@@ -6,37 +6,15 @@
     </head>
 
     <body>
-
-
-
-
         <h1>Create Subgroups</h1>
 
-        <form action = "settings.html" method = "GET">
-            <h2>Enter name of subgroup: </h2>
-            <input name ="subgroup" type="text" size=30> </input> </br>
-            <input name ="coach" type="text" size=30> </input> </br>
-            <input name ="contact" type="text" size=30> </input>
-            <input id = "submitGroup" type="submit" value="Create Group">
-        </form>
-
-        <button id="editStudents">Edit Students</button>
-
-    <?php
-    include ('database.php');
-    echo "it works";
-    if (isset($_GET['subgroup']) && isset($_GET['coach']) && isset($_GET['contact'])) {
-
-        $group = $_GET['subgroup'];
-        $coach = $_GET['coach'];
-        $contact = $_GET['contact'];
-     $sql = "INSERT INTO tblNBA (playerName, minutes, fieldGoal, fieldGoalAttempts, threePoint, threePointAttempts, freeThrow,
-          freetThrowAttempts, offensiveRebound, defensiveRebound, totalRebound, assists, personalFouls, shotsTaken, turnOver, bl, points) VALUES (" . $values . ")";
-    }
-echo"outside";
-
-    ?>
-
+        <form><h2>Enter name of subgroup: </h2><input type="text" name="p1" size=30></form>
+        
+        <a href="edit_students.html">
+            <button id="createGroup">Create</button>
+            <button id="editStudents">Edit Students</button>
+        </a>
+        
 
     </body>
 </html>
