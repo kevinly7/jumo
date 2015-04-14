@@ -33,25 +33,25 @@
                 </div> -->
 
                 <select multiple>
-					<option >
+					
 
                       <?php  
                       include ('database.php');
 
                       foreach($connection->query("Select * from tblPLAYER") as $row) {?>
-
+			<option >
                             <span>
                                                 <?php 
                             echo $row['PlayerName'];
 
                                                 ?>
                             </span>
-                        </br>
+                        </option>
 
                     <?php }?>
 
 
-				  	</option>
+				  	
 				</select>
 
             </div>
