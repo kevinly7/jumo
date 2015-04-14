@@ -35,19 +35,20 @@
                 <select multiple>
 					<option >
 
-  <?php  
-  include ('database.php');
+                      <?php  
+                      include ('database.php');
 
-  foreach($connection->query("Select * from tblPLAYER") as $row) {?>
+                      foreach($connection->query("Select * from tblPLAYER") as $row) {?>
 
-<span class = "first">
-                    <?php 
-echo $row['PlayerName'];
+                            <span>
+                                                <?php 
+                            echo $row['PlayerName'];
 
-                    ?>
-</span>
+                                                ?>
+                            </span>
+                        </br>
 
-<?php }?>
+                    <?php }?>
 
 
 				  	</option>

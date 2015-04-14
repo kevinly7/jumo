@@ -1,6 +1,4 @@
 <?php
-
-echo "inside database";
 	//values for access to db
 	$username = 'info344user';
 	$password = '<password>';
