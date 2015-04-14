@@ -1,5 +1,5 @@
 <?php
-	class Player {
+	class Group {
 		private $coachName;
 		private $coachContact;
 		private	$groupID;
