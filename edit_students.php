@@ -75,7 +75,8 @@
 
                       <?php  
                       include ('database.php');
-                      foreach($connection->query("Select * from tblPLAYER") as $row) {?>
+                      $statement = $connection->prepare ("INSERT INTO tblPractice (GroupName, CoachName, CoachContact, SportID) VALUES (:group, :coach, :contact, :sportid)");
+    $statement -> execute(array(':group' => $group, ':coach' => $coach, ':contact' => $contact, ':sportid' => $sportid));{?>
             <option >
                             <span>
                                                 <?php 
