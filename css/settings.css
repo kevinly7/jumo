@@ -1,0 +1,29 @@
+body {
+	background: #4b2e83;
+	padding-top: 50px;
+}
+
+div {
+  /*display: block;*/
+  text-align: center;
+  margin: auto;
+}
+
+.title {
+	color: #fff;
+	white-space: nowrap;
+}
+
+.selection {
+	top-padding: 20px;
+}
+
+.button {
+	text-align: center;
+	margin: auto;
+}
+
+button {
+	background-color: #ffd700;
+	border-radius: 2px;
+}

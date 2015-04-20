@@ -3,20 +3,28 @@
     <head lang="en">
         <meta charset="UTF-8">
         <title></title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/settings.css"
     </head>
     <body>
         <div>
             <form>
-                Choose a sport:
-                <select name="p2" required>
-                    <option value="">Please Select a Sport</option>
-                    <option value="sport" id="sport">Track and Field</option>
-                    <option>Football</option>
-                    <option>Tennis (Mens)</option>
-                    <option>Crew</option>
-                </select>
+                <h1 class="title">Choose a Sport</h1>
+                <div class="selection">
+                    <select name="p2" required>
+                        <option value="">Please Select a Sport</option>
+                        <option value="sport" id="sport">Track and Field</option>
+                        <option>Football</option>
+                        <option>Tennis (Mens)</option>
+                        <option>Crew</option>
+                    </select>
+                </div>
+                
             </form>
-            <a href="month_view.html"><button id="submit">Go Huskies!</button></a>
+            <div class="button">
+                <a href="month_view.html"><button type="button" id="submit">Go Huskies!</button></a>
+            </div>
+            
         </div>
     </body>
 </html>
