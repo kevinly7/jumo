@@ -11,7 +11,7 @@ join tblPLAYER_PRACTICE pp
 on pp.PracticeID = p.PracticeID
 join tblPLAYER pl
 on pp.PlayerID = pl.PlayerID") as $row) {
-	echo $row['PlayerName']. ' ' . $row['StartTime'] . ' to ' . $row['EndTime'];
+	echo $row['DateName'] . ' ' . $row['PlayerName']. ' ' . $row['StartTime'] . ' to ' . $row['EndTime'];
 	echo '</br>';
 
 
