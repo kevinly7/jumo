@@ -58,11 +58,16 @@
                 <select multiple="multiple" name="formStudents[]">
                      <?php 
 
-
+                     $playerArray = array();
+    
                      foreach($connection->query("Select * from tblPLAYER") as $row) {
-                       $playerObject = new Player($row['PlayerName'], $row['PlayerID'], $row['PlayerContact']); ?>
+                       $playerObject = new Player($row['PlayerName'], $row['PlayerID'], $row['PlayerContact']); 
 
-           <option value = <?php $playerObject ?>>
+                            $playerArray[$row['PlayerName']] = $row['PlayerID'];
+                        
+                       ?>
+
+           <option >
                 <span>
                     <?php 
                       
@@ -91,6 +96,7 @@
 
 
 <?php
+
 if(isset($_POST['formSubmit'])) 
 {
 
@@ -101,12 +107,12 @@ $groupid = $_POST['p2'];
    
   if(!isset($aStudents)) 
   {
-    echo("<p>You didn't select any countries!</p>\n");
+    echo("<p>You didn't select any students!</p>\n");
   } 
   else
   {
 
- /*$statement = $connection->prepare ("INSERT INTO tblPLAYER_GROUP (PlayerID, GroupID) VALUES (:playerid, :groupid)"); */
+ $statement = $connection->prepare ("INSERT INTO tblPLAYER_GROUP (PlayerID, GroupID) VALUES (:playerid, :groupid)"); 
   
 
 
@@ -116,13 +122,18 @@ $groupid = $_POST['p2'];
     for($i=0; $i < $nStudents; $i++)
     {
         $player = $aStudents[$i];
-      echo($player->getName() . " ");
-
+        echo $aStudents[$i];
+         $playerID = $playerArray[$player];
     
-       /* $statement -> execute(array(':groupid' => $groupid, ':playerid' => $coach)); */
+        $statement -> execute(array(':groupid' => $groupid, ':playerid' => $playerID)); 
     }
     echo("</p>");
   }
+}
+
+
+function findPlayer($playerName){
+
 }
  
 ?>
