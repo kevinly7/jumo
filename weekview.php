@@ -51,6 +51,32 @@
 	    </select>
 
 
+	    <select name="groupSelect">
+                    <option></option>
+
+<?php 
+
+      foreach($connection->query("Select * from tblGROUP") as $row) {?>
+
+           <option value = <?php echo $row['GroupID'] ?>>
+                <span>
+                    <?php 
+                        echo $row['GroupName'];
+ 
+                    ?>
+                </span>
+                       </br>
+                      </option>
+ 
+                     <?php }?>
+
+
+
+        ?>
+
+                </select>
+
+
 
 	    </br><input name = "formSubmit" type="submit" value="Select View">
 	 </form>
@@ -68,6 +94,7 @@ $year = $pieces[0];
 $month = $pieces[1];
 $nextmonth = $month+1;
 $week = $_POST['weekSelect'];
+$group = $_POST['groupSelect'];
 
 if ($week == 1) {
 	$week = '01';
@@ -93,22 +120,21 @@ $weekrange = week_range($date);
 $startday = $weekrange[0];
 $endday = $weekrange[1];
 
-foreach($connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
-from tblPRACTICE p
-join tblPRACTICE_TYPE pt
-on p.PracticeTypeID = pt.PracticeTypeID
-join tblDATE d
-on p.DateID = d.DateID
-join tblPLAYER_PRACTICE pp
-on pp.PracticeID = p.PracticeID
-join tblPLAYER pl
-on pp.PlayerID = pl.PlayerID
-WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday'") as $row) {
-	echo $row['DateName'] . ' ' . $row['PlayerName']. ' ' . $row['StartTime'] . ' to ' . $row['EndTime'];
-	echo '</br>';
-}
-
-}
+	foreach($connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
+		from tblPRACTICE p
+		join tblPRACTICE_TYPE pt
+		on p.PracticeTypeID = pt.PracticeTypeID
+		join tblDATE d
+		on p.DateID = d.DateID
+		join tblPLAYER_PRACTICE pp
+		on pp.PracticeID = p.PracticeID
+		join tblPLAYER pl
+		on pp.PlayerID = pl.PlayerID
+		WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)") as $row) {
+			echo $row['DateName'] . ' ' . $row['PlayerName']. ' ' . $row['StartTime'] . ' to ' . $row['EndTime'];
+			echo '</br>';
+		}
+	}
 
 ?>
     </body>

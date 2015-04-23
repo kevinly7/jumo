@@ -87,10 +87,6 @@
             
 
             </form>
-
-
-
-
             <a href="month_view.html"><button id="submit">Submit</button></a>
 
 
@@ -131,10 +127,6 @@ $groupid = $_POST['p2'];
   }
 }
 
-
-function findPlayer($playerName){
-
-}
  
 ?>
 
