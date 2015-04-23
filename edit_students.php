@@ -63,7 +63,7 @@
                      foreach($connection->query("Select * from tblPLAYER") as $row) {
                        $playerObject = new Player($row['PlayerName'], $row['PlayerID'], $row['PlayerContact']); 
 
-                            $playerArray[$row['PlayerName']] = $row['PlayerID'];
+                        $playerArray[$row['PlayerName']] = $row['PlayerID'];
                         
                        ?>
 

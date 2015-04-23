@@ -8,6 +8,8 @@ $count = 0;
    	VALUES (:dateid, :groupid, :practicetypeid, :starttime, :endtime)");
     $statement2 = $connection->prepare ("INSERT INTO tblPLAYER_PRACTICE (PlayerID, PracticeID) 
    	VALUES (:playerid, :practiceid)");
+   	$statement3 = $connection->prepare ("INSERT INTO tblDATE (DateName) 
+   	VALUES (:datename)");
 $count = 0;
 $practiceArray = array();
 foreach($rows as $row => $data)
@@ -21,7 +23,19 @@ foreach($rows as $row => $data)
 	}
 
 	$row_data = explode(' ', $data);
-	$date = $day.$month.$year;
+	$date = $year.$month.$day;
+
+$datequery = $connection->query("Select DateID from tblDATE where DateName = '$date'");
+$datequery->execute();
+
+if($datequery->rowCount() < 1)
+{
+    // row exists. do whatever you want to do.
+    $statement3 -> execute(array(':datename' => $date));
+} 
+
+$dateids = $datequery->fetch(PDO::FETCH_ASSOC);
+$dateid = $dateids['DateID'];
 
 	$groupID = $row_data[4] . $row_data[5]. $row_data[6] . $row_data[7];
 	
@@ -36,25 +50,32 @@ foreach($rows as $row => $data)
 	if ($size % 2 == 1 ) {
 		$begin = $practiceArray[$groupID][$size-1];
 		$end = $practiceArray[$groupID][$size];
-		echo $groupID . '</br>';
-		echo $begin . '</br>';
-		echo $end . '</br>' . '</br>';
-		
-		$statement -> execute(array(':dateid' => 1, 
-		':groupid' => $groupID, 
-		':practicetypeid' => 1, 
-		':starttime' => $begin,
-		':endtime' => $end));
-
-		$query = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND StartTime = '$begin'");
-		$practiceid = $query->fetch(PDO::FETCH_ASSOC);
 
 
-		foreach($connection->query("Select * from tblPLAYER_GROUP pg WHERE pg.GroupID = $groupID") as $row) {
-			$statement2 -> execute(array(':playerid' => $row['PlayerID'], 
-		':practiceid' => $practiceid['PracticeID']));
+		$practicequery = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$begin'");
+		$practicequery->execute();
 
-		}
+		if($practicequery->rowCount() < 1)
+		{
+		    // row exists. do whatever you want to do.
+		  	
+			$statement -> execute(array(':dateid' => $dateid, 
+			':groupid' => $groupID, 
+			':practicetypeid' => 1, 
+			':starttime' => $begin,
+			':endtime' => $end));
+
+			$query = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$begin'");
+			$practiceid = $query->fetch(PDO::FETCH_ASSOC);
+
+
+			foreach($connection->query("Select * from tblPLAYER_GROUP pg WHERE pg.GroupID = $groupID") as $row) {
+				$statement2 -> execute(array(':playerid' => $row['PlayerID'], 
+			':practiceid' => $practiceid['PracticeID']));
+
+			}
+
+		} 
 
 	} 
 		
@@ -63,17 +84,4 @@ foreach($rows as $row => $data)
 	}
 }
 echo var_dump($practiceArray);
-
-	/*$statement -> execute(array(':dateid' => 1, 
-		':groupid' => $groupID, 
-		':practicetypeid' => 1, 
-		':starttime' => $begin,
-		':endtime' => $end));
-
-		$practiceid = $connection->query("Select PracticeID from tblPractice p WHERE p.GroupID = $groupID AND p.StartTime = $begin");
-		foreach($connection->query("Select * from tblPLAYER_GROUP p WHERE p.GroupID = $groupID") as $row) {
-			$statement2 -> execute(array(':playerid' => $row['PlayerID'], 
-		':practiceid' => $practiceID));
-
-		} */
 ?>
