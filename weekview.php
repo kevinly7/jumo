@@ -82,6 +82,21 @@
 	 </form>
 
 
+
+<table style="width:80%">
+  <tr>
+  	<td>Name</td>
+    <td>Sunday</td>
+    <td>Monday</td> 
+    <td>Tuesday</td>
+    <td>Wednesday</td>
+    <td>Thursday</td>
+    <td>Friday</td>
+    <td>Saturday</td>
+  </tr>
+
+
+
        <?php  
 include ('database.php');
 
@@ -114,11 +129,10 @@ if($num_length < 2) {
 
 
 $date = $year.$month.$week;
-echo $date . '</br>';
-
 $weekrange = week_range($date);
 $startday = $weekrange[0];
 $endday = $weekrange[1];
+$dayCount = 0;
 
 	foreach($connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
 		from tblPRACTICE p
@@ -130,11 +144,23 @@ $endday = $weekrange[1];
 		on pp.PracticeID = p.PracticeID
 		join tblPLAYER pl
 		on pp.PlayerID = pl.PlayerID
-		WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)") as $row) {
-			echo $row['DateName'] . ' ' . $row['PlayerName']. ' ' . $row['StartTime'] . ' to ' . $row['EndTime'];
-			echo '</br>';
-		}
-	}
+		WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)") as $row) { 
+
+		$timestamp = strtotime($row['DateName']);
+		$dayOfWeek = date("N", $timestamp);
+			?>
+		  <tr>
+    <td><?php echo $row['PlayerName'] ?></td>
+    <?php for ($i = 0; $i < $dayOfWeek + 1; $i++) {?>
+    	<td></td>
+    <?php }?>
+     <td><?php  echo $row['StartTime'] . ' to ' . $row['EndTime'] ?></td>
+  </tr>
+
+		<?php } ?>
+
+		</table>
+	<?php }
 
 ?>
     </body>
