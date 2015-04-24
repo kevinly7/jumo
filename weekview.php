@@ -148,13 +148,42 @@ $dayCount = 0;
 
 		$timestamp = strtotime($row['DateName']);
 		$dayOfWeek = date("N", $timestamp);
+		$startTime = strtotime($row['StartTime']);
+		$endTime = strtotime($row['EndTime']);
+		$difference = $endTime - $startTime;
+		$diffDisplay = '';
+		$hours = '';
+		$minutes = '';
+		$seconds = '';
+
+
+
+		
+		 if($difference > 3600){
+
+			$hours = abs($difference/3600 %24);
+			$difference = $difference - ($hours * 3600);
+			$diffDisplay .= $hours . ' hrs ';
+		} 
+		
+		if($difference >= 60){
+			$minutes = abs($difference/60%60);
+			$difference = $difference - ($minutes * 60);
+			$diffDisplay .= $minutes . ' min ';
+		}
+
+		if ($difference <60) {
+		 	$seconds = $difference;
+		 	$diffDisplay .= $seconds . ' s ';
+		 } 		
+
 			?>
 		  <tr>
     <td><?php echo $row['PlayerName'] ?></td>
     <?php for ($i = 0; $i < $dayOfWeek + 1; $i++) {?>
     	<td></td>
     <?php }?>
-     <td><?php  echo $row['StartTime'] . ' to ' . $row['EndTime'] ?></td>
+     <td><?php  echo timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay ?></td>
   </tr>
 
 		<?php } ?>
@@ -174,6 +203,33 @@ function week_range($date) {
   $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
   return array(date('Y.m.d', $start), 
   	date('Y.m.d', strtotime('next saturday', $start)));
+}
+
+function timeFormat($time) {
+ 		$timeDisplay = '';
+		 if($time > 3600){
+
+			$hours = abs($time/3600% 24);
+			$time = $time - ($hours * 3600);
+
+			if ($hours > 12){
+				$hours  = $hours-12;
+			}
+
+			$timeDisplay .= $hours . ':';
+		} 
+		
+		if($time >= 60){
+			$minutes = abs($time/60 % 60);
+			$time = $time - ($minutes * 60);
+			$timeDisplay .= $minutes . '';
+		}
+
+		if ($time <60) {
+		 	$seconds = $time;
+		 	$timeDisplay .= $seconds . ' s ';
+		 } 
+		 return $timeDisplay;
 }
 
 
