@@ -69,9 +69,6 @@
                       </option>
  
                      <?php }?>
-
-
-
         ?>
 
                 </select>
@@ -93,6 +90,7 @@
     <td>Thursday</td>
     <td>Friday</td>
     <td>Saturday</td>
+    <td>Total Hours</td>
   </tr>
 
 
@@ -133,6 +131,8 @@ $weekrange = week_range($date);
 $startday = $weekrange[0];
 $endday = $weekrange[1];
 $dayCount = 0;
+$weekHours = 0;
+$weekArray = array();
 
 	foreach($connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
 		from tblPRACTICE p
@@ -144,19 +144,20 @@ $dayCount = 0;
 		on pp.PracticeID = p.PracticeID
 		join tblPLAYER pl
 		on pp.PlayerID = pl.PlayerID
-		WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)") as $row) { 
+		WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)
+		ORDER BY DateName ASC") as $row) { 
 
 		$timestamp = strtotime($row['DateName']);
-		$dayOfWeek = date("N", $timestamp);
+		$dayOfWeek = date("w", $timestamp);
 		$startTime = strtotime($row['StartTime']);
 		$endTime = strtotime($row['EndTime']);
 		$difference = $endTime - $startTime;
+		$weekHours += $difference;
 		$diffDisplay = '';
 		$hours = '';
 		$minutes = '';
 		$seconds = '';
-
-
+		$name = $row['PlayerName'];
 
 		
 		 if($difference > 3600){
@@ -175,21 +176,44 @@ $dayCount = 0;
 		if ($difference <60) {
 		 	$seconds = $difference;
 		 	$diffDisplay .= $seconds . ' s ';
-		 } 		
+		 } 	
 
+
+	if(!array_key_exists($name, $weekArray)){
+		$weekArray[$name][$dayOfWeek] = array();
+	} 
+
+	if (!array_key_exists($dayOfWeek, $weekArray[$name])) {
+		$weekArray[$name][$dayOfWeek][0] = timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay . $row['DateName'];
+
+	} else {
+		$size = sizeof($weekArray[$name][$dayOfWeek]);
+		$weekArray[$name][$dayOfWeek][$size] = timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay . $row['DateName'];
+	} 
+
+
+ksort($weekArray[$name][$dayOfWeek]);
 			?>
 		  <tr>
     <td><?php echo $row['PlayerName'] ?></td>
     <?php for ($i = 0; $i < $dayOfWeek + 1; $i++) {?>
-    	<td></td>
+    	<td>No Practice</td>
     <?php }?>
      <td><?php  echo timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay ?></td>
-  </tr>
+    <?php for ($j = $dayOfWeek + 1; $j < 6; $j++) {?>
+    
+    <?php }?>
 
 		<?php } ?>
-
+		
+  </tr>
 		</table>
-	<?php }
+
+
+	<?php 
+
+
+	echo var_dump($weekArray); }
 
 ?>
     </body>
@@ -204,6 +228,24 @@ function week_range($date) {
   return array(date('Y.m.d', $start), 
   	date('Y.m.d', strtotime('next saturday', $start)));
 }
+
+
+function getHours($time){
+	$timeDisplay = '';
+		 if($time > 3600){
+
+			$hours = abs($time/3600% 24);
+			$time = $time - ($hours * 3600);
+
+			if ($hours > 12){
+				$hours  = $hours-12;
+			}
+
+			$timeDisplay .= $hours . ':';
+		} 
+		return $timeDisplay;
+}
+
 
 function timeFormat($time) {
  		$timeDisplay = '';
@@ -228,7 +270,7 @@ function timeFormat($time) {
 		if ($time <60) {
 		 	$seconds = $time;
 		 	$timeDisplay .= $seconds . ' s ';
-		 } 
+		 }
 		 return $timeDisplay;
 }
 
