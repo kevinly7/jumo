@@ -145,7 +145,7 @@ $weekArray = array();
 		join tblPLAYER pl
 		on pp.PlayerID = pl.PlayerID
 		WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)
-		ORDER BY DateName ASC") as $row) { 
+		ORDER BY DateName DESC") as $row) { 
 
 		$timestamp = strtotime($row['DateName']);
 		$dayOfWeek = date("w", $timestamp);
@@ -191,22 +191,53 @@ $weekArray = array();
 		$weekArray[$name][$dayOfWeek][$size] = timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay . $row['DateName'];
 	} 
 
-
-ksort($weekArray[$name][$dayOfWeek]);
 			?>
-		  <tr>
-    <td><?php echo $row['PlayerName'] ?></td>
-    <?php for ($i = 0; $i < $dayOfWeek + 1; $i++) {?>
-    	<td>No Practice</td>
-    <?php }?>
-     <td><?php  echo timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay ?></td>
-    <?php for ($j = $dayOfWeek + 1; $j < 6; $j++) {?>
-    
-    <?php }?>
+
 
 		<?php } ?>
 		
-  </tr>
+		  
+    
+    <?php 
+    $firsttime = true;
+    $dayTracker = array();
+    $dayTracker[0] = -1;
+    foreach ($weekArray as $key => $value) {?>
+		<tr>
+    	<td><?php echo $key ?></td>
+    	<?php 
+    		foreach ($value as $dayKey => $timesArray) { 
+    			
+    			if ($firsttime == true) {
+    				for ($f = ($dayKey + 1); $f < 7; $f++) { ?>
+    				<td>No Practice</td>
+    			<?php }
+    			$firsttime = false; 
+    			?>
+    			}
+    			<?php
+    			if($dayTracker[0] != -1 && ($dayTracker[0] - $dayKey) > 1) {
+    				for ($j= 0; $j < ($dayTracker[0] - $dayKey); $j++) { ?>
+    					<td>No Practice</td>
+
+    				<?php}
+
+    			}
+					$dayTracker[0] = $dayKey;
+				?>
+    			<td>
+    			<?php 
+    				foreach ($timesArray as $timeKey => $timeValue) {
+    					echo $timeValue . '</br>';
+    				}
+    			?>
+    			</td>
+    		<?php}
+    	?>
+
+    	</tr>
+    <?php }?>
+  
 		</table>
 
 
@@ -273,8 +304,4 @@ function timeFormat($time) {
 		 }
 		 return $timeDisplay;
 }
-
-
-
 ?>
-
