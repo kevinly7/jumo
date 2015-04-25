@@ -233,6 +233,15 @@ $weekArray = array();
     			</td> 
 
     		<?php }
+
+    		if($dayTracker[0] != -1 && (7 - $dayTracker[0]) > 1) {
+    				for ($j= 0; $j < (7-$dayTracker[0])-1; $j++) { ?>
+    					<td>No Practice</td>
+
+    			<?php }
+
+    		}
+
     	?>
 
     	</tr>
