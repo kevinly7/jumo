@@ -132,7 +132,7 @@ $startday = $weekrange[0];
 $endday = $weekrange[1];
 $dayCount = 0;
 
-	foreach($connection->query("Select p.PracticeID, p.StartTime, EndTime, PracticeTypeName, DateName, PlayerName
+	foreach($connection->query("Select p.DateID, p.GroupID, pl.PlayerID, p.PracticeID, p.StartTime, EndTime, PracticeTypeName, DateName, PlayerName
 		from tblPRACTICE p
 		join tblPRACTICE_TYPE pt
 		on p.PracticeTypeID = pt.PracticeTypeID
@@ -154,7 +154,9 @@ $dayCount = 0;
 		$minutes = '';
 		$seconds = '';
 		$practiceID = $row['PracticeID'];
-
+		$playerID = $row['PlayerID'];
+		$dateID = $row['DateID'];
+		$groupID = $row['GroupID'];
 
 
 		
@@ -182,7 +184,13 @@ $dayCount = 0;
     <?php for ($i = 0; $i < $dayOfWeek + 1; $i++) {?>
     	<td></td>
     <?php }?>
-     <td><input type="hidden" name="practiceID" value="<?php echo $practiceID?>"><input type = "text" name="startTime" value="<?php echo timeFormat($startTime)?>"> to <input type="text" name="endTime" value="<?php echo timeFormat($endTime)?>"> </br></td>
+     <td>
+		<input type="hidden" name="groupID" value="<?php echo $groupID ?>">
+		<input type="hidden" name="dateID" value="<?php echo $dateID?>">
+		<input type="hidden" name="playerID" value="<?php echo $playerID?>">
+		<input type="hidden" name="practiceID" value="<?php echo $practiceID?>">
+		<input type = "text" name="startTime" value="<?php echo timeFormat($startTime)?>"> to <input type="text" name="endTime" value="<?php echo timeFormat($endTime)?>"> </br>
+	</td>
 	 
   </tr>
 
