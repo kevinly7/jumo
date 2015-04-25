@@ -3,18 +3,39 @@
     <head lang="en">
         <meta charset="UTF-8">
         <title></title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     </head>
 
     <body>
-        <h1>Create Subgroups</h1>
+        <!-- header -->
+        <nav class="purple darken-4">
+            <div class="nav-wrapper container">
+                <a href="#" class="brand-logo white-text">Jumo</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="#"><i class="mdi-action-settings"></i></a></li>
+                    <li><a href="index.html">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
 
-        <form><h2>Enter name of subgroup: </h2><input type="text" name="p1" size=30></form>
+        <h4 class="title center">Create Subgroups</h4>
+
+        <form>
+            <h5>Enter name of subgroup: </h5>
+            <input type="text" name="p1" size=30>
+        </form>
         
-        <a href="edit_students.html">
+        <a href="edit_students.html" id="createGroups" class="btn waves-effect waves-light amber accent-3 white-text">Create</a> 
+        <a href="edit_students.html" id="editStudents" class="btn waves-effect waves-light amber accent-3 white-text">Edit Students</a> 
+
+        <!-- <a href="edit_students.html">
             <button id="createGroup">Create</button>
             <button id="editStudents">Edit Students</button>
-        </a>
+        </a> -->
         
-
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
     </body>
 </html>
