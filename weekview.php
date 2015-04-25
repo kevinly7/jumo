@@ -159,7 +159,6 @@ $weekArray = array();
 		$seconds = '';
 		$name = $row['PlayerName'];
 
-		
 		 if($difference > 3600){
 
 			$hours = abs($difference/3600 %24);
@@ -184,11 +183,12 @@ $weekArray = array();
 	} 
 
 	if (!array_key_exists($dayOfWeek, $weekArray[$name])) {
-		$weekArray[$name][$dayOfWeek][0] = timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay . $row['DateName'];
+		$dayInput = timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay;
+		$weekArray[$name][$dayOfWeek][0] = $dayInput;
 
 	} else {
 		$size = sizeof($weekArray[$name][$dayOfWeek]);
-		$weekArray[$name][$dayOfWeek][$size] = timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay . $row['DateName'];
+		$weekArray[$name][$dayOfWeek][$size] = timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay ;
 	} 
 
  } ?>
@@ -196,10 +196,13 @@ $weekArray = array();
 		  
     
     <?php 
-    $firsttime = true;
+ 
     $dayTracker = array();
     $dayTracker[0] = -1;
-    foreach ($weekArray as $key => $value) {?>
+    $hourLimit = 72000;
+    $dayLimit = 14400;
+    foreach ($weekArray as $key => $value) {
+    	$firsttime = true;?>
 		<tr>
     	<td><?php echo $key ?></td>
     	<?php 
@@ -211,7 +214,7 @@ $weekArray = array();
     			<?php }
     			$firsttime = false; 
     			}
-    			$firsttime = false; 
+    			
     			?>
     			
     			<?php
@@ -244,6 +247,15 @@ $weekArray = array();
 
     	?>
 
+    	<td><?php 
+    		if ($weekHours > $hourLimit){
+			echo '<font color="red">' .timeFormat($weekHours) . '</font>';
+    		} else {
+    		echo  timeFormat($weekHours); 
+    		} ?>
+
+    	</td>
+
     	</tr>
     <?php }?> 
   
@@ -271,22 +283,6 @@ function week_range($date) {
 }
 
 
-function getHours($time){
-	$timeDisplay = '';
-		 if($time > 3600){
-
-			$hours = abs($time/3600% 24);
-			$time = $time - ($hours * 3600);
-
-			if ($hours > 12){
-				$hours  = $hours-12;
-			}
-
-			$timeDisplay .= $hours . ':';
-		} 
-		return $timeDisplay;
-}
-
 
 function timeFormat($time) {
  		$timeDisplay = '';
@@ -299,7 +295,7 @@ function timeFormat($time) {
 				$hours  = $hours-12;
 			}
 
-			$timeDisplay .= $hours . ':';
+			$timeDisplay .= $hours + 2 . ':';
 		} 
 		
 		if($time >= 60){
