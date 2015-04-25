@@ -47,9 +47,9 @@
                     <input name ="coach" type="text" size=30> </input> </br>
                     <input name ="contact" type="text" size=30> </input> -->
                     <!-- <input id = "submitGroup" type="submit" value="Create Group"> -->
-                    <button class="btn waves-effect waves-light" type="submit" id="submitGroup" name="action">Create Group</button>
+                    <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="action">Create Group</button>
                     <br>
-                    <a href="edit_students.php" class="waves-effect waves-light btn">Edit Students</a>
+                    <a href="edit_students.php" class="waves-effect waves-light amber accent-3 white-text btn">Edit Students</a>
                 </div>
             </div>
         </form>
