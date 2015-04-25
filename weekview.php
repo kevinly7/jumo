@@ -147,35 +147,14 @@ $weekArray = array();
 		WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)
 		ORDER BY DateName ASC") as $row) { 
 
+
+	$name = $row['PlayerName'];
+
 		$timestamp = strtotime($row['DateName']);
 		$dayOfWeek = date("w", $timestamp);
 		$startTime = strtotime($row['StartTime']);
 		$endTime = strtotime($row['EndTime']);
-		$difference = $endTime - $startTime;
-		$weekHours += $difference;
-		$diffDisplay = '';
-		$hours = '';
-		$minutes = '';
-		$seconds = '';
-		$name = $row['PlayerName'];
 
-		 if($difference > 3600){
-
-			$hours = abs($difference/3600 %24);
-			$difference = $difference - ($hours * 3600);
-			$diffDisplay .= $hours . ' hrs ';
-		} 
-		
-		if($difference >= 60){
-			$minutes = abs($difference/60%60);
-			$difference = $difference - ($minutes * 60);
-			$diffDisplay .= $minutes . ' min ';
-		}
-
-		if ($difference <60) {
-		 	$seconds = $difference;
-		 	$diffDisplay .= $seconds . ' s ';
-		 } 	
 
 
 	if(!array_key_exists($name, $weekArray)){
@@ -183,12 +162,12 @@ $weekArray = array();
 	} 
 
 	if (!array_key_exists($dayOfWeek, $weekArray[$name])) {
-		$dayInput = timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay;
+		$dayInput = $startTime . ' ' . $endTime;
 		$weekArray[$name][$dayOfWeek][0] = $dayInput;
 
 	} else {
 		$size = sizeof($weekArray[$name][$dayOfWeek]);
-		$weekArray[$name][$dayOfWeek][$size] = timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay ;
+		$weekArray[$name][$dayOfWeek][$size] = $startTime . ' ' . $endTime;
 	} 
 
  } ?>
@@ -201,6 +180,7 @@ $weekArray = array();
     $dayTracker[0] = -1;
     $hourLimit = 72000;
     $dayLimit = 14400;
+    $dayHours = array();
     foreach ($weekArray as $key => $value) {
     	$firsttime = true;?>
 		<tr>
@@ -230,7 +210,50 @@ $weekArray = array();
     			<td>
     			<?php 
     				foreach ($timesArray as $timeKey => $timeValue) {
-    					echo $timeValue . '</br>';
+    					$timePieces = explode(' ', $timeValue);
+    					$startPiece = $timePieces[0];
+    					$endPiece = $timePieces[1];
+
+
+    					$difference = $endPiece - $startPiece;
+						$weekHours += $difference;
+						$diffDisplay = '';
+						$hours = '';
+						$minutes = '';
+						$seconds = '';
+						
+
+						if ($dayTracker[0] != -1) {
+							$weekDay = $dayTracker[0];
+
+							if(!array_key_exists($name, $dayHours)){
+								//$dayHours[$weekDay] = 0;
+							} 
+
+							$dayHours[$weekDay] = $dayHours[$weekDay] + $difference; 
+
+						}
+
+
+						 if($difference > 3600){
+
+							$hours = abs($difference/3600 %24);
+							$difference = $difference - ($hours * 3600);
+							$diffDisplay .= $hours . ' hrs ';
+						} 
+						
+						if($difference >= 60){
+							$minutes = abs($difference/60%60);
+							$difference = $difference - ($minutes * 60);
+							$diffDisplay .= $minutes . ' min ';
+						}
+
+						if ($difference <60) {
+						 	$seconds = $difference;
+						 	$diffDisplay .= $seconds . ' s ';
+						 } 	
+
+    					echo timeFormat($startPiece) . ' to ' . timeFormat($endPiece) .'</br>' . $diffDisplay . '</br>';
     				}
     			?> 
     			</td> 
@@ -240,18 +263,16 @@ $weekArray = array();
     		if($dayTracker[0] != -1 && (7 - $dayTracker[0]) > 1) {
     				for ($j= 0; $j < (7-$dayTracker[0])-1; $j++) { ?>
     					<td>No Practice</td>
-
     			<?php }
-
     		}
-
     	?>
 
     	<td><?php 
     		if ($weekHours > $hourLimit){
-			echo '<font color="red">' .timeFormat($weekHours) . '</font>';
+				echo '<font color="red">' .timeFormat($weekHours) . '</font>';
     		} else {
-    		echo  timeFormat($weekHours); 
+    			echo  $weekHours .'</br>';
+    			echo  timeFormat($weekHours); 
     		} ?>
 
     	</td>
@@ -263,8 +284,7 @@ $weekArray = array();
 
 
 	<?php 
-
-
+	echo var_dump($dayHours); 
 	echo var_dump($weekArray); 
 	}
 
