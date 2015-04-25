@@ -295,7 +295,7 @@ function timeFormat($time) {
 				$hours  = $hours-12;
 			}
 
-			$timeDisplay .= $hours . ':';
+			$timeDisplay .= $hours + 2 . ':';
 		} 
 		
 		if($time >= 60){
