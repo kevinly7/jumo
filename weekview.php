@@ -191,10 +191,7 @@ $weekArray = array();
 		$weekArray[$name][$dayOfWeek][$size] = timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay . $row['DateName'];
 	} 
 
-			?>
-
-
-		<?php } ?>
+ } ?>
 		
 		  
     
@@ -213,14 +210,15 @@ $weekArray = array();
     				<td>No Practice</td>
     			<?php }
     			$firsttime = false; 
-    			?>
     			}
+    			?>
+    			
     			<?php
     			if($dayTracker[0] != -1 && ($dayTracker[0] - $dayKey) > 1) {
     				for ($j= 0; $j < ($dayTracker[0] - $dayKey); $j++) { ?>
     					<td>No Practice</td>
 
-    				<?php}
+    			<?php }
 
     			}
 					$dayTracker[0] = $dayKey;
@@ -230,13 +228,13 @@ $weekArray = array();
     				foreach ($timesArray as $timeKey => $timeValue) {
     					echo $timeValue . '</br>';
     				}
-    			?>
-    			</td>
-    		<?php}
+    			?> 
+    			</td> 
+    		<?php }
     	?>
 
     	</tr>
-    <?php }?>
+    <?php }?> 
   
 		</table>
 
@@ -244,7 +242,8 @@ $weekArray = array();
 	<?php 
 
 
-	echo var_dump($weekArray); }
+	echo var_dump($weekArray); 
+	}
 
 ?>
     </body>
