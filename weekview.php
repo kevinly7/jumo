@@ -90,7 +90,7 @@
     <td>Thursday</td>
     <td>Friday</td>
     <td>Saturday</td>
-    <td>Total Hours</td>
+    <td>Total Time</td>
   </tr>
 
 
@@ -157,7 +157,6 @@ $sumArray = array();
 		$endTime = strtotime($row['EndTime']);
 
 
-
 		if(!array_key_exists($name, $weekArray)){
 			$weekArray[$name][$dayOfWeek] = array();
 		} 
@@ -185,16 +184,14 @@ $sumArray = array();
 		} 
 
  } ?>
-		
-		  
-    
     <?php 
- 
     $dayTracker = array();
     $dayTracker[0] = -1;
     $hourLimit = 72000;
     $dayLimit = 14400;
     $dayHours = array();
+    $daysPracticed = 0;
+
     foreach ($weekArray as $key => $value) {
     	$firsttime = true;?>
 		<tr>
@@ -267,10 +264,19 @@ $sumArray = array();
 						 	$diffDisplay .= $seconds . ' s ';
 						 } 	
 
+						 if ($startPiece < 18000 || $endPiece < 18000) {
+						 	echo 'Violation: Not supposed to be practicing at this time' . '</br>';
+						 }
+
     					echo timeFormat($startPiece) . ' to ' . timeFormat($endPiece) .'</br>';
     				}
-    				$weekHours += $difference + 20;
-    				echo $diffDisplay . '</br>';
+    				$weekHours += $difference;
+    				$daysPracticed = count($sumArray[$key]);
+    				if ($difference > $dayLimit){
+    					echo '<font color="red">' . $diffDisplay . '</font>' . '</br>';
+    				} else {
+    					echo $diffDisplay . '</br>';
+    				}
     			?> 
     			</td> 
 
@@ -284,6 +290,10 @@ $sumArray = array();
     	?>
 
     	<td><?php 
+    		if ($daysPracticed > 3) {
+    			echo 'Violaion: No Break Days' . '</br>';
+    		}
+
     		if ($weekHours > $hourLimit){
 				echo '<font color="red">' .timeFormat($weekHours) . '</font>';
     		} else {
