@@ -145,7 +145,7 @@ $weekArray = array();
 		join tblPLAYER pl
 		on pp.PlayerID = pl.PlayerID
 		WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)
-		ORDER BY DateName DESC") as $row) { 
+		ORDER BY DateName ASC") as $row) { 
 
 		$timestamp = strtotime($row['DateName']);
 		$dayOfWeek = date("w", $timestamp);
@@ -206,16 +206,17 @@ $weekArray = array();
     		foreach ($value as $dayKey => $timesArray) { 
     			
     			if ($firsttime == true) {
-    				for ($f = ($dayKey + 1); $f < 7; $f++) { ?>
+    				for ($f = 0; $f < ($dayKey); $f++) { ?>
     				<td>No Practice</td>
     			<?php }
     			$firsttime = false; 
     			}
+    			$firsttime = false; 
     			?>
     			
     			<?php
-    			if($dayTracker[0] != -1 && ($dayTracker[0] - $dayKey) > 1) {
-    				for ($j= 0; $j < ($dayTracker[0] - $dayKey); $j++) { ?>
+    			if($dayTracker[0] != -1 && ($dayKey - $dayTracker[0]) > 1) {
+    				for ($j= 0; $j < ($dayKey-$dayTracker[0])-1; $j++) { ?>
     					<td>No Practice</td>
 
     			<?php }
@@ -230,6 +231,7 @@ $weekArray = array();
     				}
     			?> 
     			</td> 
+
     		<?php }
     	?>
 

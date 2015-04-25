@@ -71,7 +71,7 @@ $dateid = $dateids['DateID'];
 
 			foreach($connection->query("Select * from tblPLAYER_GROUP pg WHERE pg.GroupID = $groupID") as $row) {
 				$statement2 -> execute(array(':playerid' => $row['PlayerID'], 
-			':practiceid' => $practiceid['PracticeID']));
+				':practiceid' => $practiceid['PracticeID']));
 
 			}
 
