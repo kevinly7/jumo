@@ -52,7 +52,7 @@ $dateid = $dateids['DateID'];
 		$end = $practiceArray[$groupID][$size];
 
 
-		$practicequery = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$begin'");
+		$practicequery = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$begin' ");
 		$practicequery->execute();
 
 		if($practicequery->rowCount() < 1)
@@ -65,7 +65,7 @@ $dateid = $dateids['DateID'];
 			':starttime' => $begin,
 			':endtime' => $end));
 
-			$query = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$begin'");
+			$query = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$begin' ");
 			$practiceid = $query->fetch(PDO::FETCH_ASSOC);
 
 
@@ -74,6 +74,8 @@ $dateid = $dateids['DateID'];
 				':practiceid' => $practiceid['PracticeID']));
 
 			}
+
+			echo var_dump($practiceArray);
 
 		} 
 
