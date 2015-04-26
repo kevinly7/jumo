@@ -115,14 +115,23 @@ if (isset($_GET['p2'])){
 
                 $nStudents = count($aStudents);
 
-                echo("<p>You selected $nStudents countries: ");
+                echo("<p>You selected $nStudents students: ");
                 for($i=0; $i < $nStudents; $i++)
                 {
                     $player = $aStudents[$i];
                     echo $aStudents[$i];
                     $playerID = $playerArray[$player];
 
-                    $statement -> execute(array(':groupid' => $groupid, ':playerid' => $playerID)); 
+                    $practicequery = $connection->query("Select PlayerID from tblPLAYER_GROUP WHERE GroupID = $groupid AND PlayerID = $playerID ");
+                    $practicequery->execute();
+
+                    if($practicequery->rowCount() < 1)
+                    {
+                      $statement -> execute(array(':groupid' => $groupid, ':playerid' => $playerID));
+                    }
+
+
+                    
                 }
                 echo("</p>");
             }
