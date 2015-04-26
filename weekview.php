@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html>
 	<head lang="en">
@@ -21,306 +20,291 @@
             </div>
         </nav>
 
-		<form action = "weekview.php" method = "POST">
-			<h2>Enter name of subgroup: </h2>
-			<select name="monthSelect" class="browser-default">
-				<option></option>
+		<div class="row">
+			<div class="col s3">
+	       		<form action = "weekview.php" method = "POST">
+					<h6>Filters</h6>
+					<select name="monthSelect" class="browser-default">
+						<option value="" disabled selected>Please select a month</option>
 
-				<?php 
-				include ('database.php');
-				$datearray = array();
-				foreach($connection->query("SELECT YEAR(dateName) AS 'year', MONTH(dateName) AS 'month' FROM tblDATE") as $row) {
-					if ($row['year'] != '0' && strlen($row['year']) > 0) { 
-
-						$datearray[$row['year'].$row['month']] = $row['year'] . ' ' . $row['month'];
-					}
-				}
-				foreach ($datearray as $value) {
-
-					?>
-					<option>
-						<span>
-							<?php 
-							echo  $value;
-							?>
-						</span>
-					</br>
-				</option>
-
-				<?php }
-
-				?>
-
-			</select>
-
-
-			<select name="weekSelect" class="browser-default">
-				<option></option> </br>
-				<option>1</option> </br>
-				<option>2</option> </br>
-				<option>3</option> </br>
-				<option>4</option> </br>
-			</select>
-
-
-			<select name="groupSelect" class="browser-default">
-				<option></option>
-
-				<?php 
-
-				foreach($connection->query("Select * from tblGROUP") as $row) {?>
-
-				<option value = <?php echo $row['GroupID'] ?>>
-					<span>
 						<?php 
-						echo $row['GroupName'];
-						?>
-					</span>
-				</br>
-				</option>
+						include ('database.php');
+						$datearray = array();
+						foreach($connection->query("SELECT YEAR(dateName) AS 'year', MONTH(dateName) AS 'month' FROM tblDATE") as $row) {
+							if ($row['year'] != '0' && strlen($row['year']) > 0) { 
 
-				<?php }?>
-				?>
-
-			</select>
-		</br><input name = "formSubmit" type="submit" value="Select View">
-		</form>
-
-
-
-		<table style="width:80%">
-			<tr>
-				<td>Name</td>
-				<td>Sunday</td>
-				<td>Monday</td> 
-				<td>Tuesday</td>
-				<td>Wednesday</td>
-				<td>Thursday</td>
-				<td>Friday</td>
-				<td>Saturday</td>
-				<td>Total Time</td>
-			</tr>
-
-
-
-		<?php  
-		include ('database.php');
-
-		if(isset($_POST['formSubmit'])) 
-		{
-
-			$monthyear = $_POST['monthSelect'];
-			$pieces = explode(" ", $monthyear);
-			$year = $pieces[0];
-			$month = $pieces[1];
-			$nextmonth = $month+1;
-			$week = $_POST['weekSelect'];
-			$group = $_POST['groupSelect'];
-
-			if ($week == 1) {
-				$week = '01';
-			} else if ($week == 2) {
-				$week = '08';
-			} else if ($week == 3){
-				$week = '15';
-			} else {
-				$week = '22';
-			}
-
-			$num_length = strlen((string)$month);
-			if($num_length < 2) {
-	// Pass
-				$month = '0'.$month;
-			} 
-
-
-			$date = $year.$month.$week;
-			$weekrange = week_range($date);
-			$startday = $weekrange[0];
-			$endday = $weekrange[1];
-			$dayCount = 0;
-			$weekHours = 0;
-			$weekArray = array();
-			$sumArray = array();
-
-			foreach($connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
-				from tblPRACTICE p
-				join tblPRACTICE_TYPE pt
-				on p.PracticeTypeID = pt.PracticeTypeID
-				join tblDATE d
-				on p.DateID = d.DateID
-				join tblPLAYER_PRACTICE pp
-				on pp.PracticeID = p.PracticeID
-				join tblPLAYER pl
-				on pp.PlayerID = pl.PlayerID
-				WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)
-				ORDER BY DateName ASC") as $row) { 
-
-
-				$name = $row['PlayerName'];
-
-			$timestamp = strtotime($row['DateName']);
-			$dayOfWeek = date("w", $timestamp);
-			$startTime = strtotime($row['StartTime']);
-			$endTime = strtotime($row['EndTime']);
-
-
-			if(!array_key_exists($name, $weekArray)){
-				$weekArray[$name][$dayOfWeek] = array();
-			} 
-
-
-			if(!array_key_exists($name, $sumArray)){
-				$sumArray[$name][$dayOfWeek] = array();
-			} 
-
-			if (!array_key_exists($dayOfWeek, $weekArray[$name])) {
-				$dayInput = $startTime . ' ' . $endTime;
-				$weekArray[$name][$dayOfWeek][0] = $dayInput;
-
-			} else {
-				$size = sizeof($weekArray[$name][$dayOfWeek]);
-				$weekArray[$name][$dayOfWeek][$size] = $startTime . ' ' . $endTime;
-			} 
-
-			$diffValue = $endTime - $startTime;
-			if (!array_key_exists($dayOfWeek, $sumArray[$name]) || count($sumArray[$name][$dayOfWeek]) == 0) {			
-				$sumArray[$name][$dayOfWeek][0] = $diffValue;
-			} else {
-
-				$sumArray[$name][$dayOfWeek][0] += $diffValue;
-			} 
-
-		} ?>
-		<?php 
-		$dayTracker = array();
-		$dayTracker[0] = -1;
-		$hourLimit = 72000;
-		$dayLimit = 14400;
-		$dayHours = array();
-		$daysPracticed = 0;
-
-		foreach ($weekArray as $key => $value) {
-			$firsttime = true;?>
-			<tr>
-				<td><?php echo $key ?></td>
-				<?php 
-				foreach ($value as $dayKey => $timesArray) { 
-
-					if ($firsttime == true) {
-						for ($f = 0; $f < ($dayKey); $f++) { ?>
-						<td>No Practice</td>
-						<?php }
-						$firsttime = false; 
-					}
-
-					?>
-
-					<?php
-					if($dayTracker[0] != -1 && ($dayKey - $dayTracker[0]) > 1) {
-						for ($j= 0; $j < ($dayKey-$dayTracker[0])-1; $j++) { ?>
-						<td>No Practice</td>
-
-						<?php }
-
-					}
-					$dayTracker[0] = $dayKey;
-					if($dayTracker[0] != -1) {
-						if(!array_key_exists($dayTracker[0], $dayHours)){
-							$dayHours[$dayTracker[0]] = 0;
-						} 
-					}
-
-					?>
-					<td>
-						<?php 
-						foreach ($timesArray as $timeKey => $timeValue) {
-							$timePieces = explode(' ', $timeValue);
-							$startPiece = $timePieces[0];
-							$endPiece = $timePieces[1];
-
-
-							$difference = $sumArray[$key][$dayKey][0];
-							$dayDifference = $difference;
-							$diffDisplay = '';
-							$hours = '';
-							$minutes = '';
-							$seconds = '';
-
-							if ($dayTracker[0] != -1) {
-								$weekDay = $dayTracker[0];
-
-								$dayHours[$weekDay] = $dayHours[$weekDay] + $difference; 
-
+								$datearray[$row['year'].$row['month']] = $row['year'] . ' ' . $row['month'];
 							}
+						}
+						foreach ($datearray as $value) {
+							?>
+							<option>
+								<span>
+									<?php 
+									echo  $value;
+									?>
+								</span>
+							</br>
+						</option>
+						<?php }
+						?>
+					</select>
 
-							if($difference > 3600){
+					<select name="weekSelect" class="browser-default">
+						<option value="" disabled selected>Please select a week</option>
+						<option>Week 1</option> 
+						<option>Week 2</option> 
+						<option>Week 3</option> 
+						<option>Week 4</option> 
+					</select>
 
-								$hours = abs($difference/3600 %24);
-								$difference = $difference - ($hours * 3600);
-								$diffDisplay .= $hours . ' hrs ';
+					<select name="groupSelect" class="browser-default">
+						<option value="" disabled selected>Please select a group</option>
+
+						<?php 
+
+						foreach($connection->query("Select * from tblGROUP") as $row) {?>
+
+						<option value = <?php echo $row['GroupID'] ?>>
+							<span>
+								<?php 
+								echo $row['GroupName'];
+								?>
+							</span>
+						</br>
+						</option>
+
+						<?php }?>
+						?>
+
+					</select>
+					<!-- <input name = "formSubmit" type="submit" value="Select View"> -->
+					<button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Select View</button>
+				</form>
+	      	</div>
+		
+	      	<div class="col s9">
+	      		<table style="width:80%" class="bordered striped hoverable">
+					<thead>
+						<tr>
+							<th data-field="name">Name</th>
+			              	<th data-field="sun">Sunday</th>
+			              	<th data-field="mon">Monday</th>
+			              	<th data-field="tue">Tuesday</th>
+			              	<th data-field="wed">Wednesday</th>
+			              	<th data-field="thu">Thursday</th>
+			              	<th data-field="fri">Friday</th>
+			              	<th data-field="sat">Saturday</th>
+			              	<th data-field="tot">Total Hours</th>
+						</tr>
+					</thead>
+
+					<?php  
+					include ('database.php');
+
+					if(isset($_POST['formSubmit'])) 
+					{
+						$monthyear = $_POST['monthSelect'];
+						$pieces = explode(" ", $monthyear);
+						$year = $pieces[0];
+						$month = $pieces[1];
+						$nextmonth = $month+1;
+						$week = $_POST['weekSelect'];
+						$group = $_POST['groupSelect'];
+
+						if ($week == 1) {
+							$week = '01';
+						} else if ($week == 2) {
+							$week = '08';
+						} else if ($week == 3){
+							$week = '15';
+						} else {
+							$week = '22';
+						}
+
+						$num_length = strlen((string)$month);
+						if($num_length < 2) {
+						// Pass
+							$month = '0'.$month;
+						} 
+
+
+						$date = $year.$month.$week;
+						$weekrange = week_range($date);
+						$startday = $weekrange[0];
+						$endday = $weekrange[1];
+						$dayCount = 0;
+						$weekHours = 0;
+						$weekArray = array();
+						$sumArray = array();
+
+						foreach($connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
+							from tblPRACTICE p
+							join tblPRACTICE_TYPE pt
+							on p.PracticeTypeID = pt.PracticeTypeID
+							join tblDATE d
+							on p.DateID = d.DateID
+							join tblPLAYER_PRACTICE pp
+							on pp.PracticeID = p.PracticeID
+							join tblPLAYER pl
+							on pp.PlayerID = pl.PlayerID
+							WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)
+							ORDER BY DateName ASC") as $row) { 
+
+							$name = $row['PlayerName'];
+
+							$timestamp = strtotime($row['DateName']);
+							$dayOfWeek = date("w", $timestamp);
+							$startTime = strtotime($row['StartTime']);
+							$endTime = strtotime($row['EndTime']);
+
+							if(!array_key_exists($name, $weekArray)){
+								$weekArray[$name][$dayOfWeek] = array();
 							} 
 
-							if($difference >= 60){
-								$minutes = abs($difference/60%60);
-								$difference = $difference - ($minutes * 60);
-								$diffDisplay .= $minutes . ' min ';
-							}
+							if(!array_key_exists($name, $sumArray)){
+								$sumArray[$name][$dayOfWeek] = array();
+							} 
 
-							if ($difference <60) {
-								$seconds = $difference;
-								$diffDisplay .= $seconds . ' s ';
-							} 	
+							if (!array_key_exists($dayOfWeek, $weekArray[$name])) {
+								$dayInput = $startTime . ' ' . $endTime;
+								$weekArray[$name][$dayOfWeek][0] = $dayInput;
+							} else {
+								$size = sizeof($weekArray[$name][$dayOfWeek]);
+								$weekArray[$name][$dayOfWeek][$size] = $startTime . ' ' . $endTime;
+							} 
 
-							if ($startPiece < 18000 || $endPiece < 18000) {
-								echo 'Violation: Not supposed to be practicing at this time' . '</br>';
-							}
+							$diffValue = $endTime - $startTime;
+							if (!array_key_exists($dayOfWeek, $sumArray[$name]) || count($sumArray[$name][$dayOfWeek]) == 0) {			
+								$sumArray[$name][$dayOfWeek][0] = $diffValue;
+							} else {
 
-							echo timeFormat($startPiece) . ' to ' . timeFormat($endPiece) .'</br>';
-						}
-						$weekHours += $dayDifference;
-						$daysPracticed = count($sumArray[$key]);
-						if ($dayDifference > $dayLimit){
-							echo '<font color="red">' .  $diffDisplay . '</font>' . '</br>';
-						} else {
-							echo $diffDisplay . '</br>';
-						}
-						?> 
-					</td> 
+								$sumArray[$name][$dayOfWeek][0] += $diffValue;
+							} 
+						} ?>
+					
+						<tbody>
+							<?php 
+							$dayTracker = array();
+							$dayTracker[0] = -1;
+							$hourLimit = 72000;
+							$dayLimit = 14400;
+							$dayHours = array();
+							$daysPracticed = 0;
 
-					<?php }
+							foreach ($weekArray as $key => $value) {
+								$firsttime = true;?>
+								<tr>
+									<td><?php echo $key ?></td>
+									<?php 
+									foreach ($value as $dayKey => $timesArray) { 
 
-					if($dayTracker[0] != -1 && (7 - $dayTracker[0]) > 1) {
-						for ($j= 0; $j < (7-$dayTracker[0])-1; $j++) { ?>
-						<td>No Practice</td>
-						<?php }
-					}
-					?>
+										if ($firsttime == true) {
+											for ($f = 0; $f < ($dayKey); $f++) { ?>
+												<td>No Practice</td>
+											<?php }
+											$firsttime = false; 
+										}
+										?>
 
-					<td><?php 
-					if ($daysPracticed > 3) {
-						echo 'Violaion: No Break Days' . '</br>';
-					}
+										<?php
+										if($dayTracker[0] != -1 && ($dayKey - $dayTracker[0]) > 1) {
+											for ($j= 0; $j < ($dayKey-$dayTracker[0])-1; $j++) { ?>
+												<td>No Practice</td>
+											<?php }
+										}
 
-					if ($weekHours > $hourLimit){
-						echo '<font color="red">' .sumFormat($weekHours) . '</font>';
-					} else {
-						echo  sumFormat($weekHours); 
-					} ?>
+										$dayTracker[0] = $dayKey;
+										if($dayTracker[0] != -1) {
+											if(!array_key_exists($dayTracker[0], $dayHours)){
+												$dayHours[$dayTracker[0]] = 0;
+											} 
+										}
 
-				</td>
+										?>
+										<td>
+											<?php 
+											foreach ($timesArray as $timeKey => $timeValue) {
+												$timePieces = explode(' ', $timeValue);
+												$startPiece = $timePieces[0];
+												$endPiece = $timePieces[1];
 
-			</tr>
-			<?php }?> 
+												$difference = $sumArray[$key][$dayKey][0];
+												$dayDifference = $difference;
+												$diffDisplay = '';
+												$hours = '';
+												$minutes = '';
+												$seconds = '';
 
-		</table>
+												if ($dayTracker[0] != -1) {
+													$weekDay = $dayTracker[0];
 
+													$dayHours[$weekDay] = $dayHours[$weekDay] + $difference; 
+												}
 
-		<?php 
+												if($difference > 3600){
+													$hours = abs($difference/3600 %24);
+													$difference = $difference - ($hours * 3600);
+													$diffDisplay .= $hours . ' hrs ';
+												} 
 
-	}
+												if($difference >= 60){
+													$minutes = abs($difference/60%60);
+													$difference = $difference - ($minutes * 60);
+													$diffDisplay .= $minutes . ' min ';
+												}
 
-	?>
+												if ($difference <60) {
+													$seconds = $difference;
+													$diffDisplay .= $seconds . ' s ';
+												} 	
+
+												if ($startPiece < 18000 || $endPiece < 18000) {
+													echo 'Violation: Not supposed to be practicing at this time' . '</br>';
+												}
+
+												echo timeFormat($startPiece) . ' to ' . timeFormat($endPiece) .'</br>';
+											}
+
+											$weekHours += $dayDifference;
+											$daysPracticed = count($sumArray[$key]);
+											if ($dayDifference > $dayLimit){
+												echo '<font color="red">' .  $diffDisplay . '</font>' . '</br>';
+											} else {
+												echo $diffDisplay . '</br>';
+											}
+											?> 
+										</td> 
+
+									<?php }
+
+									if($dayTracker[0] != -1 && (7 - $dayTracker[0]) > 1) {
+										for ($j= 0; $j < (7-$dayTracker[0])-1; $j++) { ?>
+										<td>No Practice</td>
+										<?php }
+									}
+									?>
+
+									<td><?php 
+										if ($daysPracticed > 3) {
+											echo 'Violaion: No Break Days' . '</br>';
+										}
+										if ($weekHours > $hourLimit){
+											echo '<font color="red">' .sumFormat($weekHours) . '</font>';
+										} else {
+											echo  sumFormat($weekHours); 
+										} ?>
+									</td>
+								</tr>
+							<?php }?> 
+						</tbody>
+				</table>
+				<?php }
+				?>
+	      	</div>
+		</div>
+
+		
 		<!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
 	</body>
