@@ -49,6 +49,7 @@
 						<?php }
 						?>
 					</select>
+<<<<<<< HEAD
 
 					<select name="weekSelect" class="browser-default">
 						<option value="" disabled selected>Please select a week</option>
@@ -65,6 +66,24 @@
 
 						foreach($connection->query("Select * from tblGROUP") as $row) {?>
 
+=======
+
+					<select name="weekSelect" class="browser-default">
+						<option value="" disabled selected>Please select a week</option>
+						<option>Week 1</option> 
+						<option>Week 2</option> 
+						<option>Week 3</option> 
+						<option>Week 4</option> 
+					</select>
+
+					<select name="groupSelect" class="browser-default">
+						<option value="" disabled selected>Please select a group</option>
+
+						<?php 
+
+						foreach($connection->query("Select * from tblGROUP") as $row) {?>
+
+>>>>>>> a5168b39320f234bec8f384d1af3aafd11055483
 						<option value = <?php echo $row['GroupID'] ?>>
 							<span>
 								<?php 
@@ -259,11 +278,25 @@
 													$diffDisplay .= $seconds . ' s ';
 												} 	
 
+<<<<<<< HEAD
+												$correctStart = date('h:i:s A', $startPiece);
+												$endStart = date('h:i:s A', $endPiece);
+												$practiceStart = strtotime('12:00:00 AM');
+												$practiceEnd = strtotime('05:00:00 AM');
+												
+												if (($startPiece > $practiceStart && $startPiece < $practiceEnd) ||
+													($endPiece > $practiceStart && $endPiece < $practiceEnd)) {
+													echo 'Violation: Not supposed to be practicing at this time' . '</br>';
+												}
+
+												echo $correctStart . ' to ' . $endStart .'</br>';
+=======
 												if ($startPiece < 18000 || $endPiece < 18000) {
 													echo 'Violation: Not supposed to be practicing at this time' . '</br>';
 												}
 
 												echo timeFormat($startPiece) . ' to ' . timeFormat($endPiece) .'</br>';
+>>>>>>> a5168b39320f234bec8f384d1af3aafd11055483
 											}
 
 											$weekHours += $dayDifference;
@@ -344,33 +377,4 @@ function sumFormat($time) {
 	return $timeDisplay;
 }
 
-function timeFormat($time) {
-	$timeDisplay = '';
-	$minPhrase = ' min ';
-	if($time > 3600){
-		$hours = abs($time/3600% 24);
-		$hours = $hours + 2;
-		$time = $time - ($hours * 3600);
-		if ($hours > 24) {
-			$hours = $hours -24;
-		} else if ($hours > 12){
-			$hours  = $hours-12;
-		}
-
-		$timeDisplay .= $hours . ':';
-		$minPhrase = ' ';
-	} 
-
-	if($time >= 60){
-		$minutes = abs($time/60 % 60);
-		$time = $time - ($minutes * 60);
-		$timeDisplay .= $minutes . $minPhrase;
-	}
-
-	if ($time <60) {
-		$seconds = $time;
-		$timeDisplay .= $seconds . ' s ';
-	}
-	return $timeDisplay;
-}
 ?>
