@@ -33,14 +33,21 @@
 						$datearray = array();
 						foreach($connection->query("SELECT YEAR(dateName) AS 'year', MONTH(dateName) AS 'month' FROM tblDATE") as $row) {
 							if ($row['year'] != '0' && strlen($row['year']) > 0) { 
+								
 						 		$datearray[$row['year'].$row['month']] = $row['year'] . ' ' . $row['month'];
 							}
 						}
-						foreach ($datearray as $value) {?>
+						foreach ($datearray as $value) {
+							$mpieces = explode(" ", $value);
+							$year1 = $mpieces[0];
+							$month2 = $mpieces[1];
+							$dateObj   = DateTime::createFromFormat('!m', $month2);
+							$monthName = $dateObj->format('F');
+							?>
 						    <option>
-					            <span>
+					            <span >
 					                <?php 
-					                	echo  $value;
+					                	echo  $year1 . ' ' . $monthName;
 					                ?>
 					            </span>
 					            </br>
@@ -51,12 +58,12 @@
 
 				 	<select name="weekSelect" class="browser-default">
 					 	<option value="" disabled selected>Please select a week</option> 
-					    <option>1</option> 
-					    <option>2</option> 
-					    <option>3</option> 
-					    <option>4</option> 
+					    <option>Week 1</option> 
+					    <option>Week 2</option> 
+					    <option>Week 3</option> 
+					    <option>Week 4</option> 
 				    </select>
-
+				    <?php $groupArray = array();?>
 				    <select name="groupSelect" class="browser-default">
 			            <option value="" disabled selected>Please select a group</option>
 		                <option>All</option>
@@ -66,6 +73,7 @@
 			           		<option value = <?php echo $row['GroupID'] ?>>
 				                <span>
 				                    <?php 
+				                    	$groupArray[$row['GroupID']] = $row['GroupName'];
 				                        echo $row['GroupName'];
 				                    ?>
 				                </span>
@@ -109,15 +117,17 @@
 						$monthyear = $_POST['monthSelect'];
 						$pieces = explode(" ", $monthyear);
 						$year = $pieces[0];
-						$month = $pieces[1];
+						$month3 = $pieces[1];
+						$month = date('m',strtotime($month3));
+					
 						$nextmonth = $month+1;
 						$week = $_POST['weekSelect'];
 						$group = $_POST['groupSelect'];
-						if ($week == 1) {
+						if ($week == 'Week 1') {
 							$week = '01';
-						} else if ($week == 2) {
+						} else if ($week == 'Week 2') {
 							$week = '08';
-						} else if ($week == 3){
+						} else if ($week == 'Week 3'){
 							$week = '15';
 						} else {
 							$week = '22';
@@ -130,8 +140,9 @@
 						$date = $year.$month.$week;
 						$weekrange = week_range($date);
 						$startday = $weekrange[0];
-						$endday = $weekrange[1];
-						$dayCount = 0;
+						$endday = $weekrange[1]; ?>
+						<p class = "viewTitle"> <?php echo "Checking practices for " . $groupArray[$group] . ' on ' . $startday . ' to ' . $endday; ?> </p>
+						<?php $dayCount = 0;
 						$weekHours = 0;
 						$weekArray = array();
 						$sumArray = array();

@@ -38,25 +38,31 @@
 						 		$datearray[$row['year'].$row['month']] = $row['year'] . ' ' . $row['month'];
 							}
 						}
-						foreach ($datearray as $value) { ?>
-					        <option>
-					            <span>
+							foreach ($datearray as $value) {
+							$mpieces = explode(" ", $value);
+							$year1 = $mpieces[0];
+							$month2 = $mpieces[1];
+							$dateObj   = DateTime::createFromFormat('!m', $month2);
+							$monthName = $dateObj->format('F');
+							?>
+						    <option>
+					            <span >
 					                <?php 
-					                	echo  $value;
+					                	echo  $year1 . ' ' . $monthName;
 					                ?>
 					            </span>
 					            </br>
-					        </option>
-						<?php }
+					        </option>				 
+					    <?php }
 						?>
 					</select>    
 
 				 	<select name="weekSelect" class="browser-default">
 					 	<option value="" disabled selected>Please select a week</option>
-					    <option>1</option> 
-					    <option>2</option> 
-					    <option>3</option> 
-					    <option>4</option> 
+					    <option>Week 1</option> 
+					    <option>Week 2</option> 
+					    <option>Week 3</option> 
+					    <option>Week 4</option> 
 				    </select>
 
 				    </br>
@@ -89,15 +95,16 @@
 						$monthyear = $_POST['monthSelect'];
 						$pieces = explode(" ", $monthyear);
 						$year = $pieces[0];
-						$month = $pieces[1];
+						$month3 = $pieces[1];
+						$month = date('m',strtotime($month3));
 						$nextmonth = $month+1;
 						$week = $_POST['weekSelect'];
 
-						if ($week == 1) {
+						if ($week == 'Week 1') {
 							$week = '01';
-						} else if ($week == 2) {
+						} else if ($week == 'Week 2') {
 							$week = '08';
-						} else if ($week == 3){
+						} else if ($week == 'Week 3'){
 							$week = '15';
 						} else {
 							$week = '22';
@@ -117,7 +124,9 @@
 						$weekHours = 0;
 						$weekArray = array();
 						$sumArray = array();
-
+							?>
+						<p class = "viewTitle"> <?php echo "Checking violations from " . $startday . ' to ' . $endday; ?> </p>
+<?php
 						foreach($connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
 							from tblPRACTICE p
 							join tblPRACTICE_TYPE pt

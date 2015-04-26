@@ -1,10 +1,3 @@
-<?php
-if (isset($_GET['p2'])){
-    echo "this is : " . $_GET['p2'];
-}  
-?>
-
-
 <!DOCTYPE html>
 <html>
     <head lang="en">
