@@ -49,7 +49,6 @@
 						<?php }
 						?>
 					</select>
-<<<<<<< HEAD
 
 					<select name="weekSelect" class="browser-default">
 						<option value="" disabled selected>Please select a week</option>
@@ -66,24 +65,6 @@
 
 						foreach($connection->query("Select * from tblGROUP") as $row) {?>
 
-=======
-
-					<select name="weekSelect" class="browser-default">
-						<option value="" disabled selected>Please select a week</option>
-						<option>Week 1</option> 
-						<option>Week 2</option> 
-						<option>Week 3</option> 
-						<option>Week 4</option> 
-					</select>
-
-					<select name="groupSelect" class="browser-default">
-						<option value="" disabled selected>Please select a group</option>
-
-						<?php 
-
-						foreach($connection->query("Select * from tblGROUP") as $row) {?>
-
->>>>>>> a5168b39320f234bec8f384d1af3aafd11055483
 						<option value = <?php echo $row['GroupID'] ?>>
 							<span>
 								<?php 
@@ -278,7 +259,6 @@
 													$diffDisplay .= $seconds . ' s ';
 												} 	
 
-<<<<<<< HEAD
 												$correctStart = date('h:i:s A', $startPiece);
 												$endStart = date('h:i:s A', $endPiece);
 												$practiceStart = strtotime('12:00:00 AM');
@@ -290,13 +270,6 @@
 												}
 
 												echo $correctStart . ' to ' . $endStart .'</br>';
-=======
-												if ($startPiece < 18000 || $endPiece < 18000) {
-													echo 'Violation: Not supposed to be practicing at this time' . '</br>';
-												}
-
-												echo timeFormat($startPiece) . ' to ' . timeFormat($endPiece) .'</br>';
->>>>>>> a5168b39320f234bec8f384d1af3aafd11055483
 											}
 
 											$weekHours += $dayDifference;

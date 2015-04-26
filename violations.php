@@ -159,8 +159,7 @@ $sumArray = array();
     foreach ($weekArray as $key => $value) { ?>
 		<tr>
     	<?php 
-    		foreach ($value as $dayKey => $timesArray) {     			
-    			?>
+    		foreach ($value as $dayKey => $timesArray) {   ?>
     			<td>
     			<?php  
     				foreach ($timesArray as $timeKey => $timeValue) {
@@ -170,27 +169,32 @@ $sumArray = array();
     					$difference = $sumArray[$key][$dayKey][0];
 
     					$dayTracker[0] = $dayKey;
-					if($dayTracker[0] != -1) {
-						if(!array_key_exists($dayTracker[0], $dayHours)){
-							$dayHours[$dayTracker[0]] = 0;
-						} 
-					}
+						if($dayTracker[0] != -1) {
+							if(!array_key_exists($dayTracker[0], $dayHours)){
+								$dayHours[$dayTracker[0]] = 0;
+							} 
+						}
 						
 						if ($dayTracker[0] != -1) {
 							$weekDay = $dayTracker[0];
 							$dayHours[$weekDay] = $dayHours[$weekDay] + $difference; 
 						}
 
-						if ($startPiece < 18000 || $endPiece < 18000) { ?>
-						 	<td><?php echo $key ?></td>
-						 	<?php echo 'Violation: Not supposed to be practicing at this time' . '</br>';
-						 }
+						$correctStart = date('h:i:s A', $startPiece);
+						$endStart = date('h:i:s A', $endPiece);
+						$practiceStart = strtotime('12:00:00 AM');
+						$practiceEnd = strtotime('05:00:00 AM');
+						
+						if (($startPiece > $practiceStart && $startPiece < $practiceEnd) ||
+							($endPiece > $practiceStart && $endPiece < $practiceEnd)) {
+							echo 'Violation: Not supposed to be practicing at this time' . '</br>';
+						}
     				}
     				$weekHours += $difference;
     				$daysPracticed = count($sumArray[$key]);
     				if ($difference > $dayLimit){ ?>
     					<td><?php echo $key ?></td>
-    				<?php	echo 'Over 4 hours on ' . $date . '</br>';
+    					<?php echo 'Over 4 hours on ' . $date . '</br>';
     				} 
     			 ?> 
     			</td> 
@@ -234,32 +238,5 @@ function week_range($date) {
 
 
 
-function timeFormat($time) {
- 		$timeDisplay = '';
- 		$minPhrase = ' min ';
-		 if($time > 3600){
 
-			$hours = abs($time/3600% 24);
-			$time = $time - ($hours * 3600);
-
-			if ($hours > 12){
-				$hours  = $hours-12;
-			}
-
-			$timeDisplay .= $hours + 2 . ':';
-			$minPhrase = ' ';
-		} 
-		
-		if($time >= 60){
-			$minutes = abs($time/60 % 60);
-			$time = $time - ($minutes * 60);
-			$timeDisplay .= $minutes . $minPhrase;
-		}
-
-		if ($time <60) {
-		 	$seconds = $time;
-		 	$timeDisplay .= $seconds . ' s ';
-		 }
-		 return $timeDisplay;
-	}
 ?>
