@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
-	<head lang="en">
-		<meta charset="UTF-8">
-		<title></title>
-		<!-- Compiled and minified CSS -->
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+        <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-	</head>
-	<body>
-		<!-- header -->
-        <nav class="purple darken-4">
+    </head>
+    <body>
+    	<!-- header -->
+    	<nav class="purple darken-4">
             <div class="nav-wrapper container">
                 <a href="weekview.php" class="brand-logo white-text">Jumo</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -19,70 +19,75 @@
             </div>
         </nav>
 
-		<div class="row">
-			<div class="col s3">
-	       		<form action = "weekview.php" method = "POST">
-					<h6>Filters</h6>
-					<select name="monthSelect" class="browser-default">
-						<option value="" disabled selected>Please select a month</option>
+    	<div class="row">
+			<div class="col s3">	
+				<form action = "weekview.php" method = "POST"> 
+					<br>
+			        <h6><b>Filters</b></h6>	
+			        <br>
+			        <select name="monthSelect" class="browser-default">
+			            <option value="" >Please select a month</option>
 
 						<?php 
 						include ('database.php');
 						$datearray = array();
 						foreach($connection->query("SELECT YEAR(dateName) AS 'year', MONTH(dateName) AS 'month' FROM tblDATE") as $row) {
 							if ($row['year'] != '0' && strlen($row['year']) > 0) { 
-								$datearray[$row['year'].$row['month']] = $row['year'] . ' ' . $row['month'];
+						 		$datearray[$row['year'].$row['month']] = $row['year'] . ' ' . $row['month'];
 							}
 						}
-						foreach ($datearray as $value) {
-							?>
-							<option>
-								<span>
-									<?php 
-									echo  $value;
-									?>
-								</span>
-							</br>
-						</option>
-						<?php }
+						foreach ($datearray as $value) {?>
+						    <option>
+					            <span>
+					                <?php 
+					                	echo  $value;
+					                ?>
+					            </span>
+					            </br>
+					        </option>				 
+					    <?php }
 						?>
-					</select>
+					</select>    
 
-					<select name="weekSelect" class="browser-default">
-						<option value="" disabled selected>Please select a week</option>
-						<option>Week 1</option> 
-						<option>Week 2</option> 
-						<option>Week 3</option> 
-						<option>Week 4</option> 
-					</select>
+				 	<select name="weekSelect" class="browser-default">
+					 	<option value="" disabled selected>Please select a week</option> 
+					    <option>1</option> 
+					    <option>2</option> 
+					    <option>3</option> 
+					    <option>4</option> 
+				    </select>
 
-					<select name="groupSelect" class="browser-default">
-						<option value="" disabled selected>Please select a group</option>
-						<option>All</option>
-
+				    <select name="groupSelect" class="browser-default">
+			            <option value="" disabled selected>Please select a group</option>
+		                <option>All</option>
 						<?php 
-						foreach($connection->query("Select * from tblGROUP") as $row) {?>
 
-						<option value = <?php echo $row['GroupID'] ?>>
-							<span>
-								<?php 
-								echo $row['GroupName'];
-								?>
-							</span>
-						</br>
-						</option>
+			      		foreach($connection->query("Select * from tblGROUP") as $row) {?>
+			           		<option value = <?php echo $row['GroupID'] ?>>
+				                <span>
+				                    <?php 
+				                        echo $row['GroupName'];
+				                    ?>
+				                </span>
+			                    </br>
+		                    </option>
+		                <?php }?>
+			        	?>
+			        </select>
 
-						<?php }?>
-						?>
-
-					</select>
-					<!-- <input name = "formSubmit" type="submit" value="Select View"> -->
-					<button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Select View</button>
+				    </br><!-- <input name = "formSubmit" type="submit" value="Select View"> -->
+				    <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Select View</button>
 				</form>
-	      	</div>
-		
-	      	<div class="col s9">
-	      		<table style="width:80%" class="bordered striped hoverable">
+
+				<?php  
+				include ('database.php');
+
+				if(isset($_POST['formSubmit'])) 
+				{ ?>
+			</div>
+
+			<div class="col s9">
+	      		<table class="bordered striped">
 					<thead>
 						<tr>
 							<th data-field="name">Name</th>
@@ -286,40 +291,73 @@
 				<?php }
 				?>
 	      	</div>
-		</div>
-
-		
+	    </div>
+		<?php 
+		}?>
 		<!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
-	</body>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+    </body>
 </html>
-
-
 
 <?php 
 function week_range($date) {
-	$ts = strtotime($date);
-	$start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
-	return array(date('Y.m.d', $start), 
-		date('Y.m.d', strtotime('next saturday', $start)));
+  $ts = strtotime($date);
+  $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
+  return array(date('Y.m.d', $start), 
+  	date('Y.m.d', strtotime('next saturday', $start)));
 }
+
+
 function sumFormat($time) {
-	$timeDisplay = '';
-	$minPhrase = ' min ';
-	if($time > 3600){
-		$hours = abs($time/3600% 24);
-		$time = $time - ($hours * 3600);
-		$timeDisplay .= $hours . ' hrs ';
-	} 
-	if($time >= 60){
-		$minutes = abs($time/60 % 60);
-		$time = $time - ($minutes * 60);
-		$timeDisplay .= $minutes . ' min ';
-	}
-	if ($time <60) {
-		$seconds = $time;
-		$timeDisplay .= $seconds . ' s ';
-	}
-	return $timeDisplay;
+ 		$timeDisplay = '';
+ 		$minPhrase = ' min ';
+		 if($time > 3600){
+			$hours = abs($time/3600% 24);
+			$time = $time - ($hours * 3600);
+
+			$timeDisplay .= $hours . ' hrs ';
+		} 
+		
+		if($time >= 60){
+			$minutes = abs($time/60 % 60);
+			$time = $time - ($minutes * 60);
+			$timeDisplay .= $minutes . ' min ';
+		}
+
+		if ($time <60) {
+		 	$seconds = $time;
+		 	$timeDisplay .= $seconds . ' s ';
+		 }
+		 return $timeDisplay;
+}
+
+function timeFormat($time) {
+ 		$timeDisplay = '';
+ 		$minPhrase = ' min ';
+		 if($time > 3600){
+			$hours = abs($time/3600% 24);
+			$hours = $hours + 2;
+			$time = $time - ($hours * 3600);
+			if ($hours > 24) {
+				$hours = $hours -24;
+			} else if ($hours > 12){
+				$hours  = $hours-12;
+			}
+
+			$timeDisplay .= $hours . ':';
+			$minPhrase = ' ';
+		} 
+		
+		if($time >= 60){
+			$minutes = abs($time/60 % 60);
+			$time = $time - ($minutes * 60);
+			$timeDisplay .= $minutes . $minPhrase;
+		}
+
+		if ($time <60) {
+		 	$seconds = $time;
+		 	$timeDisplay .= $seconds . ' s ';
+		 }
+		 return $timeDisplay;
 }
 ?>
