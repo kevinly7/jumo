@@ -291,6 +291,8 @@
 				<?php }
 				?>
 	      	</div>
+	      	<a class="waves-effect waves-light btn amber accent-3" href="violations.php" id="submit">Next</a>
+	      	<!-- <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Next</button> -->
 	    </div>
 		<?php 
 		}?>
