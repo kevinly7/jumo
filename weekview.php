@@ -58,6 +58,7 @@
 
 					<select name="groupSelect" class="browser-default">
 						<option value="" disabled selected>Please select a group</option>
+						<option>All</option>
 
 						<?php 
 						foreach($connection->query("Select * from tblGROUP") as $row) {?>
@@ -129,6 +130,12 @@
 						$weekHours = 0;
 						$weekArray = array();
 						$sumArray = array();
+						$groupQuery = "AND '$endday' AND (p.GroupID = $group)";
+
+						if($group == 'All') {
+							$groupQuery = '';
+						}
+
 						foreach($connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
 							from tblPRACTICE p
 							join tblPRACTICE_TYPE pt
@@ -139,7 +146,7 @@
 							on pp.PracticeID = p.PracticeID
 							join tblPLAYER pl
 							on pp.PlayerID = pl.PlayerID
-							WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)
+							WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' $groupQuery
 							ORDER BY DateName ASC") as $row) { 
 							$name = $row['PlayerName'];
 							$timestamp = strtotime($row['DateName']);
@@ -240,7 +247,7 @@
 												
 												if (($startPiece > $practiceStart && $startPiece < $practiceEnd) ||
 													($endPiece > $practiceStart && $endPiece < $practiceEnd)) {
-													echo 'Violation: Not supposed to be practicing at this time' . '</br>';
+													echo 'Not supposed to be practicing at this time' . '</br>';
 												}
 												echo $correctStart . ' to ' . $endStart .'</br>';
 											}
@@ -264,7 +271,7 @@
 
 									<td><?php 
 										if ($daysPracticed > 3) {
-											echo 'Violaion: No Break Days' . '</br>';
+											echo 'No Break Days' . '</br>';
 										}
 										if ($weekHours > $hourLimit){
 											echo '<font color="red">' .sumFormat($weekHours) . '</font>';
