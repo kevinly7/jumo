@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 	<head lang="en">
@@ -32,7 +31,6 @@
 						$datearray = array();
 						foreach($connection->query("SELECT YEAR(dateName) AS 'year', MONTH(dateName) AS 'month' FROM tblDATE") as $row) {
 							if ($row['year'] != '0' && strlen($row['year']) > 0) { 
-
 								$datearray[$row['year'].$row['month']] = $row['year'] . ' ' . $row['month'];
 							}
 						}
@@ -62,7 +60,6 @@
 						<option value="" disabled selected>Please select a group</option>
 
 						<?php 
-
 						foreach($connection->query("Select * from tblGROUP") as $row) {?>
 
 						<option value = <?php echo $row['GroupID'] ?>>
@@ -101,7 +98,6 @@
 
 					<?php  
 					include ('database.php');
-
 					if(isset($_POST['formSubmit'])) 
 					{
 						$monthyear = $_POST['monthSelect'];
@@ -111,7 +107,6 @@
 						$nextmonth = $month+1;
 						$week = $_POST['weekSelect'];
 						$group = $_POST['groupSelect'];
-
 						if ($week == 1) {
 							$week = '01';
 						} else if ($week == 2) {
@@ -121,14 +116,11 @@
 						} else {
 							$week = '22';
 						}
-
 						$num_length = strlen((string)$month);
 						if($num_length < 2) {
 						// Pass
 							$month = '0'.$month;
 						} 
-
-
 						$date = $year.$month.$week;
 						$weekrange = week_range($date);
 						$startday = $weekrange[0];
@@ -137,7 +129,6 @@
 						$weekHours = 0;
 						$weekArray = array();
 						$sumArray = array();
-
 						foreach($connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
 							from tblPRACTICE p
 							join tblPRACTICE_TYPE pt
@@ -150,22 +141,17 @@
 							on pp.PlayerID = pl.PlayerID
 							WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)
 							ORDER BY DateName ASC") as $row) { 
-
 							$name = $row['PlayerName'];
-
 							$timestamp = strtotime($row['DateName']);
 							$dayOfWeek = date("w", $timestamp);
 							$startTime = strtotime($row['StartTime']);
 							$endTime = strtotime($row['EndTime']);
-
 							if(!array_key_exists($name, $weekArray)){
 								$weekArray[$name][$dayOfWeek] = array();
 							} 
-
 							if(!array_key_exists($name, $sumArray)){
 								$sumArray[$name][$dayOfWeek] = array();
 							} 
-
 							if (!array_key_exists($dayOfWeek, $weekArray[$name])) {
 								$dayInput = $startTime . ' ' . $endTime;
 								$weekArray[$name][$dayOfWeek][0] = $dayInput;
@@ -173,12 +159,10 @@
 								$size = sizeof($weekArray[$name][$dayOfWeek]);
 								$weekArray[$name][$dayOfWeek][$size] = $startTime . ' ' . $endTime;
 							} 
-
 							$diffValue = $endTime - $startTime;
 							if (!array_key_exists($dayOfWeek, $sumArray[$name]) || count($sumArray[$name][$dayOfWeek]) == 0) {			
 								$sumArray[$name][$dayOfWeek][0] = $diffValue;
 							} else {
-
 								$sumArray[$name][$dayOfWeek][0] += $diffValue;
 							} 
 						} ?>
@@ -191,14 +175,13 @@
 							$dayLimit = 14400;
 							$dayHours = array();
 							$daysPracticed = 0;
-
 							foreach ($weekArray as $key => $value) {
-								$firsttime = true;?>
+								$firsttime = true;
+								$weekHours = 0;?>
 								<tr>
 									<td><?php echo $key ?></td>
 									<?php 
 									foreach ($value as $dayKey => $timesArray) { 
-
 										if ($firsttime == true) {
 											for ($f = 0; $f < ($dayKey); $f++) { ?>
 												<td>No Practice</td>
@@ -213,14 +196,12 @@
 												<td>No Practice</td>
 											<?php }
 										}
-
 										$dayTracker[0] = $dayKey;
 										if($dayTracker[0] != -1) {
 											if(!array_key_exists($dayTracker[0], $dayHours)){
 												$dayHours[$dayTracker[0]] = 0;
 											} 
 										}
-
 										?>
 										<td>
 											<?php 
@@ -228,37 +209,30 @@
 												$timePieces = explode(' ', $timeValue);
 												$startPiece = $timePieces[0];
 												$endPiece = $timePieces[1];
-
 												$difference = $sumArray[$key][$dayKey][0];
 												$dayDifference = $difference;
 												$diffDisplay = '';
 												$hours = '';
 												$minutes = '';
 												$seconds = '';
-
 												if ($dayTracker[0] != -1) {
 													$weekDay = $dayTracker[0];
-
 													$dayHours[$weekDay] = $dayHours[$weekDay] + $difference; 
 												}
-
 												if($difference > 3600){
 													$hours = abs($difference/3600 %24);
 													$difference = $difference - ($hours * 3600);
 													$diffDisplay .= $hours . ' hrs ';
 												} 
-
 												if($difference >= 60){
 													$minutes = abs($difference/60%60);
 													$difference = $difference - ($minutes * 60);
 													$diffDisplay .= $minutes . ' min ';
 												}
-
 												if ($difference <60) {
 													$seconds = $difference;
 													$diffDisplay .= $seconds . ' s ';
 												} 	
-
 												$correctStart = date('h:i:s A', $startPiece);
 												$endStart = date('h:i:s A', $endPiece);
 												$practiceStart = strtotime('12:00:00 AM');
@@ -268,10 +242,8 @@
 													($endPiece > $practiceStart && $endPiece < $practiceEnd)) {
 													echo 'Violation: Not supposed to be practicing at this time' . '</br>';
 												}
-
 												echo $correctStart . ' to ' . $endStart .'</br>';
 											}
-
 											$weekHours += $dayDifference;
 											$daysPracticed = count($sumArray[$key]);
 											if ($dayDifference > $dayLimit){
@@ -283,7 +255,6 @@
 										</td> 
 
 									<?php }
-
 									if($dayTracker[0] != -1 && (7 - $dayTracker[0]) > 1) {
 										for ($j= 0; $j < (7-$dayTracker[0])-1; $j++) { ?>
 										<td>No Practice</td>
@@ -325,29 +296,23 @@ function week_range($date) {
 	return array(date('Y.m.d', $start), 
 		date('Y.m.d', strtotime('next saturday', $start)));
 }
-
-
 function sumFormat($time) {
 	$timeDisplay = '';
 	$minPhrase = ' min ';
 	if($time > 3600){
 		$hours = abs($time/3600% 24);
 		$time = $time - ($hours * 3600);
-
 		$timeDisplay .= $hours . ' hrs ';
 	} 
-
 	if($time >= 60){
 		$minutes = abs($time/60 % 60);
 		$time = $time - ($minutes * 60);
 		$timeDisplay .= $minutes . ' min ';
 	}
-
 	if ($time <60) {
 		$seconds = $time;
 		$timeDisplay .= $seconds . ' s ';
 	}
 	return $timeDisplay;
 }
-
 ?>
