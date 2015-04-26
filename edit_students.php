@@ -90,7 +90,7 @@ if (isset($_GET['p2'])){
             </div>
 
             <a href="settings.php" class="waves-effect waves-light amber accent-3 white-text btn">Create a Group</a>
-            <a href="month_view.html" class="waves-effect waves-light amber accent-3 white-text btn">Submit (go to month)</a>
+            <a href="weekview.php" class="waves-effect waves-light amber accent-3 white-text btn">Submit (go to week)</a>
 
         <?php
 
