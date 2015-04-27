@@ -80,7 +80,7 @@
 	 </form>
 
 
-<form action="coach_review_update.php">
+<form action="coach_review_update.php" method="POST">
 <table style="width:80%">
   <tr>
   	<td>Name</td>
@@ -202,6 +202,7 @@ $dayCount = 0;
 ?>
 	<input type="submit" value = "Submit">
 	</form>
+	
     </body>
 </html>
 

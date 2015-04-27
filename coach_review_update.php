@@ -1,11 +1,12 @@
 <?php  
 include ('database.php');
-$groupID = $_GET['groupID'];
-$dateID = $_GET['dateID'];
-$practiceID = $_GET['practiceID'];
-$startTime = $_GET['startTime'];
-$endTime = $_GET['endTime'];
-$playerID = $_GET['playerID'];
+if(isset($_POST['groupID'])) {
+$groupID = $_POST['groupID'];
+$dateID = $_POST['dateID'];
+$practiceID = $_POST['practiceID'];
+$startTime = $_POST['startTime'];
+$endTime = $_POST['endTime'];
+$playerID = $_POST['playerID'];
 $statement = $connection->prepare('DELETE From tblPLAYER_PRACTICE Where PracticeID = :practiceID AND PlayerID = :playerID');
 $statement2 = $connection->prepare ("INSERT Into tblPRACTICE(DateID, GroupID, PracticeTypeID, StartTime, EndTime)  Values(:dateID, :groupID, :practiceTypeID, :startTime, :endTime)");
 //$statement = $connection->prepare ("UPDATE tblPRACTICE SET startTime = :startTime, endTime = :endTime WHERE PracticeID = :practiceID");
@@ -18,6 +19,8 @@ $statement3 = $connection->prepare ("INSERT INTO tblPLAYER_PRACTICE (PlayerID, P
 
 				$statement3 -> execute(array(':playerid' => $playerID, 
 				':practiceid' => $practiceid['PracticeID']));
-
-			
+echo "practice times updated!";
+} else {
+	echo "something was not set";
+}
 ?>

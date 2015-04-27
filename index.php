@@ -76,6 +76,7 @@
         </div>
 		<?php include("login.php")?>
 
+
         <!-- description section -->
         <div class="container">
             <div class="section">
@@ -120,7 +121,6 @@
 
             </div>
         </div>
-
         <footer class="page-footer purple darken-4">
             <div class="container">
                 <div class="row">
