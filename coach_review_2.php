@@ -8,7 +8,7 @@
 
     </head>
     <body>
-	<form action = "weekview.php" method = "POST">
+	<form action = "" method = "POST">
         <h2>Enter name of subgroup: </h2>
         <select name="monthSelect">
             <option></option>
@@ -187,12 +187,13 @@ $weekArray = array();
 	} 
 
 	if (!array_key_exists($dayOfWeek, $weekArray[$name])) {
-		$dayInput = timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay;
+		//'<input type = "text" name="startTime" value="timeFormat($startTime)"> to <input type="text" name="endTime" value="timeFormat($endTime)"> </br>'
+		$dayInput = '<input type = "text" name="startTime" value="timeFormat($startTime)"> to <input type="text" name="endTime" value="timeFormat($endTime)"> </br>';
 		$weekArray[$name][$dayOfWeek][0] = $dayInput;
 
 	} else {
 		$size = sizeof($weekArray[$name][$dayOfWeek]);
-		$weekArray[$name][$dayOfWeek][$size] = timeFormat($startTime) . ' to ' . timeFormat($endTime) . '</br>' . $diffDisplay ;
+		$weekArray[$name][$dayOfWeek][$size] = '<input type = "text" name="startTime" value="timeFormat($startTime)"> to <input type="text" name="endTime" value="timeFormat($endTime)"> </br>';
 	} 
 
  } ?>
