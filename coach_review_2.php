@@ -188,12 +188,16 @@ $weekArray = array();
 
 	if (!array_key_exists($dayOfWeek, $weekArray[$name])) {
 		//'<input type = "text" name="startTime" value="timeFormat($startTime)"> to <input type="text" name="endTime" value="timeFormat($endTime)"> </br>'
-		$dayInput = '<input type = "text" name="startTime" value=' . $startTime . '> to <input type="text" name="endTime" value=' . $endTime . '> </br>';
+		$dayInput = /*'<input type="hidden" name="groupID" value='. $groupID.'>
+		<input type="hidden" name="dateID" value'.$dateID.'>
+		<input type="hidden" name="playerID" value='.$playerID.'>
+		<input type="hidden" name="practiceID" value='.$practiceID'.>*/
+		'<input type = "time" name="startTime" value=' . timeFormat($startTime) . '> to <input type="time" name="endTime" value=' . timeFormat($endTime) . '> </br>';
 		$weekArray[$name][$dayOfWeek][0] = $dayInput;
 
 	} else {
 		$size = sizeof($weekArray[$name][$dayOfWeek]);
-		$weekArray[$name][$dayOfWeek][$size] = '<input type = "text" name="startTime" value=' . timeFormat($startTime) . '> to <input type="text" name="endTime" value=' . timeFormat($endTime) . '> </br>';
+		$weekArray[$name][$dayOfWeek][$size] = '<input type = "time" name="startTime" value=' . timeFormat($startTime) . '> to <input type="time" name="endTime" value=' . timeFormat($endTime) . '> </br>';
 	} 
 
  } ?>
@@ -297,11 +301,11 @@ function timeFormat($time) {
 			$hours = abs($time/3600% 24);
 			$time = $time - ($hours * 3600);
 
-			if ($hours > 12){
-				$hours  = $hours-12;
+			if ($hours < 12){
+				$hours  = "0" . $hours;
 			}
 
-			$timeDisplay .= $hours + 2 . ':';
+			$timeDisplay .= $hours . ':';
 		} 
 		
 		if($time >= 60){
