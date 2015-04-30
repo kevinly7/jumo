@@ -188,12 +188,12 @@ $weekArray = array();
 
 	if (!array_key_exists($dayOfWeek, $weekArray[$name])) {
 		//'<input type = "text" name="startTime" value="timeFormat($startTime)"> to <input type="text" name="endTime" value="timeFormat($endTime)"> </br>'
-		$dayInput = '<input type = "text" name="startTime" value="timeFormat($startTime)"> to <input type="text" name="endTime" value="timeFormat($endTime)"> </br>';
+		$dayInput = '<input type = "text" name="startTime" value=' . timeFormat($startTime) . '> to <input type="text" name="endTime" value=' . timeFormat($endTime) . '> </br>';
 		$weekArray[$name][$dayOfWeek][0] = $dayInput;
 
 	} else {
 		$size = sizeof($weekArray[$name][$dayOfWeek]);
-		$weekArray[$name][$dayOfWeek][$size] = '<input type = "text" name="startTime" value="timeFormat($startTime)"> to <input type="text" name="endTime" value="timeFormat($endTime)"> </br>';
+		$weekArray[$name][$dayOfWeek][$size] = '<input type = "text" name="startTime" value=' . timeFormat($startTime) . '> to <input type="text" name="endTime" value=' . timeFormat($endTime) . '> </br>';
 	} 
 
  } ?>
