@@ -201,8 +201,12 @@ $practiceCounter = 0;
 	} else {
 		$size = sizeof($weekArray[$name][$dayOfWeek]);
 		$weekArray[$name][$dayOfWeek][$size] =
-		'<input type="checkbox" name="edit" value="edit">'.$practiceCounter.'</br>'.
-		'<input type = "time" name="startTime" value=' . timeFormat($startTime) . '> to <input type="time" name="endTime" value=' . timeFormat($endTime) . '> </br>';
+		'<input type="hidden" name=groupID'.$practiceCounter.' value='. $groupID.'>
+		<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
+		<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
+		<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
+		'<input type="checkbox" name=edit'.$practiceCounter.' value="edit">'.$practiceCounter.'</br>'.
+		'<input type = "time" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 	} 
 
  } ?>
@@ -273,7 +277,7 @@ $practiceCounter = 0;
   
 		</table>
 		<input type="hidden" name="length" value=<?php echo $practiceCounter ?>>
-		<input type="submit" value = "Submit">
+		<input type="submit" name = "formSubmit" value = "Submit">
 		</form>
 
 
@@ -307,7 +311,7 @@ function timeFormat($time) {
 			$hours = abs($time/3600% 24);
 			$time = $time - ($hours * 3600);
 
-			if ($hours < 12){
+			if ($hours < 10){
 				$hours  = "0" . $hours;
 			}
 
