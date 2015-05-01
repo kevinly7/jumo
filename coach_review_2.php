@@ -133,6 +133,7 @@ $endday = $weekrange[1];
 $dayCount = 0;
 $weekHours = 0;
 $weekArray = array();
+$practiceCounter = 0;
 
 	foreach($connection->query("Select p.DateID, p.GroupID, pl.PlayerID, p.PracticeID, p.StartTime, EndTime, PracticeTypeName, DateName, PlayerName
 		from tblPRACTICE p
@@ -162,6 +163,7 @@ $weekArray = array();
 		$playerID = $row['PlayerID'];
 		$dateID = $row['DateID'];
 		$groupID = $row['GroupID'];
+		$practiceCounter++;
 
 		 if($difference > 3600){
 
@@ -187,17 +189,20 @@ $weekArray = array();
 	} 
 
 	if (!array_key_exists($dayOfWeek, $weekArray[$name])) {
-		//'<input type = "text" name="startTime" value="timeFormat($startTime)"> to <input type="text" name="endTime" value="timeFormat($endTime)"> </br>'
-		$dayInput = /*'<input type="hidden" name="groupID" value='. $groupID.'>
-		<input type="hidden" name="dateID" value'.$dateID.'>
-		<input type="hidden" name="playerID" value='.$playerID.'>
-		<input type="hidden" name="practiceID" value='.$practiceID'.>*/
-		'<input type = "time" name="startTime" value=' . timeFormat($startTime) . '> to <input type="time" name="endTime" value=' . timeFormat($endTime) . '> </br>';
+		$dayInput = 
+		'<input type="hidden" name=groupID'.$practiceCounter.' value='. $groupID.'>
+		<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
+		<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
+		<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
+		'<input type="checkbox" name=edit'.$practiceCounter.' value="edit">'.$practiceCounter.'</br>'.
+		'<input type = "time" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 		$weekArray[$name][$dayOfWeek][0] = $dayInput;
 
 	} else {
 		$size = sizeof($weekArray[$name][$dayOfWeek]);
-		$weekArray[$name][$dayOfWeek][$size] = '<input type = "time" name="startTime" value=' . timeFormat($startTime) . '> to <input type="time" name="endTime" value=' . timeFormat($endTime) . '> </br>';
+		$weekArray[$name][$dayOfWeek][$size] =
+		'<input type="checkbox" name="edit" value="edit">'.$practiceCounter.'</br>'.
+		'<input type = "time" name="startTime" value=' . timeFormat($startTime) . '> to <input type="time" name="endTime" value=' . timeFormat($endTime) . '> </br>';
 	} 
 
  } ?>
@@ -267,6 +272,7 @@ $weekArray = array();
     <?php }?> 
   
 		</table>
+		<input type="hidden" name="length" value=<?php echo $practiceCounter ?>>
 		<input type="submit" value = "Submit">
 		</form>
 
