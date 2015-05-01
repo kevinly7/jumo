@@ -20,6 +20,7 @@ for($i = 1; $i < $length + 1; $i++) {
 	if(isset($_POST['edit' . $i])) {
 		$edit = $_POST['edit' . $i];
 		if($edit == 'edit') {
+			echo $startTime . ' to ' . $endTime;
 			$statement -> execute(array(':practiceID' =>$practiceID, ':playerID' =>$playerID));
 			$statement2 -> execute(array(':dateID' =>$dateID, ':groupID' => $groupID, ':practiceTypeID' => 1, ':startTime' => $startTime, ':endTime' => $endTime));
 			$query = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND DateID = $dateID AND StartTime = '$startTime'");
