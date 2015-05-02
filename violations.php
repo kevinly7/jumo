@@ -4,7 +4,8 @@
         <meta charset="UTF-8">
         <title></title>
         <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+  		<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     </head>
     <body>
