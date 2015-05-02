@@ -1,6 +1,6 @@
 <?php  
 include ('database.php');
-$txt_file    = file_get_contents('timelog2.txt');
+$txt_file    = file_get_contents('timelog3.txt');
 $rows        = explode("\n", $txt_file);
 array_shift($rows);
 $count = 0;
@@ -10,19 +10,23 @@ $count = 0;
    	VALUES (:playerid, :practiceid)");
    	$statement3 = $connection->prepare ("INSERT INTO tblDATE (DateName) 
    	VALUES (:datename)");
+	//Check for practice in database
+	$statement4 = $connection->prepare ("SELECT PracticeID FROM tblPRACTICE WHERE GroupID = :groupid and DateID = :dateid and StartTime = :starttime");
 $count = 0;
 $practiceArray = array();
 foreach($rows as $row => $data)
 {
+	$row_data = explode(' ', $data);
+
 	$day = $row_data[1];
 	$month = $row_data[2];
 	$year = $row_data[3];
 	$num_length = strlen((string)$month);
+	
 	if ($num_length < 2){
 		$month = '0'.$month;
 	}
 
-	$row_data = explode(' ', $data);
 	$date = $year.$month.$day;
 
 $datequery = $connection->query("Select DateID from tblDATE where DateName = '$date'");
@@ -47,39 +51,42 @@ $dateid = $dateids['DateID'];
 		$practiceArray[$groupID][$size] = $row_data[0];
 		
 	
-	if ($size % 2 == 1 ) {
-		$begin = $practiceArray[$groupID][$size-1];
-		$end = $practiceArray[$groupID][$size];
+		if ($size % 2 == 1 ) {
+			$begin = $practiceArray[$groupID][$size-1];
+			$end = $practiceArray[$groupID][$size];
 
 
-		$practicequery = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$begin' ");
-		$practicequery->execute();
+			//$practicequery = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$begin' ");
+			$statement4->execute(array('groupid' => $groupID, 'dateid' => $dateid, 'starttime' => $begin));
+			$rowNumber = $statement4->fetch(PDO::FETCH_NUM);
+			//$practicequery = $statement4->fetchAll();
+			//$practicequery->execute();
 
-		if($practicequery->rowCount() < 1)
-		{
-		    // row exists. do whatever you want to do.
-		  	
-			$statement -> execute(array(':dateid' => $dateid, 
-			':groupid' => $groupID, 
-			':practicetypeid' => 1, 
-			':starttime' => $begin,
-			':endtime' => $end));
+			if($rowNumber[0] < 1)
+			{
+				// row exists. do whatever you want to do.
+				
+				$statement -> execute(array(':dateid' => $dateid, 
+				':groupid' => $groupID, 
+				':practicetypeid' => 1, 
+				':starttime' => $begin,
+				':endtime' => $end));
 
-			$query = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$begin' ");
-			$practiceid = $query->fetch(PDO::FETCH_ASSOC);
+				$query = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$begin' ");
+				$practiceid = $query->fetch(PDO::FETCH_ASSOC);
 
 
-			foreach($connection->query("Select * from tblPLAYER_GROUP pg WHERE pg.GroupID = $groupID") as $row) {
-				$statement2 -> execute(array(':playerid' => $row['PlayerID'], 
-				':practiceid' => $practiceid['PracticeID']));
+				foreach($connection->query("Select * from tblPLAYER_GROUP pg WHERE pg.GroupID = $groupID") as $row) {
+					$statement2 -> execute(array(':playerid' => $row['PlayerID'], 
+					':practiceid' => $practiceid['PracticeID']));
 
-			}
+				}
 
-			echo var_dump($practiceArray);
+				echo var_dump($practiceArray);
+
+			} 
 
 		} 
-
-	} 
 		
 	
 	
