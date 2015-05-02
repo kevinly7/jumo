@@ -242,6 +242,8 @@
 						    </tbody>
 					    <?php }?>   
 				</table>
+				<br>
+				<button class="btn waves-effect waves-light amber accent-3 white-text right" type="submit" id="submitGroup" name="formSubmit">Submit</button>
 				<?php }
 				?>
 			</div>

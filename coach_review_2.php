@@ -197,7 +197,8 @@
 									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
 									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
-									'<input type="checkbox" name=edit'.$practiceCounter.' value="edit">'.$practiceCounter.'</br>'.
+									// <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
+									'<input type="checkbox" class="filled-in browser-default" checked="checked" name=edit'.$practiceCounter.' value="edit">'.$practiceCounter.'</br>'.
 									'<input type = "time" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 									$weekArray[$name][$dayOfWeek][0] = $dayInput;
 
@@ -208,7 +209,7 @@
 									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
 									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
-									'<input type="checkbox" name=edit'.$practiceCounter.' value="edit">'.$practiceCounter.'</br>'.
+									'<input type="checkbox" class="filled-in browser-default" checked="checked" name=edit'.$practiceCounter.' value="edit">'.$practiceCounter.'</br>'.
 									'<input type = "time" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 								} 
 
@@ -267,8 +268,10 @@
 						    	</tr>
 					    	<?php }?> 
 					</table>
+					<br>
 					<input type="hidden" name="length" value=<?php echo $practiceCounter ?>>
-					<input type="submit" name = "formSubmit" value = "Submit">
+					<!-- <input type="submit" name = "formSubmit" value = "Submit"> -->
+					<button class="btn waves-effect waves-light amber accent-3 white-text right" type="submit" id="submitGroup" name="formSubmit">Submit</button>
 				</form>
 				<?php 
 				echo var_dump($weekArray); 
