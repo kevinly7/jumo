@@ -11,7 +11,7 @@
     <body>
         <!-- header -->
         <nav class="purple darken-4">
-            <div class="nav-wrapper container">
+            <div class="nav-wrapper">
                 <a href="weekview.php" class="brand-logo white-text">Jumo</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="#"><i class="mdi-action-settings"></i></a></li>
@@ -75,5 +75,8 @@
 
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="js/materialize.js"></script>
+        <script src="js/init.js"></script>
     </body>
 </html>
