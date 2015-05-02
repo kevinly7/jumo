@@ -38,7 +38,6 @@
 						$datearray = array();
 						foreach($connection->query("SELECT YEAR(dateName) AS 'year', MONTH(dateName) AS 'month' FROM tblDATE") as $row) {
 							if ($row['year'] != '0' && strlen($row['year']) > 0) { 
-								
 						 		$datearray[$row['year'].$row['month']] = $row['year'] . ' ' . $row['month'];
 							}
 						}
@@ -157,7 +156,7 @@
 							$groupQuery = '';
 						}
 
-						foreach($connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
+						foreach($connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName, p.PracticeTypeID
 							from tblPRACTICE p
 							join tblPRACTICE_TYPE pt
 							on p.PracticeTypeID = pt.PracticeTypeID
@@ -174,6 +173,7 @@
 							$dayOfWeek = date("w", $timestamp);
 							$startTime = strtotime($row['StartTime']);
 							$endTime = strtotime($row['EndTime']);
+							$practiceTypeID = $row['PracticeTypeID'];
 							if(!array_key_exists($name, $weekArray)){
 								$weekArray[$name][$dayOfWeek] = array();
 							} 
@@ -188,6 +188,9 @@
 								$weekArray[$name][$dayOfWeek][$size] = $startTime . ' ' . $endTime;
 							} 
 							$diffValue = $endTime - $startTime;
+							if ($practiceTypeID == 2){
+								$diffValue = 10800;
+							}
 							if (!array_key_exists($dayOfWeek, $sumArray[$name]) || count($sumArray[$name][$dayOfWeek]) == 0) {			
 								$sumArray[$name][$dayOfWeek][0] = $diffValue;
 							} else {
