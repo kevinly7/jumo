@@ -27,7 +27,7 @@ if(isset($_POST["netid"]) and isset($_POST["password"])) {
 			} 
 			if($row["UserTypeName"] == "Coach") {
 				if($row["UserPassword"] == $password) {
-					header("Location: coach_review.php");
+					header("Location: coach_review_2.php");
 					die();
 				} else { ?>
 					<script>
