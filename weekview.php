@@ -66,7 +66,8 @@
 					    <option>Week 1</option> 
 					    <option>Week 2</option> 
 					    <option>Week 3</option> 
-					    <option>Week 4</option> 
+					    <option>Week 4</option>
+					    <option>Week 5</option> 
 				    </select>
 				    <?php $groupArray = array();?>
 				    <select name="groupSelect" class="browser-default">
@@ -133,8 +134,11 @@
 							$week = '08';
 						} else if ($week == 'Week 3'){
 							$week = '15';
-						} else {
+						} else if ($week == 'Week 4') {
 							$week = '22';
+						}
+						else {
+							$week = '29';
 						}
 						$num_length = strlen((string)$month);
 						if($num_length < 2) {
