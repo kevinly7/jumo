@@ -5,9 +5,9 @@
         <title></title>
 
         <!-- Compiled and minified CSS -->
-  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+  		<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
   		<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
     </head>
     <body>
     	<!-- header -->
@@ -39,11 +39,16 @@
 							}
 						}
 						foreach ($datearray as $value) {
+							$mpieces = explode(" ", $value);
+							$year1 = $mpieces[0];
+							$month2 = $mpieces[1];
+							$dateObj   = DateTime::createFromFormat('!m', $month2);
+							$monthName = $dateObj->format('F');
 						 	?>
 						    <option>
 					            <span>
 					                <?php 
-					                echo  $value;
+					                	echo  $year1 . ' ' . $monthName;
 					                ?>
 					            </span>
 					            </br>
@@ -58,15 +63,18 @@
 					    <option>3</option> 
 					    <option>4</option> 
 				    </select>
+				    <?php $groupArray = array();?>
 
 				    <select name="groupSelect" class="browser-default">
 			            <option value="" >Please select a group</option>
+			            <!--<option>All</option>-->
 						<?php 
 
 				      	foreach($connection->query("Select * from tblGROUP") as $row) {?>
 				            <option value = <?php echo $row['GroupID'] ?>>
 					            <span>
 				                    <?php 
+				                    	$groupArray[$row['GroupID']] = $row['GroupName'];
 				                        echo $row['GroupName'];
 				                    ?>
 					            </span>
@@ -106,7 +114,8 @@
 							$monthyear = $_POST['monthSelect'];
 							$pieces = explode(" ", $monthyear);
 							$year = $pieces[0];
-							$month = $pieces[1];
+							$month3 = $pieces[1];
+							$month = date('m',strtotime($month3));
 							$nextmonth = $month+1;
 							$week = $_POST['weekSelect'];
 							$group = $_POST['groupSelect'];
@@ -131,11 +140,18 @@
 							$date = $year.$month.$week;
 							$weekrange = week_range($date);
 							$startday = $weekrange[0];
-							$endday = $weekrange[1];
-							$dayCount = 0;
+							$endday = $weekrange[1];?>
+							<p class = "viewTitle"> <?php echo "Checking practices from " . $groupArray[$group] . ' ' . $startday . ' to ' . $endday; ?> </p>
+
+							<?php $dayCount = 0;
 							$weekHours = 0;
 							$weekArray = array();
+							$sumArray = array();
+							//$groupQuery = "AND '$endday' AND (p.GroupID = $group)";
 							$practiceCounter = 0;
+							if($group == 'All') {
+								$groupQuery = '';
+							}
 
 							foreach($connection->query("Select p.DateID, p.GroupID, pl.PlayerID, p.PracticeID, p.StartTime, EndTime, PracticeTypeName, DateName, PlayerName
 								from tblPRACTICE p
@@ -147,7 +163,7 @@
 								on pp.PracticeID = p.PracticeID
 								join tblPLAYER pl
 								on pp.PlayerID = pl.PlayerID
-								WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND (p.GroupID = $group)
+								WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND p.GroupID = $group
 								ORDER BY DateName ASC") as $row) { 
 
 								$timestamp = strtotime($row['DateName']);
@@ -196,8 +212,7 @@
 									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
 									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
-									// <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
-									'<input type="checkbox" class="filled-in browser-default" checked="checked" name=edit'.$practiceCounter.' value="edit">'.$practiceCounter.'</br>'.
+									'<input type="checkbox" class="filled-in browser-default" name=edit'.$practiceCounter.' value="edit">'.$practiceCounter.'</br>'.
 									'<input type = "time" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 									$weekArray[$name][$dayOfWeek][0] = $dayInput;
 
@@ -208,7 +223,8 @@
 									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
 									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
-									'<input type="checkbox" class="filled-in browser-default" checked="checked" name=edit'.$practiceCounter.' value="edit">'.$practiceCounter.'</br>'.
+									'<input type="checkbox" class="filled-in browser-default" name=edit'.$practiceCounter.' value="edit">'.$practiceCounter.' edit'.'</br>'.
+									'<input type="checkbox" class="filled-in browser-default" name=delete'.$practiceCounter.' value="edit">'.$practiceCounter.' delete'.'</br>'.
 									'<input type = "time" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 								} 
 
@@ -273,16 +289,16 @@
 					<button class="btn waves-effect waves-light amber accent-3 white-text right" type="submit" id="submitGroup" name="formSubmit">Submit</button>
 				</form>
 				<?php 
-				echo var_dump($weekArray); 
+				//echo var_dump($weekArray); 
 				}?>
 			</div>
 		</div>
 
 		<!--  Scripts-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="js/materialize.js"></script>
-        <script src="js/init.js"></script>
+        <script src="js/init.js"></script>-->
     </body>
 </html>
 
@@ -304,8 +320,11 @@ function timeFormat($time) {
 
 			$hours = abs($time/3600% 24);
 			$hours = $hours + 2;
+			echo $hours." ";
 			$time = $time - ($hours * 3600);
-
+			if ($hours > 23) {
+				$hours = $hours -24;
+			}
 			if ($hours < 10){
 				$hours  = "0" . $hours;
 			}
