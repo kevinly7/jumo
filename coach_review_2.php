@@ -331,7 +331,7 @@ function timeFormat($time) {
 		 if($time > 3600){
 
 			$hours = abs($time/3600% 24);
-			$hours = $hours + 2;
+			//$hours = $hours + 2;
 			//echo $hours." ";
 			$time = $time - ($hours * 3600);
 			if ($hours > 23) {
