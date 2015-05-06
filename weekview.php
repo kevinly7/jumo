@@ -120,6 +120,7 @@
 					include ('database.php');
 					if(isset($_POST['formSubmit'])) 
 					{
+						$monthyear = $_POST['monthSelect'];
 						$pieces = explode(" ", $monthyear);
 						$year = $pieces[0];
 						$month3 = $pieces[1];
