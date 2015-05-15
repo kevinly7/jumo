@@ -95,7 +95,7 @@
 
 				<?php  
 				include ('database.php');
-
+				echo "HELLO";
 				if(isset($_POST['formSubmit'])) 
 				{ ?>
 			</div>
@@ -117,9 +117,7 @@
 					</thead>
 
 					<?php  
-					include ('database.php');
-					if(isset($_POST['formSubmit'])) 
-					{
+					
 						$monthyear = $_POST['monthSelect'];
 						$pieces = explode(" ", $monthyear);
 						$year = $pieces[0];
@@ -308,13 +306,14 @@
 										} ?>
 									</td>
 								</tr>
-							<?php }?> 
+							<?php }
+
+							?> 
 						</tbody>
 				</table>
 				<br>
 				<a class="waves-effect waves-light btn amber accent-3 right" href="violations.php" id="submit">Next</a>
-				<?php }
-				?>
+			
 	      	</div>
 	      	
 	      	<!-- <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Next</button> -->
