@@ -95,7 +95,7 @@
 
 				<?php  
 				include ('database.php');
-
+				echo "HELLO";
 				if(isset($_POST['formSubmit'])) 
 				{ ?>
 			</div>
@@ -117,9 +117,7 @@
 					</thead>
 
 					<?php  
-					include ('database.php');
-					if(isset($_POST['formSubmit'])) 
-					{
+					
 						$monthyear = $_POST['monthSelect'];
 						$pieces = explode(" ", $monthyear);
 						$year = $pieces[0];
@@ -263,12 +261,11 @@
 												if($difference >= 60){
 													$minutes = abs($difference/60%60);
 													$difference = $difference - ($minutes * 60);
+													if ($difference > 30) {
+														$minutes += 1;
+													}
 													$diffDisplay .= $minutes . ' min ';
 												}
-												if ($difference <60) {
-													$seconds = $difference;
-													$diffDisplay .= $seconds . ' s ';
-												} 	
 												$correctStart = date('h:i:s A', $startPiece);
 												$endStart = date('h:i:s A', $endPiece);
 												$practiceStart = strtotime('12:00:00 AM');
@@ -309,13 +306,14 @@
 										} ?>
 									</td>
 								</tr>
-							<?php }?> 
+							<?php }
+
+							?> 
 						</tbody>
 				</table>
 				<br>
 				<a class="waves-effect waves-light btn amber accent-3 right" href="violations.php" id="submit">Next</a>
-				<?php }
-				?>
+			
 	      	</div>
 	      	
 	      	<!-- <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Next</button> -->
@@ -352,13 +350,11 @@ function sumFormat($time) {
 		if($time >= 60){
 			$minutes = abs($time/60 % 60);
 			$time = $time - ($minutes * 60);
+			if($time > 30){
+				$minutes += 1;
+			}
 			$timeDisplay .= $minutes . ' min ';
 		}
-
-		if ($time <60) {
-		 	$seconds = $time;
-		 	$timeDisplay .= $seconds . ' s ';
-		 }
 		 return $timeDisplay;
 }
 
@@ -382,13 +378,11 @@ function timeFormat($time) {
 		if($time >= 60){
 			$minutes = abs($time/60 % 60);
 			$time = $time - ($minutes * 60);
+			if ($time > 30){
+				$minutes += 1;
+			}
 			$timeDisplay .= $minutes . $minPhrase;
 		}
-
-		if ($time <60) {
-		 	$seconds = $time;
-		 	$timeDisplay .= $seconds . ' s ';
-		 }
 		 return $timeDisplay;
 }
 ?>
