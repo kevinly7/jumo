@@ -263,12 +263,11 @@
 												if($difference >= 60){
 													$minutes = abs($difference/60%60);
 													$difference = $difference - ($minutes * 60);
+													if ($difference > 30) {
+														$minutes += 1;
+													}
 													$diffDisplay .= $minutes . ' min ';
 												}
-												if ($difference <60) {
-													$seconds = $difference;
-													$diffDisplay .= $seconds . ' s ';
-												} 	
 												$correctStart = date('h:i:s A', $startPiece);
 												$endStart = date('h:i:s A', $endPiece);
 												$practiceStart = strtotime('12:00:00 AM');
@@ -352,13 +351,11 @@ function sumFormat($time) {
 		if($time >= 60){
 			$minutes = abs($time/60 % 60);
 			$time = $time - ($minutes * 60);
+			if($time > 30){
+				$minutes += 1;
+			}
 			$timeDisplay .= $minutes . ' min ';
 		}
-
-		if ($time <60) {
-		 	$seconds = $time;
-		 	$timeDisplay .= $seconds . ' s ';
-		 }
 		 return $timeDisplay;
 }
 
@@ -382,13 +379,11 @@ function timeFormat($time) {
 		if($time >= 60){
 			$minutes = abs($time/60 % 60);
 			$time = $time - ($minutes * 60);
+			if ($time > 30){
+				$minutes += 1;
+			}
 			$timeDisplay .= $minutes . $minPhrase;
 		}
-
-		if ($time <60) {
-		 	$seconds = $time;
-		 	$timeDisplay .= $seconds . ' s ';
-		 }
 		 return $timeDisplay;
 }
 ?>
