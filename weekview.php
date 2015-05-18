@@ -1,5 +1,11 @@
+
+<?php
+include ('database.php'); 
+?>
 <!DOCTYPE html>
+
 <html>
+
     <head lang="en">
         <meta charset="UTF-8">
         <title></title>
@@ -35,7 +41,7 @@
 			            <option value="" >Please select a month</option>
 
 						<?php 
-						include ('database.php');
+						
 						$datearray = array();
 						foreach($connection->query("SELECT YEAR(dateName) AS 'year', MONTH(dateName) AS 'month' FROM tblDATE") as $row) {
 							if ($row['year'] != '0' && strlen($row['year']) > 0) { 
@@ -92,42 +98,78 @@
 				    </br><!-- <input name = "formSubmit" type="submit" value="Select View"> -->
 				    <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Select View</button>
 				</form>
-
+				<div class="col s9">
+		      		<table class="bordered striped">
+						<thead>
+							<tr>
+								<th data-field="name">Name</th>
+				              	<th data-field="sun">Sunday</th>
+				              	<th data-field="mon">Monday</th>
+				              	<th data-field="tue">Tuesday</th>
+				              	<th data-field="wed">Wednesday</th>
+				              	<th data-field="thu">Thursday</th>
+				              	<th data-field="fri">Friday</th>
+				              	<th data-field="sat">Saturday</th>
+				              	<th data-field="tot">Total Hours</th>
+							</tr>
+						</thead>
 				<?php  
-				include ('database.php');
-				echo "HELLO";
 				if(isset($_POST['formSubmit'])) 
 				{ ?>
-			</div>
+				</div>
+						<?php  
+						
+							$monthyear = $_POST['monthSelect'];
+							$pieces = explode(" ", $monthyear);
+							$year = $pieces[0];
+							$month3 = $pieces[1];
+							$month = date('m',strtotime($month3));
+						
+							
+							$week = $_POST['weekSelect'];
+							$group = $_POST['groupSelect'];
+							printWeek($year, $month, $week, $group, $groupArray);
+							
+			} else {
+				date_default_timezone_set("America/Los_Angeles");
+				$year = date("Y");
+				$month = date("m");
 
-			<div class="col s9">
-	      		<table class="bordered striped">
-					<thead>
-						<tr>
-							<th data-field="name">Name</th>
-			              	<th data-field="sun">Sunday</th>
-			              	<th data-field="mon">Monday</th>
-			              	<th data-field="tue">Tuesday</th>
-			              	<th data-field="wed">Wednesday</th>
-			              	<th data-field="thu">Thursday</th>
-			              	<th data-field="fri">Friday</th>
-			              	<th data-field="sat">Saturday</th>
-			              	<th data-field="tot">Total Hours</th>
-						</tr>
-					</thead>
+				if ($month == 1) {
+					$month = 12;
+				} else {
+					$month -= 1;
+				}
+			
+				
+				$week = 'Week 1';
+				$group = 'All';
+				
+				printWeek($year, $month, $week, $group, $groupArray); 
+			}
 
-					<?php  
-					
-						$monthyear = $_POST['monthSelect'];
-						$pieces = explode(" ", $monthyear);
-						$year = $pieces[0];
-						$month3 = $pieces[1];
-						$month = date('m',strtotime($month3));
-					
-						$nextmonth = $month+1;
-						$week = $_POST['weekSelect'];
-						$group = $_POST['groupSelect'];
-						if ($week == 'Week 1') {
+		?>
+		<!--  Scripts-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="js/materialize.js"></script>
+        <script src="js/init.js"></script>
+    </body>
+</html>
+
+<?php 
+function week_range($date) {
+  $ts = strtotime($date);
+  $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
+  return array(date('Y.m.d', $start), 
+  	date('Y.m.d', strtotime('next saturday', $start)));
+}
+
+
+function printWeek($year, $month, $week, $group, $groupArray){
+	include ('database.php');
+	$nextmonth = $month+1;
+	if ($week == 'Week 1') {
 							$week = '01';
 						} else if ($week == 'Week 2') {
 							$week = '08';
@@ -147,8 +189,13 @@
 						$date = $year.$month.$week;
 						$weekrange = week_range($date);
 						$startday = $weekrange[0];
-						$endday = $weekrange[1]; ?>
-						<p class = "viewTitle"> <?php echo "Checking practices from " . $groupArray[$group] . '' . $startday . ' to ' . $endday; ?> </p>
+						$endday = $weekrange[1];
+						$groupDisplay = $group; 
+						if ($group != 'All'){
+							$groupDisplay = $groupArray[$group];
+						}
+						?>
+						<p class = "viewTitle"> <?php echo "Checking practices from " . $groupDisplay . ' ' . $startday . ' to ' . $endday; ?> </p>
 						<?php $dayCount = 0;
 						$weekHours = 0;
 						$weekArray = array();
@@ -307,7 +354,6 @@
 									</td>
 								</tr>
 							<?php }
-
 							?> 
 						</tbody>
 				</table>
@@ -318,23 +364,7 @@
 	      	
 	      	<!-- <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Next</button> -->
 	    </div>
-		<?php 
-		}?>
-		<!--  Scripts-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="js/materialize.js"></script>
-        <script src="js/init.js"></script>
-    </body>
-</html>
-
-<?php 
-function week_range($date) {
-  $ts = strtotime($date);
-  $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
-  return array(date('Y.m.d', $start), 
-  	date('Y.m.d', strtotime('next saturday', $start)));
-}
+<?php }
 
 
 function sumFormat($time) {
