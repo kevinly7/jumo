@@ -98,7 +98,12 @@ include ('database.php');
 				    </br><!-- <input name = "formSubmit" type="submit" value="Select View"> -->
 				    <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Select View</button>
 				</form>
-				<div class="col s9">
+		
+				<?php  
+				if(isset($_POST['formSubmit'])) 
+				{ ?>
+				</div>
+						<div class="col s9">
 		      		<table class="bordered striped">
 						<thead>
 							<tr>
@@ -113,10 +118,6 @@ include ('database.php');
 				              	<th data-field="tot">Total Hours</th>
 							</tr>
 						</thead>
-				<?php  
-				if(isset($_POST['formSubmit'])) 
-				{ ?>
-				</div>
 					<?php  
 					
 					$monthyear = $_POST['monthSelect'];
@@ -124,13 +125,31 @@ include ('database.php');
 					$year = $pieces[0];
 					$month3 = $pieces[1];
 					$month = date('m',strtotime($month3));
-				
+					
 					
 					$week = $_POST['weekSelect'];
 					$group = $_POST['groupSelect'];
 					printWeek($year, $month, $week, $group, $groupArray);
 							
-				} else {
+				} else { ?>
+				</div>
+				<div class="col s9">
+	      		<table class="bordered striped">
+					<thead>
+						<tr>
+							<th data-field="name">Name</th>
+			              	<th data-field="sun">Sunday</th>
+			              	<th data-field="mon">Monday</th>
+			              	<th data-field="tue">Tuesday</th>
+			              	<th data-field="wed">Wednesday</th>
+			              	<th data-field="thu">Thursday</th>
+			              	<th data-field="fri">Friday</th>
+			              	<th data-field="sat">Saturday</th>
+			              	<th data-field="tot">Total Hours</th>
+						</tr>
+					</thead>
+				<?php
+
 					date_default_timezone_set("America/Los_Angeles");
 					$year = date("Y");
 					$month = date("m");
