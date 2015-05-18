@@ -117,36 +117,36 @@ include ('database.php');
 				if(isset($_POST['formSubmit'])) 
 				{ ?>
 				</div>
-						<?php  
-						
-							$monthyear = $_POST['monthSelect'];
-							$pieces = explode(" ", $monthyear);
-							$year = $pieces[0];
-							$month3 = $pieces[1];
-							$month = date('m',strtotime($month3));
-						
+					<?php  
+					
+					$monthyear = $_POST['monthSelect'];
+					$pieces = explode(" ", $monthyear);
+					$year = $pieces[0];
+					$month3 = $pieces[1];
+					$month = date('m',strtotime($month3));
+				
+					
+					$week = $_POST['weekSelect'];
+					$group = $_POST['groupSelect'];
+					printWeek($year, $month, $week, $group, $groupArray);
 							
-							$week = $_POST['weekSelect'];
-							$group = $_POST['groupSelect'];
-							printWeek($year, $month, $week, $group, $groupArray);
-							
-			} else {
-				date_default_timezone_set("America/Los_Angeles");
-				$year = date("Y");
-				$month = date("m");
-
-				if ($month == 1) {
-					$month = 12;
 				} else {
-					$month -= 1;
+					date_default_timezone_set("America/Los_Angeles");
+					$year = date("Y");
+					$month = date("m");
+
+					if ($month == 1) {
+						$month = 12;
+					} else {
+						$month -= 1;
+					}
+				
+					
+					$week = 'Week 1';
+					$group = 'All';
+					
+					printWeek($year, $month, $week, $group, $groupArray); 
 				}
-			
-				
-				$week = 'Week 1';
-				$group = 'All';
-				
-				printWeek($year, $month, $week, $group, $groupArray); 
-			}
 
 		?>
 		<!--  Scripts-->
