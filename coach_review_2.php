@@ -212,9 +212,9 @@
 									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
 									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
-									'<input type="checkbox" class="filled-in browser-default" name=edit'.$practiceCounter.' onclick = "handleClick(this)" value='.$practiceCounter.'>Edit</br>'.
+									'<input type="checkbox" class="filled-in browser-default" name=edit'.$practiceCounter.' value='.$practiceCounter.'>Edit</br>'.
 									'<input type="checkbox" class="filled-in browser-default" name=delete'.$practiceCounter.' value="delete">Delete</br>'.
-									'<input type = "time" class='.$practiceCounter.' disabled = "true" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" disabled = "true" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
+									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 									$weekArray[$name][$dayOfWeek][0] = $dayInput;
 
 								} else {
@@ -224,9 +224,9 @@
 									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
 									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
-									'<input type="checkbox" class="filled-in browser-default" name=edit'.$practiceCounter.' onclick = "handleClick(this)" value='.$practiceCounter.'>Edit</br>'.
+									'<input type="checkbox" class="filled-in browser-default" name=edit'.$practiceCounter.' value='.$practiceCounter.'>Edit</br>'.
 									'<input type="checkbox" class="filled-in browser-default" name=delete'.$practiceCounter.' value="edit">Delete</br>'.
-									'<input type = "time" class='.$practiceCounter.' disabled = "true" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" disabled ="true" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
+									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 								} 
 
 					 		} ?><?php 
@@ -310,6 +310,13 @@
     				//alert(timeInput[i].disabled);
     			}
 			}
+			
+			function selectEdit(ti) {
+				var id = ti.className;
+				var checkBox = document.getElementsByName('edit'+id);
+				checkBox[0].checked = "checked";
+				console.log(id);
+			}			
         </script>
     </body>
 </html>
@@ -347,7 +354,11 @@ function timeFormat($time) {
 		if($time >= 60){
 			$minutes = abs($time/60 % 60);
 			$time = $time - ($minutes * 60);
-			$timeDisplay .= $minutes . '';
+			if($minutes < 10) {
+				$timeDisplay .= '0'. $minutes;
+			} else {
+				$timeDisplay .= $minutes . '';
+			}
 		}
 
 		if ($time <60) {
