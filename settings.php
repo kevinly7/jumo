@@ -10,6 +10,15 @@
     </head>
 
     <body>
+          <?php  
+        session_start();
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+            } else if ($_SESSION["newsession"]!="coach") {
+                echo "Please log in again.";
+            } else {
+
+    ?>
         <!-- header -->
         <nav class="purple darken-4">
             <div class="nav-wrapper">
@@ -72,6 +81,8 @@
     } else {
         echo "Please fill out all the fields";
     }
+
+}
     ?>
 
         <!-- Compiled and minified JavaScript -->

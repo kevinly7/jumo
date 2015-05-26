@@ -9,6 +9,15 @@
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     </head>
     <body>
+    	  <?php  
+        session_start();
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+            } else if ($_SESSION["newsession"]!="ica") {
+                echo "Please log in again.";
+            } else {
+
+    ?>
     	<!-- header -->
         <nav class="purple darken-4">
             <div class="nav-wrapper">
@@ -253,7 +262,7 @@
 		<?php 
 		} 
 
-
+	}
 		?>
 		<!--  Scripts-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>

@@ -10,15 +10,20 @@ if(isset($_POST["netid"]) and isset($_POST["password"])) {
 	$statement -> execute(array(':name' =>$netid));//, ':password' => $password));
 	$data = $statement->fetchAll();
 	if($data != null) {
+		session_start();
 		foreach($data as $row) {
 			//echo $row["UserName"];
 			//echo $row["UserPassword"];
 			if($row["UserTypeName"] == "ICA") {
 				if($row["UserPassword"] == $password) {
+
+					$_SESSION["newsession"]="ica";
 					header("Location: sport_selection.html");
 					die();
 					//echo "ICA";
-				} else { ?>
+				} else { 
+					$_SESSION["newsession"]="";
+					?>
 					<script>
 						alert("Password is incorrect")
 					</script>
@@ -28,8 +33,11 @@ if(isset($_POST["netid"]) and isset($_POST["password"])) {
 			if($row["UserTypeName"] == "Coach") {
 				if($row["UserPassword"] == $password) {
 					header("Location: coach_review_2.php");
+					$_SESSION["newsession"]="coach";
 					die();
-				} else { ?>
+				} else { 
+						$_SESSION["newsession"]="";
+					?>
 					<script>
 						alert("Password is incorrect")
 					</script>
