@@ -13,12 +13,12 @@
     </head>
     <body>
         <?php  
-        session_start();
+        /*session_start();
             if (!isset($_SESSION["newsession"])) {
                 echo "Please log in again.";
             } else if ($_SESSION["newsession"]!="ica") {
                 echo "Please log in again.";
-            } else {
+            } else { */
 
     ?>
 
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-  <?php } ?>
+  <?php //} ?>
         <!--  Scripts-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

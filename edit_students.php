@@ -10,12 +10,12 @@
     </head>
     <body>
           <?php  
-        session_start();
+      /*  session_start();
             if (!isset($_SESSION["newsession"])) {
                 echo "Please log in again.";
             } else if ($_SESSION["newsession"]!="coach") {
                 echo "Please log in again.";
-            } else {
+            } else { */
 
     ?>
         <!-- header -->
@@ -140,7 +140,7 @@
             }
         }
 
-    }
+  //  }
         ?>
 
 
