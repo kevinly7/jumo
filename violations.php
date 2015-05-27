@@ -7,6 +7,50 @@
   		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
   		<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+ 		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    	<script type="text/javascript">
+		$(function() {
+		    var startDate;
+		    var endDate;
+		    
+		    var selectCurrentWeek = function() {
+		        window.setTimeout(function () {
+		            $('.week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active')
+		        }, 1);
+		    }
+		    
+		    $('.week-picker').datepicker( {
+		        showOtherMonths: true,
+		        selectOtherMonths: true,
+		        onSelect: function(dateText, inst) { 
+		            var date = $(this).datepicker('getDate');
+		            startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
+		            endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
+		            var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+		            $('#startDate').val($.datepicker.formatDate( "yy-mm-dd", startDate, inst.settings ));
+		            $('#endDate').val($.datepicker.formatDate( "yy-mm-dd", endDate, inst.settings ));
+		            console.log($.datepicker.formatDate( "yy-mm-dd", startDate, inst.settings ));
+		            console.log($.datepicker.formatDate( "yy-mm-dd", endDate, inst.settings ))
+		            
+		            selectCurrentWeek();
+		        },
+		        beforeShowDay: function(date) {
+		            var cssClass = '';
+		            if(date >= startDate && date <= endDate)
+		                cssClass = 'ui-datepicker-current-day';
+		            return [true, cssClass];
+		        },
+		        onChangeMonthYear: function(year, month, inst) {
+		            selectCurrentWeek();
+		        }
+		    });
+		    
+		    $('.week-picker .ui-datepicker-calendar tr').on('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
+		    $('.week-picker .ui-datepicker-calendar tr').on('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
+		});
+		</script>
     </head>
     <body>
     	  <?php  
@@ -39,7 +83,12 @@
 					<br>
 					
 			        <h6><b>Filters</b></h6>	
-			        <br>			        
+			        <br>
+			        <div class="week-picker"></div>
+				    <br /><br />
+				    <!--<label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span><br />-->
+				    <input id ="startDate" type="date" name="startDate">Date<br>
+					<input id="endDate" type="date" name="endDate">Date<br>			        
 			        <select name="monthSelect" class="browser-default">
 			            <option value="" >Please select a month</option>
 			            
@@ -106,7 +155,7 @@
 					if(isset($_POST['formSubmit'])) 
 					{
 
-						$monthyear = $_POST['monthSelect'];
+						/*$monthyear = $_POST['monthSelect'];
 						$pieces = explode(" ", $monthyear);
 						$year = $pieces[0];
 						$month3 = $pieces[1];
@@ -131,9 +180,9 @@
 						} 
 
 						$date = $year.$month.$week;
-						$weekrange = week_range($date);
-						$startday = $weekrange[0];
-						$endday = $weekrange[1];
+						$weekrange = week_range($date);*/
+						$startday = $_POST["startDate"];//$weekrange[0];
+						$endday = $_POST["endDate"];//$weekrange[1];
 						$dayCount = 0;
 						$weekHours = 0;
 						$weekArray = array();
@@ -266,7 +315,7 @@
 		?>
 		<!--  Scripts-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <!--<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
     </body>
