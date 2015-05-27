@@ -91,11 +91,11 @@ include ('database.php');
 			        <h6><b>Filters</b></h6>	
 			        <br>
 			        <div class="week-picker"></div>
-				    <br /><br />
+				    <br />
 				    <!--<label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span><br />-->
-				    <input id ="startDate" type="date" name="startDate">Date<br>
-					<input id="endDate" type="date" name="endDate">Date<br>
-			        <select name="monthSelect" class="browser-default">
+				    Start Date<input id ="startDate" type="date" name="startDate"><br>
+					End Date<input id="endDate" type="date" name="endDate"><br>
+			        <!--<select name="monthSelect" class="browser-default">
 			            <option value="" >Please select a month</option>
 
 						<?php 
@@ -132,7 +132,7 @@ include ('database.php');
 					    <option>Week 3</option> 
 					    <option>Week 4</option>
 					    <option>Week 5</option> 
-				    </select>
+				    </select>-->
 				    <?php $groupArray = array();?>
 				    <select name="groupSelect" class="browser-default">
 			            <option value="" disabled selected>Please select a group</option>
