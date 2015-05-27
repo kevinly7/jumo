@@ -18,7 +18,7 @@ if(isset($_POST["netid"]) and isset($_POST["password"])) {
 				if($row["UserPassword"] == $password) {
 
 					$_SESSION["newsession"]="ica";
-					header("Location: sport_selection.html");
+					header("Location: sport_selection.php");
 					die();
 					//echo "ICA";
 				} else { 

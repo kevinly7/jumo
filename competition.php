@@ -25,7 +25,7 @@
                 <a href="weekview.php" class="brand-logo white-text">Jumo</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li>
-                    <li><a href="index.php">Logout</a></li>
+                    <li><a class = "logout" href="index.php">Logout</a></li>
                 </ul>
             </div>
         </nav>
@@ -179,5 +179,6 @@
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
+         <script src="js/logout.js"></script>
     </body>
 </html>  
