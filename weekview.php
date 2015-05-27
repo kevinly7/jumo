@@ -53,8 +53,8 @@ include ('database.php');
 		        }
 		    });
 		    
-		    $('.week-picker .ui-datepicker-calendar tr').live('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
-		    $('.week-picker .ui-datepicker-calendar tr').live('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
+		    $('.week-picker .ui-datepicker-calendar tr').on('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
+		    $('.week-picker .ui-datepicker-calendar tr').on('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
 		});
 		</script>
     </head>
@@ -92,7 +92,9 @@ include ('database.php');
 			        <br>
 			        <div class="week-picker"></div>
 				    <br /><br />
-				    <label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span><br />
+				    <!--<label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span><br />-->
+				    <input id ="startDate" type="date" name="startDate">Date<br>
+					<input id="endDate" type="date" name="endDate">Date<br>
 			        <select name="monthSelect" class="browser-default">
 			            <option value="" >Please select a month</option>
 
@@ -176,16 +178,20 @@ include ('database.php');
 						</thead>
 					<?php  
 					
-					$monthyear = $_POST['monthSelect'];
+					/*$monthyear = $_POST['monthSelect'];
 					$pieces = explode(" ", $monthyear);
 					$year = $pieces[0];
 					$month3 = $pieces[1];
 					$month = date('m',strtotime($month3));
 					
 					
-					$week = $_POST['weekSelect'];
+					$week = $_POST['weekSelect'];*/
+					$year = "";
+					$month = "";
+					$week = "";
 					$group = $_POST['groupSelect'];
-					printWeek($year, $month, $week, $group, $groupArray);
+					$default = true;
+					printWeek($year, $month, $week, $group, $groupArray, $default);
 							
 				} else { ?>
 				</div>
@@ -219,8 +225,8 @@ include ('database.php');
 					
 					$week = 'Week 1';
 					$group = 'All';
-					
-					printWeek($year, $month, $week, $group, $groupArray); 
+					$default = false;
+					printWeek($year, $month, $week, $group, $groupArray,$default); 
 				}
 			}
 		?>
@@ -240,7 +246,7 @@ function week_range($date) {
 }
 
 
-function printWeek($year, $month, $week, $group, $groupArray){
+function printWeek($year, $month, $week, $group, $groupArray, $default){
 	include ('database.php');
 	$nextmonth = $month+1;
 	if ($week == 'Week 1') {
@@ -262,8 +268,14 @@ function printWeek($year, $month, $week, $group, $groupArray){
 						} 
 						$date = $year.$month.$week;
 						$weekrange = week_range($date);
-						$startday = $weekrange[0];
-						$endday = $weekrange[1];
+						if($default) {
+							$startday = $_POST["startDate"];//$weekrange[0];
+							$endday = $_POST["endDate"];//$weekrange[1];
+						} else {
+							$startday = $weekrange[0];
+							$endday = $weekrange[1];
+						}
+						
 						$groupDisplay = $group; 
 						if ($group != 'All'){
 							$groupDisplay = $groupArray[$group];
