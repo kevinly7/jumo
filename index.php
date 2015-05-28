@@ -37,7 +37,7 @@
                     <br><br>
                     <h1 class="header center purple-text text-darken-4 brand-logo">Jumo</h1>
                     <div class="row center">
-                        <h5 class="header col s12 light">University of Washington Intercollegiate Athletics' student athlete logging system</h5>
+                        <!-- <h5 class="header col s12 light">University of Washington Intercollegiate Athletics' student athlete logging system</h5> -->
                     </div>
 
                     <div class="row right black-text">
