@@ -78,6 +78,10 @@ footer.page-footer {
   margin: 0;
 }
 
+.page-title {
+  padding-bottom: 30px;
+}
+
 /*  Edit Students Page  */
 
 .student-select {
@@ -89,5 +93,5 @@ footer.page-footer {
 }
 
 .editStudentSubmit {
-  padding-top: 10px;
+  padding-top: 20px;
 }

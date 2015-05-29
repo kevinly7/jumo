@@ -49,7 +49,7 @@
 
             ?>
 
-            <h4 class="center">Manage Groups</h4>
+            <h4 class="center page-title">Manage Groups</h4>
 
             <div class="row">
                 <div class="col s4"><p></p></div>

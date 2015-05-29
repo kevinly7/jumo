@@ -42,18 +42,18 @@
             </div>
         </nav>
 
-        <h4 class="title center">Create Subgroups</h4>
+        <h4 class="title center page-title">Create Subgroups</h4>
 
         <form action = "settings.php" method = "GET">
             <div class="row">
                 <div class="col s4"><p></p></div>
                 <div class="col s4 center">
-                    <h5 class="center">Enter name of subgroup: </h5>
+                    <!-- <h5 class="center">Enter name of subgroup: </h5> -->
 
                     <form>
                         <div class="input-field">
                             <input id="subgroup" type="text" size="30" class="validate" name="subgroup">
-                            <label for="soubgroup">Subgroup</label>
+                            <label for="soubgroup">Subgroup Name</label>
                         </div>
                         <div class="input-field">
                             <input id="coach" type="text" size="30" class="validate" name="coach">
@@ -69,8 +69,9 @@
                     <input name ="coach" type="text" size=30> </input> </br>
                     <input name ="contact" type="text" size=30> </input> -->
                     <!-- <input id = "submitGroup" type="submit" value="Create Group"> -->
-                    <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="action">Create Group</button>
-                    <br>
+                    <div class="editStudentSubmit">
+                        <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="action">Create Group</button>
+                    </div>
                     <!-- <a href="edit_students.php" class="waves-effect waves-light amber accent-3 white-text btn">Edit Students</a> -->
                 </div>
             </div>
