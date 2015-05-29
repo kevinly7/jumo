@@ -1,4 +1,4 @@
-/* Custom Stylesheet */
+ Custom Stylesheet */
 /**
  * Use this file to override Materialize files so you can update
  * the core Materialize files in the future
@@ -78,6 +78,16 @@ footer.page-footer {
   margin: 0;
 }
 
+/*  Edit Students Page  */
+
 .student-select {
-  height: 150px;
+  height: 300px;
+}
+
+.student {
+  padding-bottom: 50px;
+}
+
+.editStudentSubmit {
+  padding-top: 10px;
 }

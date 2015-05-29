@@ -20,6 +20,12 @@
 
     ?>
         <!-- header -->
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a class="purple-text text-darken-4" href="settings.php">Create Groups</a></li>
+            <li class="divider"></li>
+            <li><a class="purple-text text-darken-4" href="edit_students.php">Edit Groups</a></li>
+        </ul>
+
         <nav class="purple darken-4">
             <div class="nav-wrapper">
                 <ul class="logo">
@@ -27,7 +33,10 @@
                 </ul>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
-                    <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li>
+                    <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->
+
+                    <!-- Dropdown Trigger -->
+                    <li><a class="dropdown-button" href="#" data-activates="dropdown1">Settings<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
                     <li><a class = "logout" href="index.php">Logout</a></li>
                 </ul>
             </div>
@@ -62,7 +71,7 @@
                     <!-- <input id = "submitGroup" type="submit" value="Create Group"> -->
                     <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="action">Create Group</button>
                     <br>
-                    <a href="edit_students.php" class="waves-effect waves-light amber accent-3 white-text btn">Edit Students</a>
+                    <!-- <a href="edit_students.php" class="waves-effect waves-light amber accent-3 white-text btn">Edit Students</a> -->
                 </div>
             </div>
         </form>

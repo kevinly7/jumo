@@ -19,6 +19,12 @@
 
     ?>
         <!-- header -->
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a class="purple-text text-darken-4" href="settings.php">Create Groups</a></li>
+            <li class="divider"></li>
+            <li><a class="purple-text text-darken-4" href="edit_students.php">Edit Groups</a></li>
+        </ul>
+
         <nav class="purple darken-4">
             <div class="nav-wrapper">
                 <ul class="logo">
@@ -26,7 +32,10 @@
                 </ul>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
-                    <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li>
+                    <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->
+
+                    <!-- Dropdown Trigger -->
+                    <li><a class="dropdown-button" href="#" data-activates="dropdown1">Settings<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
                     <li><a class = "logout" href="index.php">Logout</a></li>
                 </ul>
             </div>
@@ -63,7 +72,7 @@
                         </select>                
 
                         <label for='formStudents[]'>Select the students to add to the above group:</label>
-                        <select multiple="multiple" name="formStudents[]" class="browser-default student-select">
+                        <select multiple="multiple" name="formStudents[]" class="browser-default student-select ">
                             <?php 
 
                             $playerArray = array();
@@ -75,14 +84,14 @@
 
                                 ?>
 
-                                <option >
-                                    <span>
+                                <option class="student">
+                                    <span class="student">
                                         <?php 
                                         echo $playerObject ->getName();
                                         ?>
                                     </span>
-                                </br>
-                            </option>
+                                    
+                                </option>
 
                             <?php }?>
                             <option>test</option>
@@ -90,13 +99,15 @@
                         </select>
 
                         <!-- <input name = "formSubmit" id = "formSubmit" type="submit" value="Test Submission"> -->
-                        <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="formSubmit" name="formSubmit">Test Submission</button>
+                        <div class="editStudentSubmit">
+                            <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="formSubmit" name="formSubmit">Submit</button>
+                        </div>
                     </form>
                 </div>
             </div>
 
-            <a href="settings.php" class="waves-effect waves-light amber accent-3 white-text btn">Create a Group</a>
-            <a href="weekview.php" class="waves-effect waves-light amber accent-3 white-text btn">Submit (go to week)</a>
+            <!-- <a href="settings.php" class="waves-effect waves-light amber accent-3 white-text btn">Create a Group</a> -->
+            <!-- <a href="weekview.php" class="waves-effect waves-light amber accent-3 white-text btn">Submit (go to week)</a> -->
 
         <?php
 
