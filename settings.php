@@ -44,7 +44,7 @@
 
         <h4 class="title center page-title">Create Subgroups</h4>
 
-        <form action = "settings.php" method = "GET">
+        <form action = "settings.php" method = "POST">
             <div class="row">
                 <div class="col s4"><p></p></div>
                 <div class="col s4 center">
@@ -70,7 +70,7 @@
                     <input name ="contact" type="text" size=30> </input> -->
                     <!-- <input id = "submitGroup" type="submit" value="Create Group"> -->
                     <div class="editStudentSubmit">
-                        <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="action">Create Group</button>
+                        <button class="btn waves-effect waves-light amber accent-3 white-text" onclick="clickFunction()" type="submit" id="submitGroup" name="action">Create Group</button>
                     </div>
                     <!-- <a href="edit_students.php" class="waves-effect waves-light amber accent-3 white-text btn">Edit Students</a> -->
                 </div>
@@ -82,18 +82,16 @@
     <?php
     include ('database.php');
 
-    if (isset($_GET['subgroup']) && isset($_GET['coach']) && isset($_GET['contact'])) {
+    if (isset($_POST['subgroup']) && isset($_POST['coach']) && isset($_POST['contact'])) {
 
-        $group = $_GET['subgroup'];
-        $coach = $_GET['coach'];
-        $contact = $_GET['contact'];
+        $group = $_POST['subgroup'];
+        $coach = $_POST['coach'];
+        $contact = $_POST['contact'];
         $sportid = 1;
 
      $statement = $connection->prepare ("INSERT INTO tblGROUP (GroupName, CoachName, CoachContact, SportID) VALUES (:group, :coach, :contact, :sportid)");
     $statement -> execute(array(':group' => $group, ':coach' => $coach, ':contact' => $contact, ':sportid' => $sportid));
-    } else {
-        echo "Please fill out all the fields";
-    }
+    } 
 
 //}
     ?>
@@ -104,5 +102,6 @@
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
          <script src="js/logout.js"></script>
+         <script src="js/alertClick.js"></script>
     </body>
 </html>
