@@ -101,8 +101,8 @@ include ('database.php');
 			        <div class="week-picker"></div>
 				    <br />
 				    <!--<label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span><br />-->
-				    Start Date<input id ="startDate" type="date" name="startDate"><br>
-					End Date<input id="endDate" type="date" name="endDate"><br>
+				    <input id ="startDate" style="display:none" type="date" name="startDate">
+					<input id="endDate" style="display:none" type="date" name="endDate">
 			        <!--<select name="monthSelect" class="browser-default">
 			            <option value="" >Please select a month</option>
 
@@ -409,8 +409,8 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 													}
 													$diffDisplay .= $minutes . ' min ';
 												}
-												$correctStart = date('h:i:s A', $startPiece);
-												$endStart = date('h:i:s A', $endPiece);
+												$correctStart = date('h:i A', $startPiece);
+												$endStart = date('h:i A', $endPiece);
 												$practiceStart = strtotime('12:00:00 AM');
 												$practiceEnd = strtotime('05:00:00 AM');
 												
