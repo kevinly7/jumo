@@ -71,9 +71,17 @@ include ('database.php');
     	<!-- header -->
     	<nav class="purple darken-4">
             <div class="nav-wrapper">
-                <a href="weekview.php" class="brand-logo white-text">Jumo</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li>
+                <ul class="logo">
+                	<a href="sport_selection.php" class="brand-logo white-text">Jumo</a>
+                </ul>
+                
+                <ul class="left hide-on-med-and-down menu">
+          			<li class="active"><a href="weekview.php">Weekview</a></li>
+            		<li><a href="violations.php">Violations</a></li>
+        		</ul>
+
+                <ul id="nav-mobile" class="right hide-on-med-and-down logout">
+                    <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->
                     <li><a class = "logout" href="index.php">Logout</a></li>
                 </ul>
             </div>
@@ -133,6 +141,7 @@ include ('database.php');
 					    <option>Week 4</option>
 					    <option>Week 5</option> 
 				    </select>-->
+
 				    <?php $groupArray = array();?>
 				    <select name="groupSelect" class="browser-default">
 			            <option value="" disabled selected>Please select a group</option>

@@ -3,6 +3,14 @@
     <head lang="en">
         <meta charset="UTF-8">
         <title></title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+  		<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+ 		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
     	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
     	<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
@@ -55,20 +63,23 @@
     <body>
   
    	<?php  
-   	session_start();
+   /*	session_start();
 		if (!isset($_SESSION["newsession"])) {
 			echo "Please log in again.";
 		} else if ($_SESSION["newsession"]!="coach") {
 			echo "Please log in again.";
-		} else {
+		} else { */
 
    	?>
 
     	<!-- header -->
         <nav class="purple darken-4">
             <div class="nav-wrapper">
-                <a href="weekview.php" class="brand-logo white-text">Jumo</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <ul class="logo">
+                	<a href="coach_review_2.php" class="brand-logo white-text">Jumo</a>
+                </ul>
+
+                <ul id="nav-mobile" class="right hide-on-med-and-down logout">
                     <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li>
                     <li><a class = "logout" href="index.php">Logout</a></li>
                 </ul>
@@ -356,7 +367,7 @@
 			</div>
 		</div>
 
-		  <?php } ?>
+		<?php //} ?>
 
 		<!--  Scripts-->
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>

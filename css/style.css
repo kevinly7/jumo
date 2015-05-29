@@ -20,6 +20,19 @@ nav {
 
 .brand-logo {
   font-family: Pacifico;
+  /*padding-left: 300px;*/
+}
+
+.logo {
+  padding-left: 30px;
+}
+
+.menu {
+  padding-left: 160px;
+}
+
+.logout {
+  padding-right: 30px
 }
 
 p {

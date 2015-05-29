@@ -21,8 +21,11 @@
         <!-- header -->
         <nav class="purple darken-4">
             <div class="nav-wrapper">
-                <a href="weekview.php" class="brand-logo white-text">Jumo</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <ul class="logo">
+                    <a href="coach_review_2.php" class="brand-logo white-text">Jumo</a>
+                </ul>
+
+                <ul id="nav-mobile" class="right hide-on-med-and-down logout">
                     <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li>
                     <li><a class = "logout" href="index.php">Logout</a></li>
                 </ul>
