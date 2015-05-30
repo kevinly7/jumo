@@ -9,10 +9,10 @@ include ('database.php');
    	$statement3 = $connection->prepare ("INSERT INTO tblDATE (DateName) 
    	VALUES (:datename)");
 	//echo "works: " . $_GET['uid'];
-   	if (isset($_GET['uid']) && isset($_GET['time'])) {
+   	if (isset($_POST['uid']) && isset($_POST['time'])) {
    		echo "did it work?";
-		$groupID = $_GET['uid'];
-		$tData = $_GET['time'];
+		$groupID = $_POST['uid'];
+		$tData = $_POST['time'];
 		$timeData = explode('_', $tData);
 		$time = $timeData[0];
 		$day = $timeData[1];
@@ -82,34 +82,6 @@ include ('database.php');
 					':starttime' => $time,
 					':endtime' => ''));
 			}
-
-			/*$practiceData = $practicequery->fetchAll();
-			$practiceid = 1;
-			$checkTime = true;
-			echo "else: " . $practicequery->rowCount() ;
-			foreach($practiceData as $row) {
-				$starttime = $row['StartTime'];
-				echo "  inside the loop: " . $row['EndTime'] . ' new: ' . $row['EndTime'] == '';
-				if ($row['EndTime'] == '') {
-					echo "inside end";
-					$updatepractice = $connection->query("UPDATE tblPRACTICE SET EndTime = '$time' WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$starttime'");
-					$updatepractice->execute();
-					$checkTime = false;
-					$practiceid = $row['PracticeID'];
-					insertPlayers($practiceid);
-				}
-			}
-
-			if($checkTime) {
-				echo "inside check time statement";
-				  $statement -> execute(array(':dateid' => $dateid, 
-					':groupid' => $groupID, 
-					':practicetypeid' => 1, 
-					':starttime' => $time,
-					':endtime' => ''));
-			}
-
-			*/
 		}
 
 	

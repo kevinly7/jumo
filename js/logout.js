@@ -5,7 +5,7 @@ $(document).ready(function(){
            url: 'logout.php',
            data:{action:'call_this'},
            success:function(html) {
-             alert(html);
+            // alert(html);
            }
 
       });

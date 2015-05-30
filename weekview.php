@@ -60,12 +60,12 @@ include ('database.php');
     </head>
     <body>
       <?php  
-        /*session_start();
+        session_start();
             if (!isset($_SESSION["newsession"])) {
                 echo "Please log in again.";
             } else if ($_SESSION["newsession"]!="ica") {
                 echo "Please log in again.";
-            } else { */
+            } else { 
 
     ?>
     	<!-- header -->
@@ -237,7 +237,7 @@ include ('database.php');
 					$default = false;
 					printWeek($year, $month, $week, $group, $groupArray,$default); 
 				}
-			//}
+			}
 		?>
 		<!--  Scripts-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>

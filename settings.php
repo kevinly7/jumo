@@ -11,12 +11,12 @@
 
     <body>
           <?php  
-        /*session_start();
+        session_start();
             if (!isset($_SESSION["newsession"])) {
                 echo "Please log in again.";
             } else if ($_SESSION["newsession"]!="coach") {
                 echo "Please log in again.";
-            } else { */
+            } else { 
 
     ?>
         <!-- header -->
@@ -98,7 +98,7 @@
     $statement -> execute(array(':groupid' => $rfid, ':group' => $group, ':coach' => $coach, ':contact' => $contact, ':sportid' => $sportid));
     } 
 
-//}
+}
     ?>
 
         <!-- Compiled and minified JavaScript -->

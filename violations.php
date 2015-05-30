@@ -54,12 +54,12 @@
     </head>
     <body>
     	  <?php  
-        /*session_start();
+        session_start();
             if (!isset($_SESSION["newsession"])) {
                 echo "Please log in again.";
             } else if ($_SESSION["newsession"]!="ica") {
                 echo "Please log in again.";
-            } else { */
+            } else { 
 
     ?>
     	<!-- header -->
@@ -173,7 +173,7 @@
 
 
 
-				} //}?>
+				} }?>
 
 
 				   
@@ -254,7 +254,6 @@ function printWeek($year, $month, $week, $group, $default){
 					<tr>
 						<td>
 					<?php
-
 				    // row exists. do whatever you want to do.
 				    echo "There are no violations for this week"; ?>
 				    </td>
@@ -262,10 +261,6 @@ function printWeek($year, $month, $week, $group, $default){
 			</tbody>
 			<?php
 				} else {
-
-
-
-
 				foreach($violationquery as $row) { 
 					$name = $row['PlayerName'];
 					$timestamp = strtotime($row['DateName']);
