@@ -4,7 +4,6 @@
     $('.button-collapse').sideNav();
     $('.parallax').parallax();
 
-    $(".dropdown-button").dropdown();
     $('.dropdown-button').dropdown({
       	inDuration: 300,
       	outDuration: 225,
