@@ -63,6 +63,10 @@
                             <input id="contact" type="text" size="30" class="validate" name="contact">
                             <label for="contact">Contact Info</label>
                         </div>
+                         <div class="input-field">
+                            <input id="rfid" type="text" size="30" class="validate" name="rfid">
+                            <label for="contact">RFID Number</label>
+                        </div>
                     </form>
 
                     <!-- <input name ="subgroup" type="text" size=30> </input> </br>
@@ -87,10 +91,11 @@
         $group = $_POST['subgroup'];
         $coach = $_POST['coach'];
         $contact = $_POST['contact'];
+        $rfid = $_POST['rfid'];
         $sportid = 1;
 
-     $statement = $connection->prepare ("INSERT INTO tblGROUP (GroupName, CoachName, CoachContact, SportID) VALUES (:group, :coach, :contact, :sportid)");
-    $statement -> execute(array(':group' => $group, ':coach' => $coach, ':contact' => $contact, ':sportid' => $sportid));
+    $statement = $connection->prepare ("INSERT INTO tblGROUP (GroupID, GroupName, CoachName, CoachContact, SportID) VALUES (:groupid, :group, :coach, :contact, :sportid)");
+    $statement -> execute(array(':groupid' => $rfid, ':group' => $group, ':coach' => $coach, ':contact' => $contact, ':sportid' => $sportid));
     } 
 
 //}

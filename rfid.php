@@ -9,10 +9,10 @@ include ('database.php');
    	$statement3 = $connection->prepare ("INSERT INTO tblDATE (DateName) 
    	VALUES (:datename)");
 	//echo "works: " . $_GET['uid'];
-   	if (isset($_GET['uid']) && isset($_GET['time'])) {
+   	if (isset($_POST['uid']) && isset($_POST['time'])) {
    		echo "did it work?";
-		$groupID = $_GET['uid'];
-		$tData = $_GET['time'];
+		$groupID = $_POST['uid'];
+		$tData = $_POST['time'];
 		$timeData = explode('_', $tData);
 		$time = $timeData[0];
 		$day = $timeData[1];
