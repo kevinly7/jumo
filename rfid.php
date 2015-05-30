@@ -9,10 +9,10 @@ include ('database.php');
    	$statement3 = $connection->prepare ("INSERT INTO tblDATE (DateName) 
    	VALUES (:datename)");
 	//echo "works: " . $_GET['uid'];
-   	if (isset($_POST['uid']) && isset($_POST['time'])) {
+   	if (isset($_GET['uid']) && isset($_GET['time'])) {
    		echo "did it work?";
-		$groupID = $_POST['uid'];
-		$tData = $_POST['time'];
+		$groupID = $_GET['uid'];
+		$tData = $_GET['time'];
 		$timeData = explode('_', $tData);
 		$time = $timeData[0];
 		$day = $timeData[1];
@@ -42,10 +42,12 @@ include ('database.php');
 		$practicequery->execute();
 		$practiceid = 1;
 
+	
 
 		if($practicequery->rowCount() < 1)
 		{
 		    // row exists. do whatever you want to do.
+		    echo "nothing exists";
 		   $statement -> execute(array(':dateid' => $dateid, 
 					':groupid' => $groupID, 
 					':practicetypeid' => 1, 
@@ -53,13 +55,43 @@ include ('database.php');
 					':endtime' => ''));
 
 		} else {
-			$practiceData = $practicequery->fetch(PDO::FETCH_ASSOC);
-			$practiceid = $practiceData['PracticeID'];
+			$practiceid = 1;
 			$checkTime = true;
-
-			foreach($practicequery as $row) {
+			foreach($practicequery as $row) { 
+				echo " this::: " . $row['StartTime'] . ' end: ' . $row['EndTime'];
 				$starttime = $row['StartTime'];
+				if ($row['EndTime'] == '00:00:00.000000') {
+					echo "     inside end      ";
+					$updatepractice = $connection->query("UPDATE tblPRACTICE SET EndTime = '$time' WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$starttime'");
+					$updatepractice->execute();
+					$checkTime = false;
+					$practiceid = $row['PracticeID'];
+					$checkTime = false;
+					foreach($connection->query("Select * from tblPLAYER_GROUP pg WHERE pg.GroupID = $groupID") as $row) {
+						$statement2 -> execute(array(':playerid' => $row['PlayerID'], 
+						':practiceid' => $practiceid));
+					}
+				}
+				
+			}
+			if($checkTime) {
+				echo "inside check time statement";
+				  $statement -> execute(array(':dateid' => $dateid, 
+					':groupid' => $groupID, 
+					':practicetypeid' => 1, 
+					':starttime' => $time,
+					':endtime' => ''));
+			}
+
+			/*$practiceData = $practicequery->fetchAll();
+			$practiceid = 1;
+			$checkTime = true;
+			echo "else: " . $practicequery->rowCount() ;
+			foreach($practiceData as $row) {
+				$starttime = $row['StartTime'];
+				echo "  inside the loop: " . $row['EndTime'] . ' new: ' . $row['EndTime'] == '';
 				if ($row['EndTime'] == '') {
+					echo "inside end";
 					$updatepractice = $connection->query("UPDATE tblPRACTICE SET EndTime = '$time' WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$starttime'");
 					$updatepractice->execute();
 					$checkTime = false;
@@ -69,24 +101,22 @@ include ('database.php');
 			}
 
 			if($checkTime) {
+				echo "inside check time statement";
 				  $statement -> execute(array(':dateid' => $dateid, 
 					':groupid' => $groupID, 
 					':practicetypeid' => 1, 
 					':starttime' => $time,
 					':endtime' => ''));
 			}
+
+			*/
 		}
 
-		function insertPlayers($practiceid){
-			foreach($connection->query("Select * from tblPLAYER_GROUP pg WHERE pg.GroupID = $groupID") as $row) {
-				$statement2 -> execute(array(':playerid' => $row['PlayerID'], 
-				':practiceid' => $practiceid));
-			}
-
-		}
+	
 	// 	$db = $sql_
 		
 		echo($groupID);
 	}
 	echo "this is up!";
+
 	?>
