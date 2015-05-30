@@ -8,10 +8,11 @@ include ('database.php');
    	VALUES (:playerid, :practiceid)");
    	$statement3 = $connection->prepare ("INSERT INTO tblDATE (DateName) 
    	VALUES (:datename)");
-	
-   	if (isset($_POST['uid']) && isset($_POST['time'])) {
-		$groupID = $_POST['uid'];
-		$tData = $_POST['time'];
+	//echo "works: " . $_GET['uid'];
+   	if (isset($_GET['uid']) && isset($_GET['time'])) {
+   		echo "did it work?";
+		$groupID = $_GET['uid'];
+		$tData = $_GET['time'];
 		$timeData = explode('_', $tData);
 		$time = $timeData[0];
 		$day = $timeData[1];
@@ -49,7 +50,7 @@ include ('database.php');
 					':groupid' => $groupID, 
 					':practicetypeid' => 1, 
 					':starttime' => $time,
-					':endtime' => NULL));
+					':endtime' => ''));
 
 		} else {
 			$practiceData = $practicequery->fetch(PDO::FETCH_ASSOC);
@@ -58,7 +59,7 @@ include ('database.php');
 
 			foreach($practicequery as $row) {
 				$starttime = $row['StartTime'];
-				if ($row['EndTime'] == NULL) {
+				if ($row['EndTime'] == '') {
 					$updatepractice = $connection->query("UPDATE tblPRACTICE SET EndTime = '$time' WHERE GroupID = $groupID AND DateID = $dateid AND StartTime = '$starttime'");
 					$updatepractice->execute();
 					$checkTime = false;
@@ -72,7 +73,7 @@ include ('database.php');
 					':groupid' => $groupID, 
 					':practicetypeid' => 1, 
 					':starttime' => $time,
-					':endtime' => NULL));
+					':endtime' => ''));
 			}
 		}
 
@@ -85,7 +86,7 @@ include ('database.php');
 		}
 	// 	$db = $sql_
 		
-		echo($uid);
+		echo($groupID);
 	}
 	echo "this is up!";
 	?>
