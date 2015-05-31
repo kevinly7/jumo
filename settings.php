@@ -85,13 +85,13 @@
 
     <?php
     include ('database.php');
-
+    include ('grouprfid.php');
     if (isset($_POST['subgroup']) && isset($_POST['coach']) && isset($_POST['contact'])) {
 
         $group = $_POST['subgroup'];
         $coach = $_POST['coach'];
         $contact = $_POST['contact'];
-        $rfid = $_POST['rfid'];
+        $rfid = convertgroup($_POST['rfid']);
         $sportid = 1;
 
     $statement = $connection->prepare ("INSERT INTO tblGROUP (GroupID, GroupName, CoachName, CoachContact, SportID) VALUES (:groupid, :group, :coach, :contact, :sportid)");

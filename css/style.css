@@ -109,7 +109,8 @@ footer.page-footer {
 }
 
 .signin-card {
-  width: 50%;
+  height: 550px;
+  width: 40%;
   margin-right: auto;
   margin-left: auto;
 }
@@ -124,6 +125,10 @@ footer.page-footer {
 
 .join-btn {
   width: 60%;
+}
+
+.coach-ica {
+  padding-left: 10px;
 }
 
 /*  index  */
