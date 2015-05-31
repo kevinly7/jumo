@@ -4,9 +4,9 @@
         <meta charset="UTF-8">
         <title></title>
 
-        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
   		<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
  		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -52,9 +52,9 @@
 		});
 		</script>
         <!-- Compiled and minified CSS -->
-  		<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
   		<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     </head>
     <body>
   
@@ -290,7 +290,8 @@
 									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
 									'<input type="checkbox" class="filled-in browser-default"  name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
-									'<input type="checkbox"  class="filled-in browser-default" name=delete'.$practiceCounter.' value="delete">Delete</br>'.
+									'<input type="checkbox"  class="filled-in browser-default" name=delete'.$practiceCounter.' value="delete">'.
+									'<button type="button"  class='.$practiceCounter.' onclick="markDelete(this)">Delete</button></br>'.
 									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 									$weekArray[$name][$dayOfWeek][0] = $dayInput;
 
@@ -301,8 +302,9 @@
 									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
 									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
-									'<input type="checkbox" class="filled-in browser-default"  name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
-									'<input type="checkbox"  class="filled-in browser-default" name=delete'.$practiceCounter.' value="edit">Delete</br>'.
+									'<input type="checkbox" class="filled-in browser-default" style="display:none" name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
+									'<input type="checkbox"  class="filled-in browser-default" style="display:none" name=delete'.$practiceCounter.' value="edit">'.
+									'<button type="button"  class='.$practiceCounter.' onclick="markDelete(this)">Delete</button></br>'.
 									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 								} 
 
@@ -375,9 +377,9 @@
 		<?php } ?>
 
 		<!--  Scripts-->
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
         <script src="js/materialize.js"></script>
-        <script src="js/init.js"></script>-->
+        <script src="js/init.js"></script>
         <script>
         	function handleClick(cb) {
         		var id = cb.value;
@@ -395,6 +397,20 @@
 				checkBox[0].checked = "checked";
 				console.log(id);
 				console.log(checkBox[0].checked);
+			}
+
+			function markDelete(button) {
+				var id = button.className;
+				var deleteBox = document.getElementsByName('delete' +id);
+				var bool = deleteBox[0].checked;
+				deleteBox[0].checked = !bool;
+				if(deleteBox[0].checked) {
+					button.style.backgroundColor="red";
+				} else {
+					button.style.backgroundColor="green";
+				}
+				console.log(id);
+				console.log(deleteBox[0].checked);
 			}			
         </script>
 

@@ -95,8 +95,8 @@
 			        <div class="week-picker"></div>
 				    <br /><br />
 				    <!--<label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span><br />-->
-				    <input id ="startDate" type="date" name="startDate">Date<br>
-					<input id="endDate" type="date" name="endDate">Date<br>			        
+				    <input id ="startDate" style="display:none" type="date" name="startDate">
+					<input id="endDate" style="display:none" type="date" name="endDate">			        
 			    
 				    <!-- <input name = "formSubmit" type="submit" value="Select View"> -->
 				    <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="formSubmit" name="formSubmit">Select View</button>
