@@ -171,7 +171,7 @@ include ('database.php');
 				</form>
 		
 				<?php  
-				if(isset($_POST['formSubmit'])) 
+				if(isset($_POST['formSubmit']) AND isset($_POST['groupSelect'])) 
 				{ ?>
 				</div>
 						<div class="col s9">
@@ -206,6 +206,8 @@ include ('database.php');
 					$default = true;
 					printWeek($year, $month, $week, $group, $groupArray, $default);
 							
+				} elseif(isset($_POST['formSubmit'])) {
+					echo "<script>alert('Please select a group')</script>"; 
 				} else { ?>
 				</div>
 				<div class="col s9">

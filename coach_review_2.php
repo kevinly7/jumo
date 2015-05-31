@@ -183,7 +183,7 @@
 						
 						include ('database.php');
 
-						if(isset($_POST['formSubmit'])) {
+						if(isset($_POST['formSubmit']) AND $_POST['groupSelect'] != "") {
 
 							/*$monthyear = $_POST['monthSelect'];
 							$pieces = explode(" ", $monthyear);
@@ -370,6 +370,8 @@
 				</form>
 				<?php 
 				//echo var_dump($weekArray); 
+				} elseif(isset($_POST['formSubmit'])) {
+					echo "<script>alert('Please select a group')</script>";
 				}?>
 			</div>
 		</div>
