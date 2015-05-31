@@ -206,8 +206,8 @@ include ('database.php');
 					$default = true;
 					printWeek($year, $month, $week, $group, $groupArray, $default);
 							
-				} elseif(isset($_POST['formSubmit'])) {
-					echo "<script>alert('Please select a group')</script>"; 
+				} elseif(isset($_POST['formSubmit']) AND !isset($_POST['groupSelect'])) {
+					echo "<script>alert('Please select a group')</script>";
 				} else { ?>
 				</div>
 				<div class="col s9">
