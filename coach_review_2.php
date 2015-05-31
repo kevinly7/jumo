@@ -95,11 +95,31 @@
         	<div class="col s3">
 				<form action = "" method = "POST">
 					<br>
-			        <h6><b>Filters</b></h6>	
+			        <h6><b>Filters</b></h6>
+			        <?php $groupArray = array();
+			        include ('database.php');?>
+
+				    <select name="groupSelect" class="browser-default">
+			            <option value="" >Please select a group</option>
+			            <!--<option>All</option>-->
+						<?php 
+
+				      	foreach($connection->query("Select * from tblGROUP") as $row) {?>
+				            <option value = <?php echo $row['GroupID'] ?>>
+					            <span>
+				                    <?php 
+				                    	$groupArray[$row['GroupID']] = $row['GroupName'];
+				                        echo $row['GroupName'];
+				                    ?>
+					            </span>
+					            </br>
+				            </option>
+				        <?php }?>?>
+			        </select>	
 			        <br>
 			        <div class="week-picker"></div>
 				    <br /><br />
-			        <select name="monthSelect" class="browser-default">
+			        <!--<select name="monthSelect" class="browser-default">
 			            <option value="" >Please select a month</option>
 
 						<?php 
@@ -126,38 +146,18 @@
 					            </br>
 					        </option>
 						<?php }?>
-					</select>
+					</select>-->
 
-				 	<select name="weekSelect" class="browser-default">
+				 	<!--<select name="weekSelect" class="browser-default">
 					 	<option value="" >Please select a week</option>
 					    <option>1</option> 
 					    <option>2</option> 
 					    <option>3</option> 
 					    <option>4</option> 
-				    </select>
-				    <?php $groupArray = array();?>
-
-				    <select name="groupSelect" class="browser-default">
-			            <option value="" >Please select a group</option>
-			            <!--<option>All</option>-->
-						<?php 
-
-				      	foreach($connection->query("Select * from tblGROUP") as $row) {?>
-				            <option value = <?php echo $row['GroupID'] ?>>
-					            <span>
-				                    <?php 
-				                    	$groupArray[$row['GroupID']] = $row['GroupName'];
-				                        echo $row['GroupName'];
-				                    ?>
-					            </span>
-					            </br>
-				            </option>
-				        <?php }?>?>
-			        </select>
-
-				    </br>
-				    <input id ="startDate" type="date" name="startDate">Date<br>
-					<input id="endDate" type="date" name="endDate">Date<br>
+				    </select>-->
+				    
+				    <input id ="startDate" type="date" name="startDate" style="display:none">
+					<input id="endDate" type="date" name="endDate" style="display:none">
 				    <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Select View</button>
 				</form>
 			</div>
