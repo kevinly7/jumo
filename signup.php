@@ -28,7 +28,7 @@
 
         <!-- body -->
         <div class="whitespace"></div>
-        <div class="card large signin-card">
+        <div class="card-panel signin-card">
             <div class="row">
                 <h3 class="join-jumo-title">Join Jumo today.</h3>
             </div>
@@ -51,6 +51,19 @@
                             <input id="password" type="password" class="validate">
                             <label for="password">Password</label>
                         </div>
+                    </div>
+                    <div class="row">
+                        <form action="#">
+                            <span class="coach-ica">
+                                <input type="radio" class="filled-in " id="coach" name="group1"/>
+                                <label for="coach">Coach</label>
+                            </span>
+                            <span class="coach-ica">
+                                <input type="radio" class="filled-in " id="ica" name="group1"/>
+                                <label for="ica">ICA</label>
+                            </span>
+                        </form>
+                            
                     </div>
                 </form>
             </div>
