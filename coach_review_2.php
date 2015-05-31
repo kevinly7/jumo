@@ -4,16 +4,12 @@
         <meta charset="UTF-8">
         <title></title>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
   		<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
  		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
-    	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
-    	<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
     	<script type="text/javascript">
 		$(function() {
 		    var startDate;
@@ -51,8 +47,8 @@
 		        }
 		    });
 		    
-		    $('.week-picker .ui-datepicker-calendar tr').live('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
-		    $('.week-picker .ui-datepicker-calendar tr').live('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
+		    $('.week-picker .ui-datepicker-calendar tr').on('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
+		    $('.week-picker .ui-datepicker-calendar tr').on('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
 		});
 		</script>
         <!-- Compiled and minified CSS -->
@@ -293,8 +289,8 @@
 									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
 									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
-									'<input type="checkbox" class="filled-in browser-default" name=edit'.$practiceCounter.' value='.$practiceCounter.'>Edit</br>'.
-									'<input type="checkbox" class="filled-in browser-default" name=delete'.$practiceCounter.' value="delete">Delete</br>'.
+									'<input type="checkbox" class="filled-in browser-default"  name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
+									'<input type="checkbox"  class="filled-in browser-default" name=delete'.$practiceCounter.' value="delete">Delete</br>'.
 									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 									$weekArray[$name][$dayOfWeek][0] = $dayInput;
 
@@ -305,8 +301,8 @@
 									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
 									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
-									'<input type="checkbox" class="filled-in browser-default" name=edit'.$practiceCounter.' value='.$practiceCounter.'>Edit</br>'.
-									'<input type="checkbox" class="filled-in browser-default" name=delete'.$practiceCounter.' value="edit">Delete</br>'.
+									'<input type="checkbox" class="filled-in browser-default"  name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
+									'<input type="checkbox"  class="filled-in browser-default" name=delete'.$practiceCounter.' value="edit">Delete</br>'.
 									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 								} 
 
@@ -380,7 +376,6 @@
 
 		<!--  Scripts-->
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>-->
         <script>
@@ -399,6 +394,7 @@
 				var checkBox = document.getElementsByName('edit'+id);
 				checkBox[0].checked = "checked";
 				console.log(id);
+				console.log(checkBox[0].checked);
 			}			
         </script>
 

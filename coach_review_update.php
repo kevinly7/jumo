@@ -16,12 +16,14 @@ if(isset($_POST['formSubmit'])) {
 		$startTime = $_POST['startTime' . $i];
 		$endTime = $_POST['endTime' . $i];
 		$playerID = $_POST['playerID' . $i];
+		
+		
 		if(isset($_POST['delete' . $i])) {
 			$statement -> execute(array(':practiceID' =>$practiceID, ':playerID' =>$playerID));
 			echo 'deleted practice';
 		} elseif(isset($_POST['edit' . $i])) {
 			$edit = $_POST['edit' . $i];
-			if($edit == 'edit') {
+			
 				echo $startTime . ' to ' . $endTime;
 				$statement -> execute(array(':practiceID' =>$practiceID, ':playerID' =>$playerID));
 				$statement2 -> execute(array(':dateID' =>$dateID, ':groupID' => $groupID, ':practiceTypeID' => 1, ':startTime' => $startTime, ':endTime' => $endTime));
@@ -29,7 +31,7 @@ if(isset($_POST['formSubmit'])) {
 				$practiceid = $query->fetch(PDO::FETCH_ASSOC);
 				$statement3 -> execute(array(':playerid' => $playerID, ':practiceid' => $practiceid['PracticeID']));
 				//make pdo call
-			}
+			
 		}
 	}
 
