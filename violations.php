@@ -85,20 +85,15 @@
 
 		<div class="row">
 			<div class="col s3">
-				<form action = "violations.php" method = "POST">
-			        <br>
-					<br>
-					<br>
-					
+				<form action = "violations.php" method = "POST">			
 			        <h6><b>Filters</b></h6>	
-			        <br>
 			        <div class="week-picker"></div>
-				    <br /><br />
 				    <!--<label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span><br />-->
 				    <input id ="startDate" style="display:none" type="date" name="startDate">
 					<input id="endDate" style="display:none" type="date" name="endDate">			        
 			    
 				    <!-- <input name = "formSubmit" type="submit" value="Select View"> -->
+				    <br>
 				    <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="formSubmit" name="formSubmit">Select View</button>
 				</form>
 
@@ -169,10 +164,6 @@
 					$group = 'All';
 					$default = false;
 					printWeek($year, $month, $week, $group, $default); 
-
-
-
-
 				} }?>
 
 

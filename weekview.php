@@ -92,12 +92,10 @@ include ('database.php');
     	<div class="row">
 			<div class="col s3">	
 				<form action = "weekview.php" method = "POST"> 
-					<br>
-					<br>
-					<br>
-					<br>
 			        <h6><b>Filters</b></h6>	
-			        <br>
+
+
+			        <!-- Group Selection -->
 			        <?php $groupArray = array();?>
 				    <select name="groupSelect" class="browser-default">
 			            <option value="" disabled selected>Please select a group</option>
@@ -117,8 +115,14 @@ include ('database.php');
 		                <?php }?>
 			        	?>
 			        </select>
+			        <br>
+
+
+			        <!--  Date Picker -->
+
+
 			        <div class="week-picker"></div>
-				    <br />
+				 
 				    <!--<label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span><br />-->
 				    <input id ="startDate" style="display:none" type="date" name="startDate">
 					<input id="endDate" style="display:none" type="date" name="endDate">
@@ -161,7 +165,6 @@ include ('database.php');
 					    <option>Week 5</option> 
 				    </select>-->
 
-				    
 
 				    </br><!-- <input name = "formSubmit" type="submit" value="Select View"> -->
 				    <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Select View</button>
@@ -464,8 +467,8 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 							?> 
 						</tbody>
 				</table>
-				<br>
-				<a class="waves-effect waves-light btn amber accent-3 right" href="violations.php" id="submit">Next</a>
+				<!-- <br> -->
+				<!-- <a class="waves-effect waves-light btn amber accent-3 right" href="violations.php" id="submit">Next</a> -->
 			
 	      	</div>
 	      	
