@@ -86,10 +86,12 @@
 
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-button" href="#" data-activates="dropdown1">Settings<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
-                    <li><a class = "logout" href="index.php">Logout</a></li>
+                    <li><a class = "logout1" href="index.php">Logout</a></li>
                 </ul>
             </div>
         </nav>
+
+        <h4 class="center">Summary</h4>
 
         <div class="row">
         	<div class="col s3">
@@ -118,7 +120,7 @@
 			        </select>	
 			        <br>
 			        <div class="week-picker"></div>
-				    <br /><br />
+				    
 			        <!--<select name="monthSelect" class="browser-default">
 			            <option value="" >Please select a month</option>
 
@@ -158,6 +160,7 @@
 				    
 				    <input id ="startDate" type="date" name="startDate" style="display:none">
 					<input id="endDate" type="date" name="endDate" style="display:none">
+					<br>
 				    <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Select View</button>
 				</form>
 			</div>

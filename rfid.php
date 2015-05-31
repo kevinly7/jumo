@@ -14,10 +14,13 @@ include ('database.php');
 		$groupID = $_POST['uid'];
 		$tData = $_POST['time'];
 		$timeData = explode('_', $tData);
-		$time = $timeData[0];
+		$hour = $timeData[0]; 
+		$minute = $timeData[1]; 
+		$second = $timeData[2];
 		$day = $timeData[1];
 		$month = $timeData[2];
 		$year = $timeData[3];
+		$time = $hour.$minute.$second;
 		$num_length = strlen((string)$month);
 		
 		if ($num_length < 2){

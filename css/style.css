@@ -49,9 +49,10 @@ p {
   height: auto;
   color: rgba(255,255,255,.9);
 }
-  .parallax-container .section {
-    width: 100%;
-  }
+
+.parallax-container .section {
+  width: 100%;
+}
 
 @media only screen and (max-width : 992px) {
   .parallax-container .section {
@@ -95,9 +96,39 @@ footer.page-footer {
 }
 
 .student {
-  padding-bottom: 50px;
+  padding-bottom: 12px;
 }
 
 .editStudentSubmit {
   padding-top: 20px;
+}
+
+/*  signup  */
+.whitespace {
+  height: 100px;
+}
+
+.signin-card {
+  width: 50%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.join-jumo-title {
+  padding-left: 20px;
+}
+
+.join-button {
+  padding-left: 20px;
+}
+
+.join-btn {
+  width: 60%;
+}
+
+/*  index  */
+.hero {
+  background: url(../background2.jpg);
+  height: 100%;
+  width: 100%;
 }

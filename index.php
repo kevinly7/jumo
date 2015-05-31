@@ -29,7 +29,6 @@
             </form>
         </div>  -->
 
-
         <!-- parallax section -->
         <div id="index-banner" class="parallax-container">
             <div class="section no-pad-bot">
@@ -37,7 +36,6 @@
                     <br><br>
                     <h1 class="header center purple-text text-darken-4 brand-logo">Jumo</h1>
                     <div class="row center">
-                        <!-- <h5 class="header col s12 light">University of Washington Intercollegiate Athletics' student athlete logging system</h5> -->
                     </div>
 
                     <div class="row right black-text">
@@ -55,17 +53,13 @@
                                                 <label for="password">Password</label>
                                             </div>
 											<div class="card-action row right">
-                                        <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" value="Login" name="action">Login</button>
-                                        <!-- <input type = "submit" value = "Login" class="btn waves-effect waves-light amber accent-3 white-text"/> -->
-                                    </div>
+                                                <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" value="Login" name="action">Login</button>
+                                            </div>
                                         </form>
                                     </div>
-                
                                 </div>
                           </div>
                     </div>
-
-                    <br><br>
                 </div>
             </div>
             <div class="parallax"><img src="background2.jpg" alt="Unsplashed background img 2"></div>
