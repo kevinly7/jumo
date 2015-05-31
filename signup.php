@@ -33,7 +33,7 @@
                 <h3 class="join-jumo-title">Join Jumo today.</h3>
             </div>
             <div class="row">
-                <form class="col s12">
+                <form  action = "signupprocess.php" method = "POST" class="col s12">
                     <div class="row">
                         <div class="input-field col s8">
                             <input id="netid" type="text" class="validate">

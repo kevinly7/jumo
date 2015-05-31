@@ -375,7 +375,7 @@
 				//echo var_dump($weekArray); 
 				} elseif(isset($_POST['formSubmit'])) {
 					echo "<script>alert('Please select a group')</script>";
-				}?>
+				} ?>
 			</div>
 		</div>
 
