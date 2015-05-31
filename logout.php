@@ -1,7 +1,8 @@
 <?php
 if (isset($_POST['action'])) {
-    session_start();
-     $_SESSION["newsession"]="";
+   Session_start();
+Session_destroy();
+header('Location: ' . $_SERVER['HTTP_REFERER']);
 
 }
 
