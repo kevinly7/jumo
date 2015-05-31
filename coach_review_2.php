@@ -354,9 +354,9 @@
 
 							    	<td><?php 
 							    		if ($weekHours > $hourLimit){
-										echo '<font color="red">' .timeFormat($weekHours) . '</font>';
+										echo '<font color="red">' .sumFormat($weekHours) . '</font>';
 							    		} else {
-							    		echo  timeFormat($weekHours); 
+							    		echo  sumFormat($weekHours); 
 							    		} ?>
 
 							    	</td>
@@ -462,6 +462,36 @@ function timeFormat($time) {
 		 	$seconds = $time;
 		 	$timeDisplay .= $seconds . ' s ';
 		 }
+		 return $timeDisplay;
+}
+
+function sumFormat($time) {
+ 		$timeDisplay = '';
+ 		$minPhrase = ' min ';
+		 if($time > 3600){
+		 	$hours = abs($time/3600);
+		 	$hours = floor($hours);
+		 	
+		 	$minutes = abs($time/3600) - $hours;
+		 	
+			//$hours = $hours - $minutes;
+			$minutes = $minutes * 60;
+			if(round($minutes) < 1) {
+				$timeDisplay .= $hours . ' hrs ';
+			} else {
+				$timeDisplay .= $hours . ' hrs ' . round($minutes) . ' min ';
+			}
+			//$time = $time - ($hours * 3600);
+		} elseif($time >= 60){
+			$minutes = abs($time/60 % 60);
+			$time = $time - ($minutes * 60);
+			if($time > 30){
+				$minutes += 1;
+			}
+			$timeDisplay .= $minutes . ' min ';
+		} elseif($time < 60) {
+			$timeDisplay .= '0 min ';
+		}
 		 return $timeDisplay;
 }
 ?>

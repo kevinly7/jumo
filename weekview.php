@@ -350,8 +350,7 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 								$sumArray[$name][$dayOfWeek][0] += $diffValue;
 							} 
 						} 
-						var_dump($sumArray);
-						var_dump($weekArray);
+						
 						?>
 					
 						<tbody>
@@ -406,9 +405,6 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 													$weekDay = $dayTracker[0];
 													$dayHours[$weekDay] = $dayHours[$weekDay] + $difference; 
 												}
-												/*if($difference < 0) {
-													$difference = $difference + (24 *3600);
-												}*/
 												if($difference >= 3600){
 													$hours = abs($difference/3600 %24);
 													$difference = $difference - ($hours * 3600);
@@ -452,7 +448,7 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 									?>
 
 									<td><?php
-										var_dump($weekHours);
+										
 										if ($daysPracticed > 3) {
 											echo 'No Break Days' . '</br>';
 										}
@@ -483,9 +479,9 @@ function sumFormat($time) {
 		 if($time > 3600){
 		 	$hours = abs($time/3600);
 		 	$hours = floor($hours);
-		 	var_dump($hours);
+		 	
 		 	$minutes = abs($time/3600) - $hours;
-		 	var_dump($minutes);
+		 	
 			//$hours = $hours - $minutes;
 			$minutes = $minutes * 60;
 			if(round($minutes) < 1) {
