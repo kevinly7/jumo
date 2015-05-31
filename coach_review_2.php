@@ -291,7 +291,7 @@
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
 									'<input type="checkbox" class="filled-in browser-default"  name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
 									'<input type="checkbox"  class="filled-in browser-default" name=delete'.$practiceCounter.' value="delete">'.
-									'<button type="button"  class='.$practiceCounter.' onclick="markDelete(this)">Delete</button></br>'.
+									'<button type="button"  value='.$practiceCounter.' class="btn" onclick="markDelete(this)">Delete</button></br>'.
 									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 									$weekArray[$name][$dayOfWeek][0] = $dayInput;
 
@@ -304,7 +304,7 @@
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
 									'<input type="checkbox" class="filled-in browser-default" style="display:none" name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
 									'<input type="checkbox"  class="filled-in browser-default" style="display:none" name=delete'.$practiceCounter.' value="edit">'.
-									'<button type="button"  class='.$practiceCounter.' onclick="markDelete(this)">Delete</button></br>'.
+									'<button type="button"  value='.$practiceCounter.' class="btn" onclick="markDelete(this)">Delete</button></br>'.
 									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
 								} 
 
@@ -400,14 +400,14 @@
 			}
 
 			function markDelete(button) {
-				var id = button.className;
+				var id = button.value;
 				var deleteBox = document.getElementsByName('delete' +id);
 				var bool = deleteBox[0].checked;
 				deleteBox[0].checked = !bool;
 				if(deleteBox[0].checked) {
 					button.style.backgroundColor="red";
 				} else {
-					button.style.backgroundColor="green";
+					button.style.backgroundColor="teal";
 				}
 				console.log(id);
 				console.log(deleteBox[0].checked);

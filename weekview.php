@@ -98,6 +98,25 @@ include ('database.php');
 					<br>
 			        <h6><b>Filters</b></h6>	
 			        <br>
+			        <?php $groupArray = array();?>
+				    <select name="groupSelect" class="browser-default">
+			            <option value="" disabled selected>Please select a group</option>
+		                <option>All</option>
+						<?php 
+
+			      		foreach($connection->query("Select * from tblGROUP") as $row) {?>
+			           		<option value = <?php echo $row['GroupID'] ?>>
+				                <span>
+				                    <?php 
+				                    	$groupArray[$row['GroupID']] = $row['GroupName'];
+				                        echo $row['GroupName'];
+				                    ?>
+				                </span>
+			                    </br>
+		                    </option>
+		                <?php }?>
+			        	?>
+			        </select>
 			        <div class="week-picker"></div>
 				    <br />
 				    <!--<label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span><br />-->
@@ -142,25 +161,7 @@ include ('database.php');
 					    <option>Week 5</option> 
 				    </select>-->
 
-				    <?php $groupArray = array();?>
-				    <select name="groupSelect" class="browser-default">
-			            <option value="" disabled selected>Please select a group</option>
-		                <option>All</option>
-						<?php 
-
-			      		foreach($connection->query("Select * from tblGROUP") as $row) {?>
-			           		<option value = <?php echo $row['GroupID'] ?>>
-				                <span>
-				                    <?php 
-				                    	$groupArray[$row['GroupID']] = $row['GroupName'];
-				                        echo $row['GroupName'];
-				                    ?>
-				                </span>
-			                    </br>
-		                    </option>
-		                <?php }?>
-			        	?>
-			        </select>
+				    
 
 				    </br><!-- <input name = "formSubmit" type="submit" value="Select View"> -->
 				    <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="submitGroup" name="formSubmit">Select View</button>
