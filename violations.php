@@ -93,6 +93,7 @@
 					<input id="endDate" style="display:none" type="date" name="endDate">			        
 			    
 				    <!-- <input name = "formSubmit" type="submit" value="Select View"> -->
+				    <br>
 				    <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="formSubmit" name="formSubmit">Select View</button>
 				</form>
 

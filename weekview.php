@@ -464,8 +464,8 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 							?> 
 						</tbody>
 				</table>
-				<br>
-				<a class="waves-effect waves-light btn amber accent-3 right" href="violations.php" id="submit">Next</a>
+				<!-- <br> -->
+				<!-- <a class="waves-effect waves-light btn amber accent-3 right" href="violations.php" id="submit">Next</a> -->
 			
 	      	</div>
 	      	
