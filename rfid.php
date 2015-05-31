@@ -1,7 +1,7 @@
 <?php
 // 	header("Content-type: text/xml"); 
 include ('database.php');
-
+include('grouprfid.php');
 	$statement = $connection->prepare ("INSERT INTO tblPRACTICE (DateID, GroupID, PracticeTypeID, StartTime, EndTime) 
    	VALUES (:dateid, :groupid, :practicetypeid, :starttime, :endtime)");
     $statement2 = $connection->prepare ("INSERT INTO tblPLAYER_PRACTICE (PlayerID, PracticeID) 
@@ -11,7 +11,7 @@ include ('database.php');
 	//echo "works: " . $_GET['uid'];
    	if (isset($_POST['uid']) && isset($_POST['time'])) {
    		echo "did it work?";
-		$groupID = $_POST['uid'];
+		$groupID = convertgroup($_POST['uid']);
 		$tData = $_POST['time'];
 		$timeData = explode('_', $tData);
 		$hour = $timeData[0]; 
