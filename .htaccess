@@ -1,0 +1,5 @@
+DirectoryIndex index.php
+
+RewriteEngine On
+
+RewriteRule ^review coach_review_2.php [NC,L]
