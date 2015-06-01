@@ -185,7 +185,7 @@
 					    <?php  
 						
 						include ('database.php');
-						if(isset($_POST['formSubmit']) AND $_POST['groupSelect'] != "") {
+						if(isset($_POST['formSubmit']) AND $_POST['groupSelect'] != "" AND !empty($_POST['startDate'])) {
 
 							/*$monthyear = $_POST['monthSelect'];
 							$pieces = explode(" ", $monthyear);
@@ -373,14 +373,13 @@
 				<?php 
 				//echo var_dump($weekArray); 
 				} elseif(isset($_POST['formSubmit'])) {
-
-					echo "<script>alert('Please select a group')</script>";
+					if($_POST['groupSelect'] == "") {
+						echo "<script>alert('Please select a group')</script>";
+					}
 					$start = $_POST["startDate"];
-					if(strcmp($start, "")) {
+					if(empty($start)) {
 						echo "<script>alert('Please select a date from the calendar')</script>";
 					}
-				} elseif(isset($_POST['formSubmit']) AND $_POST["startDate"] == "") {
-					echo "<script>alert('Please select a date from the calendar')</script>";
 				} 
 				?>
 			</div>
