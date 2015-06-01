@@ -36,42 +36,42 @@
                 <form  action = "signupprocess.php" method = "POST" class="col s12">
                     <div class="row">
                         <div class="input-field col s8">
-                            <input id="netid" type="text" class="validate">
+                            <input id="netid" type="text" class="validate" name="username">
                             <label for="netid">UW Net ID</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s8">
-                          <input id="email" type="email" class="validate">
+                          <input id="email" type="email" class="validate" name="email">
                           <label for="email">Email</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s8">
-                            <input id="password" type="password" class="validate">
+                            <input id="password" type="password" class="validate" name="password">
                             <label for="password">Password</label>
                         </div>
                     </div>
                     <div class="row">
-                        <form action="#">
                             <span class="coach-ica">
-                                <input type="radio" class="filled-in " id="coach" name="group1"/>
+                                <input type="radio" value = "Coach" class="filled-in " id="coach" name="group1"/>
                                 <label for="coach">Coach</label>
                             </span>
                             <span class="coach-ica">
-                                <input type="radio" class="filled-in " id="ica" name="group1"/>
+                                <input type="radio" value = "ICA" class="filled-in " id="ica" name="group1"/>
                                 <label for="ica">ICA</label>
                             </span>
-                        </form>
+                        
                             
+                    </div>
+                    <div class="row">
+                        <div class="join-button">
+                            <button class="btn waves-effect waves-light amber accent-3 white-text join-btn" type="submit" id="formSubmit" name="formSubmit">Sign Up</button>
+                        </div>
                     </div>
                 </form>
             </div>
-            <div class="row">
-                <div class="join-button">
-                    <button class="btn waves-effect waves-light amber accent-3 white-text join-btn" type="submit" id="formSubmit" name="formSubmit">Sign Up</button>
-                </div>
-            </div>
+            
         </div>
             
 
