@@ -357,6 +357,7 @@ function printWeek($year, $month, $week, $group, $default){
 					    		if ($trackViolations == 0) {
 					    			echo 'No Violations this week';
 					    		}
+					    		$trackViolations = 0;
 					    		?> 
 								</td>
 					    	</tr>
