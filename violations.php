@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title></title>
         <!-- Compiled and minified CSS -->
+        <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
   		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
   		<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -76,7 +77,7 @@
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
                     <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->
-                    <li><a class = "logout1" href="index.php">Logout</a></li>
+                    <li><a class = "logout" href="index.php">Logout</a></li>
                 </ul>
             </div>
         </nav>
@@ -105,7 +106,7 @@
 			</div>
 
 			<div class="col s9">
-				<table class="bordered stiped hoverable">
+				<table class="bordered">
 					<thead>
 						<tr>
 							<th data-field="name">Name</th>
@@ -138,7 +139,7 @@
 					</div>
 
 			<div class="col s9">
-				<table class="bordered stiped hoverable">
+				<table class="bordered hoverable">
 					<thead>
 						<tr>
 							<th data-field="name">Name</th>
