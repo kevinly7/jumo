@@ -1,0 +1,41 @@
+Use Case:
+1a. Coach logs in to review a specific group's practice logs for a certain week
+1b. Coach needs to update a students practice log
+1c. Coach creates a new subgroup
+1d. Coach adds students to a subgroup
+
+2a. ICA logs in to look at summary of practice logs
+2b. ICA reviews violations for a certain week
+2c. ICA changes sport 
+
+3a. User creates a new account
+
+Test case:
+1a. log in with Rob Lowe
+	select a group and choose a week and press select view
+1b. log in with Rob Lowe
+	choose a group and week
+	click select view
+	click delete and enter a new time
+	click submit
+1c. log in with Rob Lowe
+	go to settings by hovering over settings and choosing create group
+	enter data and click create group
+	validate by going to edit students and group shows up
+1d. as rob lowe go to edit students
+	choose a group and select students
+	click submit
+
+2a. as saul goodman go to weekview
+	choose a group and select a date and click select view
+2b. as saul goodman go to violations
+	choose a date and click select view
+2c. ICA logs in and selects a sport
+	ICA clicks jumo from anywhere and is taken to sport select
+
+3a. user clicks signup 
+	user chooses a username, enters an email, and password
+	user clicks sign up
+	user goes to home by clicking jumo or log in 
+	user logs in with credentials
+
