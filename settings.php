@@ -92,7 +92,7 @@
         $group = $_POST['subgroup'];
         $coach = $_POST['coach'];
         $contact = $_POST['contact'];
-        $rfid = convertgroup($_POST['rfid']);
+        $rfid = $_POST['rfid'];
         $sportid = 1;
 
     $statement = $connection->prepare ("INSERT INTO tblGROUP (GroupID, GroupName, CoachName, CoachContact, SportID) VALUES (:groupid, :group, :coach, :contact, :sportid)");

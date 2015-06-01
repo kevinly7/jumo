@@ -287,6 +287,7 @@ function printWeek($year, $month, $week, $group, $default){
 			    $daysPracticed = 0; 
 			    $dayTracker = array();
 			    $dayTracker[0] = -1;
+			    $trackViolations = 0;
 
 			    foreach ($weekArray as $key => $value) { $weekhours = 0;?>
 
@@ -328,12 +329,14 @@ function printWeek($year, $month, $week, $group, $default){
 											if (($startPiece > $practiceStart && $startPiece < $practiceEnd) ||
 												($endPiece > $practiceStart && $endPiece < $practiceEnd)) {
 												echo 'Not supposed to be practicing at the time ' . $correctStart . ' to ' . $endStart . ' on ' . $dateKey .'</br>';
+												$trackViolations++;
 											}
 					    				}
 					    				$weekHours += $difference;
 					    				$daysPracticed = count($sumArray[$key]);
 					    				if ($difference > $dayLimit){ 
 					    				 echo 'Over 4 hours on ' . $dateKey . '</br>';
+					    				 $trackViolations++;
 					    				} 
 					    			 ?> 
 					    			 
@@ -343,11 +346,17 @@ function printWeek($year, $month, $week, $group, $default){
 					    		<?php 
 					    		if ($daysPracticed > 3) { 
 								   echo 'No Break Days this week' . '</br>';
+								   $trackViolations++;
 					    		}
 
 					    		if ($weekHours > $hourLimit){ 
 					    			echo 'Over the 20 hour weekly limit' ;
+					    			$trackViolations++;
 					    		} 
+
+					    		if ($trackViolations == 0) {
+					    			echo 'No Violations this week';
+					    		}
 					    		?> 
 								</td>
 					    	</tr>
