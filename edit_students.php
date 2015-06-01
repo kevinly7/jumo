@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
         <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     </head>
     <body>
           <?php  
@@ -36,7 +37,7 @@
 
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-button" href="#" data-activates="dropdown1">Settings<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
-                    <li><a class = "logout1" href="index.php">Logout</a></li>
+                    <a class = "logout1" href="index.php">Logout</a>
                 </ul>
             </div>
         </nav>

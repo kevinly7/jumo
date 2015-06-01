@@ -10,6 +10,7 @@ include ('database.php');
         <meta charset="UTF-8">
         <title></title>
         <!-- Compiled and minified CSS -->
+        <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
   		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
   		<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -82,7 +83,7 @@ include ('database.php');
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
                     <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->
-                    <li><a class = "logout1" href="index.php">Logout</a></li>
+                    <a class = "logout1" href="index.php">Logout</a>
                 </ul>
             </div>
         </nav>
