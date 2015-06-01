@@ -37,7 +37,7 @@
 
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-button" href="#" data-activates="dropdown1">Settings<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
-                    <li><a class = "logout1" href="index.php">Logout</a></li>
+                    <a class = "logout1" href="index.php">Logout</a>
                 </ul>
             </div>
         </nav>
