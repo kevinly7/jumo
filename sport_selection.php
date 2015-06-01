@@ -16,7 +16,6 @@
     <body>
         <?php  
         session_start();
-        echo $_SESSION["newsession"];
             if (!isset($_SESSION["newsession"])) {
                 echo "Please log in again.";
             } else if ($_SESSION["newsession"]!="ica") {
