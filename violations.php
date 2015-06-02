@@ -237,7 +237,7 @@ function printWeek($year, $month, $week, $group, $default){
 					join tblPLAYER pl
 					on pp.PlayerID = pl.PlayerID
 					WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday'
-					ORDER BY DateName ASC");
+					ORDER BY DateName, PlayerName ASC");
 
 				if($violationquery->rowCount() < 1)
 				{ ?>

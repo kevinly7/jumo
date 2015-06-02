@@ -320,7 +320,7 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 							join tblPLAYER pl
 							on pp.PlayerID = pl.PlayerID
 							WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' $groupQuery
-							ORDER BY DateName ASC") as $row) { 
+							ORDER BY DateName, PlayerName ASC") as $row) { 
 							$name = $row['PlayerName'];
 							$timestamp = strtotime($row['DateName']);
 							$dayOfWeek = date("w", $timestamp);
