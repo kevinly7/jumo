@@ -29,7 +29,7 @@
         <nav class="purple darken-4">
             <div class="nav-wrapper">
                 <ul class="logo">
-                    <a href="coach_review_2.php" class="brand-logo white-text">Jumo</a>
+                    <a href="coach_review.php" class="brand-logo white-text">Jumo</a>
                 </ul>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
