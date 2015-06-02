@@ -230,7 +230,7 @@
 								$groupQuery = '';
 							}
 
-							foreach($connection->query("Select p.DateID, p.GroupID, pl.PlayerID, p.PracticeID, p.StartTime, EndTime, PracticeTypeName, DateName, PlayerName
+							foreach($connection->query("Select p.DateID, p.GroupID, pl.PlayerID, p.PracticeID, p.StartTime, p.PracticeTypeID, EndTime, PracticeTypeName, DateName, PlayerName
 								from tblPRACTICE p
 								join tblPRACTICE_TYPE pt
 								on p.PracticeTypeID = pt.PracticeTypeID
@@ -243,12 +243,13 @@
 								WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' $groupQuery
 								ORDER BY DateName ASC, PlayerName ASC") as $row) { 
 
+								$practiceTypeID = $row['PracticeTypeID'];
 								$timestamp = strtotime($row['DateName']);
 								$dayOfWeek = date("w", $timestamp);
 								$startTime = strtotime($row['StartTime']);
 								$endTime = strtotime($row['EndTime']);
-								$difference = $endTime - $startTime;
-								$weekHours += $difference;
+								//$difference = $endTime - $startTime;
+								//$weekHours += $difference;
 								$diffDisplay = '';
 								$hours = '';
 								$minutes = '';
@@ -259,9 +260,24 @@
 								$dateID = $row['DateID'];
 								$groupID = $row['GroupID'];
 								$practiceCounter++;
+								$diffValue = $endTime - $startTime;
+								if ($practiceTypeID == 2){
+									$difference = 10800;
+								}								
+								$difference = $endTime - $startTime;
+								if($difference < 0) {
+									$difference = $difference + (24*3600);
+								}
+								/*Copied from Kevin's weekview*/
+								if(!array_key_exists($name, $sumArray)){
+									$sumArray[$name] = $difference;
+								} else {
+									$sumArray[$name] += $difference; 
+								}
+								
+								
 
-								if($difference > 3600){
-
+								/*if($difference > 3600){
 									$hours = abs($difference/3600 %24);
 									$difference = $difference - ($hours * 3600);
 									$diffDisplay .= $hours . ' hrs ';
@@ -276,7 +292,7 @@
 								if ($difference <60) {
 								 	$seconds = $difference;
 								 	$diffDisplay .= $seconds . ' s ';
-								} 	
+								}*/ 	
 
 
 								if(!array_key_exists($name, $weekArray)){
@@ -353,10 +369,10 @@
 						    		}?>
 
 							    	<td><?php 
-							    		if ($weekHours > $hourLimit){
-										echo '<font color="red">' .sumFormat($weekHours) . '</font>';
+							    		if ($sumArray[$name] > $hourLimit){
+										echo '<font color="red">' .sumFormat($sumArray[$name]) . '</font>';
 							    		} else {
-							    		echo  sumFormat($weekHours); 
+							    		echo  sumFormat($sumArray[$name]); 
 							    		} ?>
 
 							    	</td>
