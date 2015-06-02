@@ -103,13 +103,13 @@
 
 				    <select name="groupSelect" class="browser-default">
 			            <option value="" >Please select a group</option>
-			            <!--<option>All</option>-->
+			            <option value="All">All</option>
 						<?php 
 
 				      	foreach($connection->query("Select * from tblGROUP") as $row) {?>
 				            <option value = <?php echo $row['GroupID'] ?>>
 					            <span>
-				                    <?php 
+				                    <?php
 				                    	$groupArray[$row['GroupID']] = $row['GroupName'];
 				                        echo $row['GroupName'];
 				                    ?>
@@ -150,13 +150,7 @@
 						<?php }?>
 					</select>-->
 
-				 	<!--<select name="weekSelect" class="browser-default">
-					 	<option value="" >Please select a week</option>
-					    <option>1</option> 
-					    <option>2</option> 
-					    <option>3</option> 
-					    <option>4</option> 
-				    </select>-->
+				 
 				    
 				    <input id ="startDate" type="date" name="startDate" style="display:none">
 					<input id="endDate" type="date" name="endDate" style="display:none">
@@ -219,14 +213,18 @@
 							$endday = $weekrange[1];*/
 							$startday = $_POST['startDate'];
 							$endday = $_POST['endDate'];
+							$groupDisplay = $group; 
+							if ($group != 'All'){
+								$groupDisplay = $groupArray[$group];
+							}
 							?>
-							<p class = "viewTitle"> <?php echo "Checking practices from " . $groupArray[$group] . ' ' . $startday . ' to ' . $endday; ?> </p>
+							<p class = "viewTitle"> <?php echo "Checking practices from " . $groupDisplay . ' ' . $startday . ' to ' . $endday; ?> </p>
 
 							<?php $dayCount = 0;
 							$weekHours = 0;
 							$weekArray = array();
 							$sumArray = array();
-							//$groupQuery = "AND '$endday' AND (p.GroupID = $group)";
+							$groupQuery = "AND (p.GroupID = $group)";
 							$practiceCounter = 0;
 							if($group == 'All') {
 								$groupQuery = '';
@@ -242,8 +240,8 @@
 								on pp.PracticeID = p.PracticeID
 								join tblPLAYER pl
 								on pp.PlayerID = pl.PlayerID
-								WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' AND p.GroupID = $group
-								ORDER BY DateName ASC") as $row) { 
+								WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' $groupQuery
+								ORDER BY DateName ASC, PlayerName ASC") as $row) { 
 
 								$timestamp = strtotime($row['DateName']);
 								$dayOfWeek = date("w", $timestamp);
