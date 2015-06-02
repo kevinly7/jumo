@@ -32,7 +32,7 @@ if(isset($_POST["netid"]) and isset($_POST["password"])) {
 			} 
 			if($row["UserTypeName"] == "Coach") {
 				if($row["UserPassword"] == $password) {
-					header("Location: coach_review_2.php");
+					header("Location: coach_review.php");
 					$_SESSION["newsession"]="coach";
 					die();
 				} else { 
