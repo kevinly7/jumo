@@ -452,7 +452,7 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 
 									<td><?php
 										
-										if ($daysPracticed > 3) {
+										if ($daysPracticed > 6) {
 											echo 'No Break Days' . '</br>';
 										}
 										if ($weekHours > $hourLimit){

@@ -344,7 +344,7 @@ function printWeek($year, $month, $week, $group, $default){
 					    		?>
 
 					    		<?php 
-					    		if ($daysPracticed > 3) { 
+					    		if ($daysPracticed > 6) { 
 								   echo 'No Break Days this week' . '</br>';
 								   $trackViolations++;
 					    		}
