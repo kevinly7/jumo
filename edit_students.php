@@ -59,7 +59,7 @@
                         <select name="p2" class="browser-default">
                             <option value="" disabled selected>Please select a group</option>
                             <?php 
-                            foreach($connection->query("Select * from tblGROUP") as $row) {?>
+                            foreach($connection->query("Select * from tblGROUP ORDER BY GroupName ASC") as $row) {?>
                             <option value = <?php echo $row['GroupID'] ?> >
                                 <span>
                                     <?php 
@@ -78,7 +78,7 @@
 
                             $playerArray = array();
 
-                            foreach($connection->query("Select * from tblPLAYER") as $row) {
+                            foreach($connection->query("Select * from tblPLAYER ORDER BY PlayerName ASC") as $row) {
                                 $playerObject = new Player($row['PlayerName'], $row['PlayerID'], $row['PlayerContact']); 
 
                                 $playerArray[$row['PlayerName']] = $row['PlayerID'];
