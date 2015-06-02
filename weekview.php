@@ -426,11 +426,12 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 												$practiceStart = strtotime('12:00:00 AM');
 												$practiceEnd = strtotime('05:00:00 AM');
 												
+												echo $correctStart . ' to ' . $endStart .'</br>';
 												if (($startPiece > $practiceStart && $startPiece < $practiceEnd) ||
 													($endPiece > $practiceStart && $endPiece < $practiceEnd)) {
-													echo '<font color="red"> Should not practice between ' . $correctStart . ' ' . $endStart . '</font>' . '</br>';
+													echo '<font color="red"> Should not practice between that time </font>' . '</br>';
 												}
-												echo $correctStart . ' to ' . $endStart .'</br>';
+												
 											}
 											$weekHours += $dayDifference;
 											$daysPracticed = count($sumArray[$key]);
