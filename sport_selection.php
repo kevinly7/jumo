@@ -38,7 +38,7 @@
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
                     <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->
-                    <a class = "logout1" href="index.php">Logout</a>
+                    <li> <a class = "logout1" href="index.php">Logout</a> </li>
                 </ul>
             </div>
         </nav>
