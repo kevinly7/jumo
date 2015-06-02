@@ -88,7 +88,7 @@ include ('database.php');
             </div>
         </nav>
 
-        <h4 class="center">Week View</h4>
+        
 
     	<div class="row">
 			<div class="col s3">	
@@ -298,7 +298,7 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 							$groupDisplay = $groupArray[$group];
 						}
 						?>
-						<p class = "viewTitle"> <?php echo "Checking practices from " . $groupDisplay . ' ' . $startday . ' to ' . $endday; ?> </p>
+						<h4 class = "center"> <?php echo "Weekview: (" . $groupDisplay . ') ' . $startday . ' to ' . $endday; ?> </p>
 						<?php $dayCount = 0;
 						$weekHours = 0;
 						$weekArray = array();
@@ -428,7 +428,7 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 												
 												if (($startPiece > $practiceStart && $startPiece < $practiceEnd) ||
 													($endPiece > $practiceStart && $endPiece < $practiceEnd)) {
-													echo 'Not supposed to be practicing at this time' . '</br>';
+													echo '<font color="red"> Should not practice between ' . $correctStart . ' ' . $endStart . '</font>' . '</br>';
 												}
 												echo $correctStart . ' to ' . $endStart .'</br>';
 											}

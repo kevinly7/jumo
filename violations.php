@@ -82,7 +82,7 @@
             </div>
         </nav>
 		
-		<h4 class="center">Violations</h4>
+		
 
 		<div class="row">
 			<div class="col s3">
@@ -224,7 +224,7 @@ function printWeek($year, $month, $week, $group, $default){
 		$weekArray = array();
 		$sumArray = array();
 						?>
-		<p class = "viewTitle"> <?php echo "Checking violations from " . $startday . ' to ' . $endday; ?> </p>
+		<h4 class = "center"> <?php echo "Weekview: " . $startday . ' to ' . $endday; ?> </p>
 	<?php
 				$violationquery = $connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
 					from tblPRACTICE p
@@ -328,7 +328,7 @@ function printWeek($year, $month, $week, $group, $default){
 											
 											if (($startPiece > $practiceStart && $startPiece < $practiceEnd) ||
 												($endPiece > $practiceStart && $endPiece < $practiceEnd)) {
-												echo 'Not supposed to be practicing at the time ' . $correctStart . ' to ' . $endStart . ' on ' . $dateKey .'</br>';
+												echo 'Should not practice between ' . $correctStart . ' to ' . $endStart . ' on ' . $dateKey .'</br>';
 												$trackViolations++;
 											}
 					    				}

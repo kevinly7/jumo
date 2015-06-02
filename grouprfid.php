@@ -23,6 +23,5 @@ for( $i = 0; $i <= $strlen; $i++ ) {
     $groupid .= ord($char);
     // $char contains the current character, so do your processing here
 }
-echo $groupid;
 
 ?>
