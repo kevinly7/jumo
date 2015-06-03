@@ -66,12 +66,44 @@
             </div>
             <div class="parallax"><img src="background2.jpg" alt="Unsplashed background img 2"></div>
         </div>
-		<?php include("login.php")?>
+		<?php include("login.php") ?>
+
+        <div class="section hero" id="hero1">
+            <div class="container copy">
+                    <br><br>
+                    <h1 class="header center purple-text text-darken-4 brand-logo">Jumo</h1>
+                    <div class="row center">
+                    </div>
+
+                    <div class="row right black-text">
+                          <div class="col s12">
+                                <div class="card white">
+                                    <div class="card-content">
+                                        <span class="card-title black-text">Sign in</span>
+                                        <form action="" id="loginForm" method = "POST">
+                                            <div class="input-field">
+                                                <input id="first_name" type="text" class="validate" name='netid'>
+                                                <label for="email">UW NetID</label>
+                                            </div>
+                                            <div class="input-field">
+                                                <input id="password" type="password" name='password' class="validate">
+                                                <label for="password">Password</label>
+                                            </div>
+                                            <div class="card-action row right">
+                                                <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" value="Login" name="action">Login</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                          </div>
+                    </div>
+                </div>
+        </div>  
 
 
         <!-- description section -->
-        <div class="container">
-            <div class="section">
+        <div class="section description-section">
+            <div class="container">
 
                 <!--   Icon Section   -->
                 <div class="row">
@@ -110,9 +142,9 @@
                         </div>
                     </div>
               </div>
-
             </div>
         </div>
+
         <footer class="page-footer purple darken-4">
             <div class="container">
                 <div class="row">
@@ -129,14 +161,14 @@
                     <div class="col s12">
                         <h5 class="white-text">Team</h5>
                         <p class="grey-text text-lighten-4 light">
-                            !!Headshot of Team and short bio goes here!!
+                            Howard Lin | Kevin Ly | Tuvshin Tulga | Kevin Yang
                         </p>
                     </div>
                 </div>
             </div>
             <div class="footer-copyright">
                 <div class="container">
-                    Made by <!-- <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a> -->
+                    Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
                 </div>
             </div>
         </footer>
