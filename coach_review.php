@@ -350,11 +350,186 @@
 						echo "<script>alert('Please select a date from the calendar')</script>";
 					}
 				} else {
-					echo "<script>var input = document.getElementsByName('groupSelect'); input[0].value = 'All';</script>";
-					    
+					date_default_timezone_set("America/Los_Angeles");
+					$year = date("Y");
+					$month = date("m");
+
+					if ($month == 1) {
+						$month = 12;
+					} else {
+						$month -= 1;
+					}
+
+					$week = '01';
+					$num_length = strlen((string)$month);
+					if($num_length < 2) {
+					// Pass
+						$month = '0'.$month;
+					} 
+					$date = $year.$month.$week;
+					$weekrange = week_range($date);
+					$startday = $weekrange[0];
+					$endday = $weekrange[1];
+
+					
+							$group = "All";
+							$groupDisplay = $group; 
+							if ($group != 'All'){
+								$groupDisplay = $groupArray[$group];
+							}
+							?>
+							<p class = "viewTitle"> <?php echo "Checking practices from " . $groupDisplay . ' ' . $startday . ' to ' . $endday; ?> </p>
+
+							<?php $dayCount = 0;
+							$weekHours = 0;
+							$weekArray = array();
+							$sumArray = array();
+							$groupQuery = "AND (p.GroupID = $group)";
+							$practiceCounter = 0;
+							if($group == 'All') {
+								$groupQuery = '';
+							}
+
+							foreach($connection->query("Select p.DateID, p.GroupID, pl.PlayerID, p.PracticeID, p.StartTime, p.PracticeTypeID, EndTime, PracticeTypeName, DateName, PlayerName
+								from tblPRACTICE p
+								join tblPRACTICE_TYPE pt
+								on p.PracticeTypeID = pt.PracticeTypeID
+								join tblDATE d
+								on p.DateID = d.DateID
+								join tblPLAYER_PRACTICE pp
+								on pp.PracticeID = p.PracticeID
+								join tblPLAYER pl
+								on pp.PlayerID = pl.PlayerID
+								WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' $groupQuery
+								ORDER BY DateName ASC, PlayerName ASC") as $row) { 
+
+								$practiceTypeID = $row['PracticeTypeID'];
+								$timestamp = strtotime($row['DateName']);
+								$dayOfWeek = date("w", $timestamp);
+								$startTime = strtotime($row['StartTime']);
+								$endTime = strtotime($row['EndTime']);
+								$diffDisplay = '';
+								$hours = '';
+								$minutes = '';
+								$seconds = '';
+								$name = $row['PlayerName'];
+								$practiceID = $row['PracticeID'];
+								$playerID = $row['PlayerID'];
+								$dateID = $row['DateID'];
+								$groupID = $row['GroupID'];
+								$practiceCounter++;
+								$diffValue = $endTime - $startTime;
+								if ($practiceTypeID == 2){
+									$difference = 10800;
+								}								
+								$difference = $endTime - $startTime;
+								if($difference < 0) {
+									$difference = $difference + (24*3600);
+								}
+								/*Copied from Kevin's weekview*/
+								if(!array_key_exists($name, $sumArray)){
+									$sumArray[$name] = $difference;
+								} else {
+									$sumArray[$name] += $difference; 
+								}
+								
+								
+
+								
+
+
+								if(!array_key_exists($name, $weekArray)){
+									$weekArray[$name][$dayOfWeek] = array();
+								} 
+
+								if (!array_key_exists($dayOfWeek, $weekArray[$name])) {
+									$dayInput = 
+									'<input type="hidden" name=groupID'.$practiceCounter.' value='. $groupID.'>
+									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
+									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
+									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
+									'<input type="checkbox" class="filled-in browser-default"  name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
+									'<input type="checkbox"  class="filled-in browser-default" name=delete'.$practiceCounter.' value="delete">'.
+									'<button type="button"  value='.$practiceCounter.' class="btn" onclick="markDelete(this)">Delete</button></br>'.
+									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
+									$weekArray[$name][$dayOfWeek][0] = $dayInput;
+
+								} else {
+									$size = sizeof($weekArray[$name][$dayOfWeek]);
+									$weekArray[$name][$dayOfWeek][$size] =
+									'<input type="hidden" name=groupID'.$practiceCounter.' value='. $groupID.'>
+									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
+									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
+									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
+									'<input type="checkbox" class="filled-in browser-default" style="display:none" name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
+									'<input type="checkbox"  class="filled-in browser-default" style="display:none" name=delete'.$practiceCounter.' value="edit">'.
+									'<button type="button"  value='.$practiceCounter.' class="btn" onclick="markDelete(this)">Delete</button></br>'.
+									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
+								} 
+
+					 		} ?><?php 
+					 
+						    $dayTracker = array();
+						    $dayTracker[0] = -1;
+						    $hourLimit = 72000;
+						    $dayLimit = 14400;
+					 
+					    	foreach ($weekArray as $key => $value) {
+					    		$firsttime = true;?>
+								<tr>
+						    		<td><?php echo $key ?></td>
+						    		<?php 
+						    		foreach ($value as $dayKey => $timesArray) { 
+						    			if ($firsttime == true) {
+						    				for ($f = 0; $f < ($dayKey); $f++) { ?>
+						    					<td>No Practice</td>
+						    				<?php }
+						    			$firsttime = false; 
+						    			}?>
+						    			
+						    			<?php
+						    			if($dayTracker[0] != -1 && ($dayKey - $dayTracker[0]) > 1) {
+						    				for ($j= 0; $j < ($dayKey-$dayTracker[0])-1; $j++) { ?>
+						    					<td>No Practice</td>
+						    				<?php }
+						    			}
+
+										$dayTracker[0] = $dayKey;
+										?>
+						    			<td>
+							    			<?php 
+						    				foreach ($timesArray as $timeKey => $timeValue) {
+						    					echo $timeValue . '</br>';
+						    				}?> 
+						    			</td> 
+
+						    		<?php }
+
+						    		if($dayTracker[0] != -1 && (7 - $dayTracker[0]) > 1) {
+					    				for ($j= 0; $j < (7-$dayTracker[0])-1; $j++) { ?>
+					    					<td>No Practice</td>
+						    			<?php }
+						    		}?>
+
+							    	<td><?php 
+							    		if ($sumArray[$name] > $hourLimit){
+										echo '<font color="red">' .sumFormat($sumArray[$name]) . '</font>';
+							    		} else {
+							    		echo  sumFormat($sumArray[$name]); 
+							    		} ?>
+
+							    	</td>
+						    	</tr>
+					    	<?php }?> 
+					</table>
+					<br>
+					<input type="hidden" name="length" value=<?php echo $practiceCounter ?>>
+					<!-- <input type="submit" name = "formSubmit" value = "Submit"> -->
+					<button class="btn waves-effect waves-light amber accent-3 white-text right" type="submit" id="submitGroup" name="formSubmit">Submit</button>
+				</form>					    
 					
 
-				}
+				<?php }
 				?>
 			</div>
 		</div>
