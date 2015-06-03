@@ -23,7 +23,11 @@
         <ul id="dropdown1" class="dropdown-content">
             <li><a class="purple-text text-darken-4" href="settings.php">Create Groups</a></li>
             <li class="divider"></li>
-            <li><a class="purple-text text-darken-4" href="edit_students.php">Edit Groups</a></li>
+            <li><a class="purple-text text-darken-4" href="edit_students.php">Add Students to Group</a></li>
+            <li class="divider"></li>
+            <li><a class="purple-text text-darken-4" href="delete_student_groups.php">Delete Students from Group</a></li>
+            <li class="divider"></li>
+            <li><a class="purple-text text-darken-4" href="create2.php">Add Practice to Group</a></li>
         </ul>
 
         <nav class="purple darken-4">

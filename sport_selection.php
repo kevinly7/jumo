@@ -31,10 +31,10 @@
                     <a href="sport_selection.php" class="brand-logo white-text">Jumo</a>
                 </ul>
                 
-                <ul class="left hide-on-med-and-down menu">
+                <!-- <ul class="left hide-on-med-and-down menu">
                     <li><a href="weekview.php">Weekview</a></li>
                     <li><a href="violations.php">Violations</a></li>
-                </ul>
+                </ul> -->
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
                     <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->
