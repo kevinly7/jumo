@@ -11,6 +11,7 @@
     </head>
     <body>
           <?php  
+          include('groupStudents.php');
        session_start();
             if (!isset($_SESSION["newsession"])) {
                 echo "Please log in again.";
@@ -78,12 +79,9 @@
             <!-- <a href="weekview.php" class="waves-effect waves-light amber accent-3 white-text btn">Submit (go to week)</a> -->
 
         <?php
-
-        if(isset($_POST['formSubmit'])) 
+ if(isset($_POST['formSubmit'])) 
         {
-
-            echo '</br>' . $_POST['p2'] . '</br>';
-            $groupid = $_POST['p2'];
+            echo "hello";
 
             $aStudents = $_POST['formStudents'];
 
@@ -94,33 +92,26 @@
             else
             {
 
-                $statement = $connection->prepare ("INSERT INTO tblPLAYER_GROUP (PlayerID, GroupID) VALUES (:playerid, :groupid)"); 
-
-
+               
 
                 $nStudents = count($aStudents);
 
-                echo("<p>You selected $nStudents students: ");
+                echo("<p>You have selected $nStudents students to remove: ");
                 for($i=0; $i < $nStudents; $i++)
                 {
                     $player = $aStudents[$i];
                     echo $aStudents[$i];
                     $playerID = $playerArray[$player];
-
-                    $practicequery = $connection->query("Select PlayerID from tblPLAYER_GROUP WHERE GroupID = $groupid AND PlayerID = $playerID ");
-                    $practicequery->execute();
-
-                    if($practicequery->rowCount() < 1)
-                    {
-                      $statement -> execute(array(':groupid' => $groupid, ':playerid' => $playerID));
-                    }
-
-
+                     $statement = $connection->prepare ("DELETE FROM tblPLAYER_GROUP WHERE PlayerID = :playerID "); 
+                 
+                    $statement -> execute(array(':playerid' => $playerID));
                     
                 }
                 echo("</p>");
             }
         }
+
+       
 
     }
         ?>

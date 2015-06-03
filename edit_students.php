@@ -114,8 +114,6 @@
 
         if(isset($_POST['formSubmit'])) 
         {
-
-            echo '</br>' . $_POST['p2'] . '</br>';
             $groupid = $_POST['p2'];
 
             $aStudents = $_POST['formStudents'];
@@ -133,7 +131,7 @@
 
                 $nStudents = count($aStudents);
 
-                echo("<p>You selected $nStudents students: ");
+                echo("<p>You have inserted the following $nStudents students: ");
                 for($i=0; $i < $nStudents; $i++)
                 {
                     $player = $aStudents[$i];
