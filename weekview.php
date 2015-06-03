@@ -70,7 +70,12 @@ include ('database.php');
 
     ?>
     	<!-- header -->
-    	<nav class="purple darken-4">
+    	<ul id="dropdown1" class="dropdown-content">
+            <li><a class="purple-text text-darken-4" href="signup.php">Create Accounts</a></li>
+            <li class="divider"></li>
+        </ul>
+
+        <nav class="purple darken-4">
             <div class="nav-wrapper">
                 <ul class="logo">
                 	<a href="sport_selection.php" class="brand-logo white-text">Jumo</a>
@@ -82,13 +87,12 @@ include ('database.php');
         		</ul>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
+                	<li><a class="dropdown-button" href="#" data-activates="dropdown1">Settings<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
                     <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->
                     <li> <a class = "logout1" href="index.php">Logout</a> </li>
                 </ul>
             </div>
-        </nav>
-
-        
+        </nav>    
 
     	<div class="row">
 			<div class="col s3">	
@@ -175,7 +179,7 @@ include ('database.php');
 				if(isset($_POST['formSubmit']) AND isset($_POST['groupSelect'])) 
 				{ ?>
 				</div>
-						<div class="col s9">
+				<div class="col s9">
 		      		<table class="bordered striped">
 						<thead>
 							<tr>

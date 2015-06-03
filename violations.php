@@ -64,6 +64,11 @@
 
     ?>
     	<!-- header -->
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a class="purple-text text-darken-4" href="signup.php">Create Accounts</a></li>
+            <li class="divider"></li>
+        </ul>
+
         <nav class="purple darken-4">
             <div class="nav-wrapper">
                 <ul class="logo">
@@ -76,11 +81,12 @@
         		</ul>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
+                	<li><a class="dropdown-button" href="#" data-activates="dropdown1">Settings<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
                     <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->
                     <li> <a class = "logout1" href="index.php">Logout</a> </li>
                 </ul>
             </div>
-        </nav>
+        </nav>  
 		
 		
 

@@ -23,13 +23,17 @@
         <ul id="dropdown1" class="dropdown-content">
             <li><a class="purple-text text-darken-4" href="settings.php">Create Groups</a></li>
             <li class="divider"></li>
-            <li><a class="purple-text text-darken-4" href="edit_students.php">Edit Groups</a></li>
+            <li><a class="purple-text text-darken-4" href="edit_students.php">Add Students to Group</a></li>
+            <li class="divider"></li>
+            <li><a class="purple-text text-darken-4" href="delete_student_groups.php">Delete Students from Group</a></li>
+            <li class="divider"></li>
+            <li><a class="purple-text text-darken-4" href="create2.php">Add Practice to Group</a></li>
         </ul>
 
         <nav class="purple darken-4">
             <div class="nav-wrapper">
                 <ul class="logo">
-                    <a href="coach_review_2.php" class="brand-logo white-text">Jumo</a>
+                    <a href="coach_review.php" class="brand-logo white-text">Jumo</a>
                 </ul>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
@@ -122,7 +126,7 @@
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
-         <script src="js/logout.js"></script>
-          <script src="js/deleteStudent.js"></script>
+        <script src="js/logout.js"></script>
+        <script src="js/deleteStudent.js"></script>
     </body>
 </html>
