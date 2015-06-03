@@ -82,8 +82,8 @@
         if(isset($_POST['formSubmit'])) 
         {
 
-            $groupid = $_POST['p2'];
-
+           // $groupid = $_POST['p2'];
+            echo "deleted works?";
             $aStudents = $_POST['formStudents'];
 
             if(!isset($aStudents)) 
