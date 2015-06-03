@@ -72,17 +72,13 @@
         <ul id="dropdown1" class="dropdown-content">
             <li><a class="purple-text text-darken-4" href="settings.php">Create Groups</a></li>
             <li class="divider"></li>
-            <li><a class="purple-text text-darken-4" href="edit_students.php">Add Students to Group</a></li>
-            <li class="divider"></li>
-            <li><a class="purple-text text-darken-4" href="delete_student_groups.php">Delete Students from Group</a></li>
-            <li class="divider"></li>
-            <li><a class="purple-text text-darken-4" href="create2.php">Add Practice to Group</a></li>
+            <li><a class="purple-text text-darken-4" href="edit_students.php">Edit Groups</a></li>
         </ul>
 
         <nav class="purple darken-4">
             <div class="nav-wrapper">
                 <ul class="logo">
-                    <a href="coach_review.php" class="brand-logo white-text">Jumo</a>
+                    <a href="coach_review_2.php" class="brand-logo white-text">Jumo</a>
                 </ul>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
@@ -94,6 +90,8 @@
                 </ul>
             </div>
         </nav>
+
+        <h4 class="center">Summary</h4>
 
         <div class="row">
         	<div class="col s3">
@@ -183,36 +181,8 @@
 						include ('database.php');
 						if(isset($_POST['formSubmit']) AND $_POST['groupSelect'] != "" AND !empty($_POST['startDate'])) {
 
-							/*$monthyear = $_POST['monthSelect'];
-							$pieces = explode(" ", $monthyear);
-							$year = $pieces[0];
-							$month3 = $pieces[1];
-							$month = date('m',strtotime($month3));
-							$nextmonth = $month+1;
-							$week = $_POST['weekSelect'];*/
+							
 							$group = $_POST['groupSelect'];
-
-							/*if ($week == 1) {
-								$week = '01';
-							} else if ($week == 2) {
-								$week = '08';
-							} else if ($week == 3){
-								$week = '15';
-							} else {
-								$week = '22';
-							}
-
-							$num_length = strlen((string)$month);
-							if($num_length < 2) {
-							    // Pass
-							    $month = '0'.$month;
-							} 
-
-
-							$date = $year.$month.$week;
-							$weekrange = week_range($date);
-							$startday = $weekrange[0];
-							$endday = $weekrange[1];*/
 							$startday = $_POST['startDate'];
 							$endday = $_POST['endDate'];
 							$groupDisplay = $group; 
@@ -220,7 +190,7 @@
 								$groupDisplay = $groupArray[$group];
 							}
 							?>
-							<h4 class = "center"> <?php echo "Summary: (" . $groupDisplay . ') ' . $startday . ' to ' . $endday; ?> </h4>
+							<p class = "viewTitle"> <?php echo "Checking practices from " . $groupDisplay . ' ' . $startday . ' to ' . $endday; ?> </p>
 
 							<?php $dayCount = 0;
 							$weekHours = 0;
@@ -250,8 +220,6 @@
 								$dayOfWeek = date("w", $timestamp);
 								$startTime = strtotime($row['StartTime']);
 								$endTime = strtotime($row['EndTime']);
-								//$difference = $endTime - $startTime;
-								//$weekHours += $difference;
 								$diffDisplay = '';
 								$hours = '';
 								$minutes = '';
@@ -279,22 +247,7 @@
 								
 								
 
-								/*if($difference > 3600){
-									$hours = abs($difference/3600 %24);
-									$difference = $difference - ($hours * 3600);
-									$diffDisplay .= $hours . ' hrs ';
-								} 
 								
-								if($difference >= 60){
-									$minutes = abs($difference/60%60);
-									$difference = $difference - ($minutes * 60);
-									$diffDisplay .= $minutes . ' min ';
-								}
-
-								if ($difference <60) {
-								 	$seconds = $difference;
-								 	$diffDisplay .= $seconds . ' s ';
-								}*/ 	
 
 
 								if(!array_key_exists($name, $weekArray)){
@@ -307,7 +260,7 @@
 									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
 									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
 									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
-									'<input type="checkbox" class="filled-in browser-default"  id="filin" name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
+									'<input type="checkbox" class="filled-in browser-default"  name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
 									'<input type="checkbox"  class="filled-in browser-default" name=delete'.$practiceCounter.' value="delete">'.
 									'<button type="button"  value='.$practiceCounter.' class="btn" onclick="markDelete(this)">Delete</button></br>'.
 									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
@@ -396,7 +349,12 @@
 					if(empty($start)) {
 						echo "<script>alert('Please select a date from the calendar')</script>";
 					}
-				} 
+				} else {
+					echo "<script>var input = document.getElementsByName('groupSelect'); input[0].value = 'All';</script>";
+					    
+					
+
+				}
 				?>
 			</div>
 		</div>
@@ -404,6 +362,15 @@
 		<?php } ?>
 
 		<!--  Scripts-->
+		<script>
+			function lastDate() {
+				var date = $('.week-picker').datepicker('getDate');
+				date.setMonth(date.getMonth() - 1);
+				date.setDate(1);
+				$('.week-picker').datepicker('setDate', date);
+			}				
+			
+		</script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
@@ -440,7 +407,8 @@
 				console.log(deleteBox[0].checked);
 			}			
         </script>
- 		<script src="js/logout.js"></script>
+
+ <script src="js/logout.js"></script>
     </body>
 </html>
 
