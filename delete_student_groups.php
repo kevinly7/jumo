@@ -81,9 +81,6 @@
 
         if(isset($_POST['formSubmit'])) 
         {
-
-           // $groupid = $_POST['p2'];
-            echo "deleted works?";
             $aStudents = $_POST['formStudents'];
 
             if(!isset($aStudents)) 
@@ -93,26 +90,19 @@
             else
             {
 
-                $statement = $connection->prepare ("INSERT INTO tblPLAYER_GROUP (PlayerID, GroupID) VALUES (:playerid, :groupid)"); 
+                $statement = $connection->prepare ("DELETE FROM tblPLAYER_GROUP WHERE PlayerID = :playerid"); 
 
 
 
                 $nStudents = count($aStudents);
 
-                echo("<p>You selected $nStudents students: ");
+                echo("<p>You selected $nStudents students to delete ");
                 for($i=0; $i < $nStudents; $i++)
                 {
                     $player = $aStudents[$i];
-                    echo $aStudents[$i];
-                    $playerID = $playerArray[$player];
-
-                    $practicequery = $connection->query("Select PlayerID from tblPLAYER_GROUP WHERE GroupID = $groupid AND PlayerID = $playerID ORDER BY PlayerName ASC");
-                    $practicequery->execute();
-
-                    if($practicequery->rowCount() < 1)
-                    {
-                      $statement -> execute(array(':groupid' => $groupid, ':playerid' => $playerID));
-                    }
+                                  
+                    $statement -> execute(array(':playerid' => $player));
+                    
 
 
                     
