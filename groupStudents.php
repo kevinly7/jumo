@@ -13,8 +13,7 @@
         <div>
             <?php  
             include ('database.php');
-           if(isset($_POST['action'])) 
-        	{
+            include ('Player.php');
             $groupid = $_POST["action"];
  
             ?>
@@ -39,7 +38,7 @@
                                 <option class="student" value = <?php echo $row['PlayerID'] ?> >
                                     <span class="student">
                                         <?php 
-                                        echo $row['PlayerName'];
+                                        echo $playerObject ->getName();
                                         ?>
                                     </span>
                                     
@@ -57,10 +56,46 @@
                     </form>
                 </div>
             </div>
-		<?php }?>
+
             <!-- <a href="settings.php" class="waves-effect waves-light amber accent-3 white-text btn">Create a Group</a> -->
             <!-- <a href="weekview.php" class="waves-effect waves-light amber accent-3 white-text btn">Submit (go to week)</a> -->
 
+        <?php
+
+        if(isset($_POST['formSubmit'])) 
+        {
+        	echo "hello";
+
+            $aStudents = $_POST['formStudents'];
+
+            if(!isset($aStudents)) 
+            {
+                echo("<p>You didn't select any students!</p>\n");
+            } 
+            else
+            {
+
+                $statement = $connection->prepare ("DELETE FROM tblPLAYER_GROUP WHERE PlayerID = :playerid "); 
+
+                $nStudents = count($aStudents);
+
+                echo("<p>You have selected $nStudents students to remove: ");
+                for($i=0; $i < $nStudents; $i++)
+                {
+                    $player = $aStudents[$i];
+                    echo $aStudents[$i];
+                    $playerID = $playerArray[$player];
+
+                 
+                    $statement -> execute(array(':playerid' => $playerID));
+                    
+                }
+                echo("</p>");
+            }
+        }
+
+    
+        ?>
 
 
 
