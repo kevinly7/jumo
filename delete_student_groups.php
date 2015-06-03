@@ -73,6 +73,7 @@
                 </div>
             </div>
 
+            <div id="response"></div>
             <!-- <a href="settings.php" class="waves-effect waves-light amber accent-3 white-text btn">Create a Group</a> -->
             <!-- <a href="weekview.php" class="waves-effect waves-light amber accent-3 white-text btn">Submit (go to week)</a> -->
 
