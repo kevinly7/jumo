@@ -1,3 +1,17 @@
+  <?php  
+        session_start();
+        $newURL = "index.php";
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else if ($_SESSION["newsession"]!="ica") {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else { 
+
+    ?>
 <!DOCTYPE html>
 <html>
     <head lang="en">
@@ -54,16 +68,13 @@
 		</script>
     </head>
     <body>
-    	  <?php  
-        session_start();
-            if (!isset($_SESSION["newsession"])) {
-                echo "Please log in again.";
-            } else if ($_SESSION["newsession"]!="ica") {
-                echo "Please log in again.";
-            } else { 
 
-    ?>
     	<!-- header -->
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a class="purple-text text-darken-4" href="signup.php">Create Accounts</a></li>
+            <li class="divider"></li>
+        </ul>
+
         <nav class="purple darken-4">
             <div class="nav-wrapper">
                 <ul class="logo">
@@ -76,11 +87,12 @@
         		</ul>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
+                	<li><a class="dropdown-button" href="#" data-activates="dropdown1">Settings<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
                     <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->
                     <li> <a class = "logout1" href="index.php">Logout</a> </li>
                 </ul>
             </div>
-        </nav>
+        </nav>  
 		
 		
 
@@ -224,7 +236,7 @@ function printWeek($year, $month, $week, $group, $default){
 		$weekArray = array();
 		$sumArray = array();
 						?>
-		<h4 class = "center"> <?php echo "Weekview: " . $startday . ' to ' . $endday; ?> </p>
+		<h4 class = ""> <?php echo "Violations: " . $startday . ' to ' . $endday; ?> </h4>
 	<?php
 				$violationquery = $connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
 					from tblPRACTICE p

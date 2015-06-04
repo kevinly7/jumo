@@ -41,7 +41,7 @@ if($datequery->rowCount() < 1)
 $dateids = $datequery->fetch(PDO::FETCH_ASSOC);
 $dateid = $dateids['DateID'];
 
-	$groupID = $row_data[4] . $row_data[5]. $row_data[6] . $row_data[7];
+	$groupID = $row_data[4];
 	
 	if (!array_key_exists($groupID, $practiceArray)) {
 		$practiceArray[$groupID][0] = $row_data[0];

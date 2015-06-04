@@ -41,8 +41,12 @@ if(isset($_POST['formSubmit'])) {
 		/*$query = $connection->query("Select PracticeID from tblPRACTICE WHERE GroupID = $groupID AND DateID = $dateID AND StartTime = '$startTime'");
 		$practiceid = $query->fetch(PDO::FETCH_ASSOC);
 		$statement3 -> execute(array(':playerid' => $playerID, ':practiceid' => $practiceid['PracticeID']));*/
-	echo "practice times updated!";
+	//echo "<script>alert('practice times updated!')</script>";
+	header("Location: coach_review.php");
+	die();
 } else {
-	echo "something was not set";
+	//echo "something was not set";
+	header("Location: coach_review.php");
+	die();
 }
 ?>

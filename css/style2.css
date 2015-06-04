@@ -1,0 +1,86 @@
+@import "compass/css3";
+@import url(http://fonts.googleapis.com/css?family=Pacifico);
+
+html, body{
+  margin:0px; padding:0px;
+}
+
+/*  logo  */
+.brand-logo {
+  font-family: Pacifico;
+  font-size: 70px;
+  /*padding-left: 300px;*/
+}
+
+/*  override materialize  */
+.container {
+  width: 90%;
+}
+
+.row .col {
+  padding: 0 2rem;
+}
+
+.desc {
+  line-height: 150%;
+}
+
+.desc-header {
+  padding-bottom: 20px;
+}
+
+/*  signin  */
+.signin-card {
+  height: 270px;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/*  other  */
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#hero1{
+ background:url(../cherry.jpg);
+  background-size:cover;
+  background-position:center center;
+  background-attachment:fixed;
+}
+#hero2{background: url(../boat.jpg);
+  background-size:cover;
+  background-position:center center;
+  background-attachment:fixed;
+}
+.hero, .content{
+  text-align:center; 
+  /*position:relative;*/
+  width: 100%;
+}
+
+.inner{
+  min-height:600px;
+  position: relative;
+}
+
+.inner2 {
+  min-height:300px;
+  position: relative;
+}
+
+.inner3 {
+  min-height:550px;
+  /*height: auto;*/
+  position: relative;
+  vertical-align: middle;
+}
+
+.copy{
+  position:absolute; 
+  height:10em; 
+  margin-top:5em; 
+  width:100%;
+}

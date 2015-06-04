@@ -1,7 +1,21 @@
+  <?php  
+        session_start();
+        $newURL = "index.php";
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else if ($_SESSION["newsession"]!="ica") {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else { 
 
+    ?>
 <?php
 include ('database.php'); 
 ?>
+
 <!DOCTYPE html>
 
 <html>
@@ -29,6 +43,8 @@ include ('database.php');
 		    }
 		    
 		    $('.week-picker').datepicker( {
+		    	//selectCurrentWeek();
+
 		        showOtherMonths: true,
 		        selectOtherMonths: true,
 		        onSelect: function(dateText, inst) { 
@@ -53,6 +69,7 @@ include ('database.php');
 		            selectCurrentWeek();
 		        }
 		    });
+
 		    
 		    $('.week-picker .ui-datepicker-calendar tr').on('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
 		    $('.week-picker .ui-datepicker-calendar tr').on('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
@@ -60,17 +77,13 @@ include ('database.php');
 		</script>
     </head>
     <body>
-      <?php  
-        session_start();
-            if (!isset($_SESSION["newsession"])) {
-                echo "Please log in again.";
-            } else if ($_SESSION["newsession"]!="ica") {
-                echo "Please log in again.";
-            } else { 
-
-    ?>
     	<!-- header -->
-    	<nav class="purple darken-4">
+    	<ul id="dropdown1" class="dropdown-content">
+            <li><a class="purple-text text-darken-4" href="signup.php">Create Accounts</a></li>
+            <li class="divider"></li>
+        </ul>
+
+        <nav class="purple darken-4">
             <div class="nav-wrapper">
                 <ul class="logo">
                 	<a href="sport_selection.php" class="brand-logo white-text">Jumo</a>
@@ -82,13 +95,12 @@ include ('database.php');
         		</ul>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
+                	<li><a class="dropdown-button" href="#" data-activates="dropdown1">Settings<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
                     <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->
                     <li> <a class = "logout1" href="index.php">Logout</a> </li>
                 </ul>
             </div>
-        </nav>
-
-        
+        </nav>    
 
     	<div class="row">
 			<div class="col s3">	
@@ -175,7 +187,7 @@ include ('database.php');
 				if(isset($_POST['formSubmit']) AND isset($_POST['groupSelect'])) 
 				{ ?>
 				</div>
-						<div class="col s9">
+				<div class="col s9">
 		      		<table class="bordered striped">
 						<thead>
 							<tr>
@@ -190,8 +202,15 @@ include ('database.php');
 				              	<th data-field="tot">Total Hours</th>
 							</tr>
 						</thead>
-					<?php  
-					
+					<?php
+					$group = $_POST['groupSelect'];
+  
+					if ($group != 'All'){
+							echo "<script>var input = document.getElementsByName('groupSelect'); input[0].value = $group</script>";
+						} else {
+							echo "<script>var input = document.getElementsByName('groupSelect'); input[0].value = 'All'</script>";
+
+						}
 					/*$monthyear = $_POST['monthSelect'];
 					$pieces = explode(" ", $monthyear);
 					$year = $pieces[0];
@@ -203,12 +222,16 @@ include ('database.php');
 					$year = "";
 					$month = "";
 					$week = "";
-					$group = $_POST['groupSelect'];
 					$default = true;
 					printWeek($year, $month, $week, $group, $groupArray, $default);
 							
-				} elseif(isset($_POST['formSubmit']) AND !isset($_POST['groupSelect'])) {
-					echo "<script>alert('Please select a group')</script>";
+				} elseif(isset($_POST['formSubmit'])) {
+					if(!isset($_POST['groupSelect'])) {
+						echo "<script>alert('Please select a group')</script>";
+					}
+					if(empty($start)) {
+						echo "<script>alert('Please select a date from the calendar')</script>";
+					}
 				} else { ?>
 				</div>
 				<div class="col s9">
@@ -296,9 +319,9 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 						$groupDisplay = $group; 
 						if ($group != 'All'){
 							$groupDisplay = $groupArray[$group];
-						}
+						} 
 						?>
-						<h4 class = "center"> <?php echo "Weekview: (" . $groupDisplay . ') ' . $startday . ' to ' . $endday; ?> </p>
+						<h4 class = ""> <?php echo "Weekview: (" . $groupDisplay . ') ' . $startday . ' to ' . $endday; ?> </h4>
 						<?php $dayCount = 0;
 						$weekHours = 0;
 						$weekArray = array();

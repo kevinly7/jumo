@@ -4,11 +4,9 @@
             if (!isset($_SESSION["newsession"])) {
                 echo "Please log in again.";
                 header('Location: '.$newURL);
-                die();
             } else if ($_SESSION["newsession"]!="coach") {
                 echo "Please log in again.";
                 header('Location: '.$newURL);
-                die();
             } else { 
 
     ?>
@@ -60,13 +58,12 @@
 
             ?>
 
-            <h4 class="center page-title">Manage Groups</h4>
+            <h4 class="center page-title">Delete students in Groups</h4>
 
             <div class="row">
                 <div class="col s4"><p></p></div>
                 <div class="col s4 center">
-                    <form action = "edit_students.php" method = "POST">
-                        <select name="p2" class="browser-default">
+                    <select name="studentGroups" class="browser-default">
                             <option value="" disabled selected>Please select a group</option>
                             <?php 
                             foreach($connection->query("Select * from tblGROUP ORDER BY GroupName ASC") as $row) {?>
@@ -80,43 +77,11 @@
                             </option>
                             <?php }?>
                             ?>
-                        </select>                
-
-                        <label for='formStudents[]'>Select the students to add to the above group:</label>
-                        <select multiple="multiple" name="formStudents[]" class="browser-default student-select ">
-                            <?php 
-
-                            $playerArray = array();
-
-                            foreach($connection->query("Select * from tblPLAYER ORDER BY PlayerName ASC") as $row) {
-                                $playerObject = new Player($row['PlayerName'], $row['PlayerID'], $row['PlayerContact']); 
-
-                                $playerArray[$row['PlayerName']] = $row['PlayerID'];
-
-                                ?>
-
-                                <option class="student">
-                                    <span class="student">
-                                        <?php 
-                                        echo $playerObject ->getName();
-                                        ?>
-                                    </span>
-                                    
-                                </option>
-
-                            <?php }?>
-                            <option>test</option>
-
-                        </select>
-
-                        <!-- <input name = "formSubmit" id = "formSubmit" type="submit" value="Test Submission"> -->
-                        <div class="editStudentSubmit">
-                            <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="formSubmit" name="formSubmit">Submit</button>
-                        </div>
-                    </form>
+                        </select>      
                 </div>
             </div>
 
+            <div id="response"></div>
             <!-- <a href="settings.php" class="waves-effect waves-light amber accent-3 white-text btn">Create a Group</a> -->
             <!-- <a href="weekview.php" class="waves-effect waves-light amber accent-3 white-text btn">Submit (go to week)</a> -->
 
@@ -124,8 +89,6 @@
 
         if(isset($_POST['formSubmit'])) 
         {
-            $groupid = $_POST['p2'];
-
             $aStudents = $_POST['formStudents'];
 
             if(!isset($aStudents)) 
@@ -135,26 +98,19 @@
             else
             {
 
-                $statement = $connection->prepare ("INSERT INTO tblPLAYER_GROUP (PlayerID, GroupID) VALUES (:playerid, :groupid)"); 
+                $statement = $connection->prepare ("DELETE FROM tblPLAYER_GROUP WHERE PlayerID = :playerid"); 
 
 
 
                 $nStudents = count($aStudents);
 
-                echo("<p>You have inserted the following $nStudents students: ");
+                echo("<p>You selected $nStudents students to delete ");
                 for($i=0; $i < $nStudents; $i++)
                 {
                     $player = $aStudents[$i];
-                    echo $aStudents[$i];
-                    $playerID = $playerArray[$player];
-
-                    $practicequery = $connection->query("Select PlayerID from tblPLAYER_GROUP WHERE GroupID = $groupid AND PlayerID = $playerID ");
-                    $practicequery->execute();
-
-                    if($practicequery->rowCount() < 1)
-                    {
-                      $statement -> execute(array(':groupid' => $groupid, ':playerid' => $playerID));
-                    }
+                                  
+                    $statement -> execute(array(':playerid' => $player));
+                    
 
 
                     
@@ -174,6 +130,7 @@
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
-         <script src="js/logout.js"></script>
+        <script src="js/logout.js"></script>
+        <script src="js/deleteStudent.js"></script>
     </body>
 </html>

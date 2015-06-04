@@ -1,3 +1,16 @@
+
+  <?php  
+        session_start();
+        $newURL = "index.php";
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+            } else if ($_SESSION["newsession"]!="ica") {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+            } else { 
+
+    ?>
 <!DOCTYPE html>
 <html>
     <head lang="en">
@@ -6,25 +19,38 @@
         <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/settings.css">
  -->
+        <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
         <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     </head>
     <body>
+       
         <!-- header -->
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a class="purple-text text-darken-4" href="signup.php">Create Accounts</a></li>
+            <li class="divider"></li>
+        </ul>
+
         <nav class="purple darken-4">
             <div class="nav-wrapper">
                 <ul class="logo">
-                    <a href="index.php" class="brand-logo white-text">Jumo</a>
+                    <a href="sport_selection.php" class="brand-logo white-text">Jumo</a>
+                </ul>
+                
+                <ul class="left hide-on-med-and-down menu">
+                    <li><a href="weekview.php">Weekview</a></li>
+                    <li><a href="violations.php">Violations</a></li>
                 </ul>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
+                    <li><a class="dropdown-button" href="#" data-activates="dropdown1">Settings<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
                     <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->
-                    <a class="" href="index.php">Have an account? Log in</a>
+                    <li> <a class = "logout1" href="index.php">Logout</a> </li>
                 </ul>
             </div>
-        </nav>
+        </nav>  
 
         <!-- body -->
         <div class="whitespace"></div>
@@ -74,7 +100,7 @@
             
         </div>
             
-
+<?php }?>
         <!--  Scripts-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

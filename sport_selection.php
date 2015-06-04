@@ -1,3 +1,18 @@
+  <?php  
+        session_start();
+        $newURL = "index.php";
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else if ($_SESSION["newsession"]!="ica") {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else { 
+
+    ?>
+
 <!DOCTYPE html>
 <html>
     <head lang="en">
@@ -14,16 +29,6 @@
         <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     </head>
     <body>
-        <?php  
-        session_start();
-            if (!isset($_SESSION["newsession"])) {
-                echo "Please log in again.";
-            } else if ($_SESSION["newsession"]!="ica") {
-                echo "Please log in again.";
-            } else { 
-
-    ?>
-
         <!-- header -->
         <nav class="purple darken-4">
             <div class="nav-wrapper">
@@ -31,10 +36,10 @@
                     <a href="sport_selection.php" class="brand-logo white-text">Jumo</a>
                 </ul>
                 
-                <ul class="left hide-on-med-and-down menu">
+                <!-- <ul class="left hide-on-med-and-down menu">
                     <li><a href="weekview.php">Weekview</a></li>
                     <li><a href="violations.php">Violations</a></li>
-                </ul>
+                </ul> -->
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
                     <!-- <li><a href="settings.php"><i class="mdi-action-settings"></i></a></li> -->

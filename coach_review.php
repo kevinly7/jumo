@@ -1,3 +1,17 @@
+  <?php  
+        session_start();
+        $newURL = "index.php";
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else if ($_SESSION["newsession"]!="coach") {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else { 
+
+    ?>
 <!DOCTYPE html>
 <html>
     <head lang="en">
@@ -57,28 +71,22 @@
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     </head>
     <body>
-  
-   	<?php  
-   	session_start();
-		if (!isset($_SESSION["newsession"])) {
-			echo "Please log in again.";
-		} else if ($_SESSION["newsession"]!="coach") {
-			echo "Please log in again.";
-		} else { 
-
-   	?>
 
     	<!-- header -->
         <ul id="dropdown1" class="dropdown-content">
             <li><a class="purple-text text-darken-4" href="settings.php">Create Groups</a></li>
             <li class="divider"></li>
-            <li><a class="purple-text text-darken-4" href="edit_students.php">Edit Groups</a></li>
+            <li><a class="purple-text text-darken-4" href="edit_students.php">Add Students to Group</a></li>
+            <li class="divider"></li>
+            <li><a class="purple-text text-darken-4" href="delete_student_groups.php">Delete Students from Group</a></li>
+            <li class="divider"></li>
+            <li><a class="purple-text text-darken-4" href="create2.php">Add Practice to Group</a></li>
         </ul>
 
         <nav class="purple darken-4">
             <div class="nav-wrapper">
                 <ul class="logo">
-                    <a href="coach_review_2.php" class="brand-logo white-text">Jumo</a>
+                    <a href="coach_review.php" class="brand-logo white-text">Jumo</a>
                 </ul>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
@@ -86,12 +94,12 @@
 
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-button" href="#" data-activates="dropdown1">Settings<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
-                    <li> <a class = "logout1" href="index.php">Logout</a> </li>
+                    <li><a class = "logout1" href="index.php">Logout</a></li>
                 </ul>
             </div>
         </nav>
 
-        <h4 class="center">Summary</h4>
+        <!-- <h4 class="center">Summary</h4> -->
 
         <div class="row">
         	<div class="col s3">
@@ -181,36 +189,14 @@
 						include ('database.php');
 						if(isset($_POST['formSubmit']) AND $_POST['groupSelect'] != "" AND !empty($_POST['startDate'])) {
 
-							/*$monthyear = $_POST['monthSelect'];
-							$pieces = explode(" ", $monthyear);
-							$year = $pieces[0];
-							$month3 = $pieces[1];
-							$month = date('m',strtotime($month3));
-							$nextmonth = $month+1;
-							$week = $_POST['weekSelect'];*/
+							
 							$group = $_POST['groupSelect'];
-
-							/*if ($week == 1) {
-								$week = '01';
-							} else if ($week == 2) {
-								$week = '08';
-							} else if ($week == 3){
-								$week = '15';
+							if($group == "All") {
+								echo "<script>var input = document.getElementsByName('groupSelect'); input[0].value = 'All'</script>";
 							} else {
-								$week = '22';
+								echo "<script>var input = document.getElementsByName('groupSelect'); input[0].value = $group</script>";
 							}
 
-							$num_length = strlen((string)$month);
-							if($num_length < 2) {
-							    // Pass
-							    $month = '0'.$month;
-							} 
-
-
-							$date = $year.$month.$week;
-							$weekrange = week_range($date);
-							$startday = $weekrange[0];
-							$endday = $weekrange[1];*/
 							$startday = $_POST['startDate'];
 							$endday = $_POST['endDate'];
 							$groupDisplay = $group; 
@@ -218,7 +204,7 @@
 								$groupDisplay = $groupArray[$group];
 							}
 							?>
-							<p class = "viewTitle"> <?php echo "Checking practices from " . $groupDisplay . ' ' . $startday . ' to ' . $endday; ?> </p>
+							<h4 class = ""> <?php echo "Weekview: (" . $groupDisplay . ') ' . $startday . ' to ' . $endday; ?> </h4>
 
 							<?php $dayCount = 0;
 							$weekHours = 0;
@@ -248,8 +234,192 @@
 								$dayOfWeek = date("w", $timestamp);
 								$startTime = strtotime($row['StartTime']);
 								$endTime = strtotime($row['EndTime']);
-								//$difference = $endTime - $startTime;
-								//$weekHours += $difference;
+								$diffDisplay = '';
+								$hours = '';
+								$minutes = '';
+								$seconds = '';
+								$name = $row['PlayerName'];
+								$practiceID = $row['PracticeID'];
+								$playerID = $row['PlayerID'];
+								$dateID = $row['DateID'];
+								$groupID = $row['GroupID'];
+								$practiceCounter++;
+								$diffValue = $endTime - $startTime;
+
+								if ($practiceTypeID == 2){
+									$difference = 10800;
+								}								
+								$difference = $endTime - $startTime;
+								if($difference < 0) {
+									$difference = $difference + (24*3600);
+								}
+								/*Copied from Kevin's weekview*/
+								if(!array_key_exists($name, $sumArray)){
+									$sumArray[$name] = $difference;
+								} else {
+									$sumArray[$name] += $difference; 
+								}
+								
+
+								if(!array_key_exists($name, $weekArray)){
+									$weekArray[$name][$dayOfWeek] = array();
+								} 
+
+								if (!array_key_exists($dayOfWeek, $weekArray[$name])) {
+									$dayInput = 
+									'<input type="hidden" name=groupID'.$practiceCounter.' value='. $groupID.'>
+									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
+									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
+									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
+									'<input type="checkbox" class="filled-in browser-default"  name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
+									'<input type="checkbox"  class="filled-in browser-default" name=delete'.$practiceCounter.' value="delete">'.
+									'<button type="button"  value='.$practiceCounter.' class="btn" onclick="markDelete(this)">Delete</button></br>'.
+									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
+									$weekArray[$name][$dayOfWeek][0] = $dayInput;
+
+								} else {
+									$size = sizeof($weekArray[$name][$dayOfWeek]);
+									$weekArray[$name][$dayOfWeek][$size] =
+									'<input type="hidden" name=groupID'.$practiceCounter.' value='. $groupID.'>
+									<input type="hidden" name=dateID'.$practiceCounter.' value='.$dateID.'>
+									<input type="hidden" name=playerID'.$practiceCounter.' value='.$playerID.'>
+									<input type="hidden" name=practiceID'.$practiceCounter.' value='.$practiceID.'>'.
+									'<input type="checkbox" class="filled-in browser-default" style="display:none" name=edit'.$practiceCounter.' value='.$practiceCounter.'>'.
+									'<input type="checkbox"  class="filled-in browser-default" style="display:none" name=delete'.$practiceCounter.' value="edit">'.
+									'<button type="button"  value='.$practiceCounter.' class="btn" onclick="markDelete(this)">Delete</button></br>'.
+									'<input type = "time" class='.$practiceCounter.' onchange="selectEdit(this)" name=startTime'.$practiceCounter.' value=' . timeFormat($startTime) . '> to <input type="time" onchange="selectEdit(this)" class='.$practiceCounter.' name=endTime'.$practiceCounter.' value=' . timeFormat($endTime) . '> </br>';
+								} 
+
+					 		} ?><?php 
+					 
+						    $dayTracker = array();
+						    $dayTracker[0] = -1;
+						    $hourLimit = 72000;
+						    $dayLimit = 14400;
+					 
+					    	foreach ($weekArray as $key => $value) {
+					    		$firsttime = true;?>
+								<tr>
+						    		<td><?php echo $key ?></td>
+						    		<?php 
+						    		foreach ($value as $dayKey => $timesArray) { 
+						    			if ($firsttime == true) {
+						    				for ($f = 0; $f < ($dayKey); $f++) { ?>
+						    					<td>No Practice</td>
+						    				<?php }
+						    			$firsttime = false; 
+						    			}?>
+						    			
+						    			<?php
+						    			if($dayTracker[0] != -1 && ($dayKey - $dayTracker[0]) > 1) {
+						    				for ($j= 0; $j < ($dayKey-$dayTracker[0])-1; $j++) { ?>
+						    					<td>No Practice</td>
+						    				<?php }
+						    			}
+
+										$dayTracker[0] = $dayKey;
+										?>
+						    			<td>
+							    			<?php 
+						    				foreach ($timesArray as $timeKey => $timeValue) {
+						    					echo $timeValue . '</br>';
+						    				}?> 
+						    			</td> 
+
+						    		<?php }
+
+						    		if($dayTracker[0] != -1 && (7 - $dayTracker[0]) > 1) {
+					    				for ($j= 0; $j < (7-$dayTracker[0])-1; $j++) { ?>
+					    					<td>No Practice</td>
+						    			<?php }
+						    		}?>
+
+							    	<td><?php 
+							    		if ($sumArray[$name] > $hourLimit){
+
+										echo '<font color="red">' .sumFormat($sumArray[$key]) . '</font>';
+							    		} else {
+							    		echo  sumFormat($sumArray[$key]); 
+							    		} ?>
+
+							    	</td>
+						    	</tr>
+					 <?php } ?> 
+					</table>
+					<br>
+					<input type="hidden" name="length" value=<?php echo $practiceCounter ?>>
+					<!-- <input type="submit" name = "formSubmit" value = "Submit"> -->
+					<button class="btn waves-effect waves-light amber accent-3 white-text right" type="submit" id="submitGroup" name="formSubmit">Submit</button>
+				</form>
+				<?php 
+				//echo var_dump($weekArray); 
+				} elseif(isset($_POST['formSubmit'])) {
+					if($_POST['groupSelect'] == "") {
+						echo "<script>alert('Please select a group')</script>";
+					}
+					$start = $_POST["startDate"];
+					if(empty($start)) {
+						echo "<script>alert('Please select a date from the calendar')</script>";
+					}
+				} else {
+					date_default_timezone_set("America/Los_Angeles");
+					$year = date("Y");
+					$month = date("m");
+
+					if ($month == 1) {
+						$month = 12;
+					} else {
+						$month -= 1;
+					}
+
+					$week = '01';
+					$num_length = strlen((string)$month);
+					if($num_length < 2) {
+					// Pass
+						$month = '0'.$month;
+					} 
+					$date = $year.$month.$week;
+					$weekrange = week_range($date);
+					$startday = $weekrange[0];
+					$endday = $weekrange[1];
+
+					
+							$group = "All";
+							$groupDisplay = $group; 
+							if ($group != 'All'){
+								$groupDisplay = $groupArray[$group];
+							}
+							?>
+							<h4 class = ""> <?php echo "Weekview: (" . $groupDisplay . ') ' . $startday . ' to ' . $endday; ?> </h4>
+<!-- <h4 class="center">Summary</h4> -->
+							<?php $dayCount = 0;
+							$weekHours = 0;
+							$weekArray = array();
+							$sumArray = array();
+							$groupQuery = "AND (p.GroupID = $group)";
+							$practiceCounter = 0;
+							if($group == 'All') {
+								$groupQuery = '';
+							}
+
+							foreach($connection->query("Select p.DateID, p.GroupID, pl.PlayerID, p.PracticeID, p.StartTime, p.PracticeTypeID, EndTime, PracticeTypeName, DateName, PlayerName
+								from tblPRACTICE p
+								join tblPRACTICE_TYPE pt
+								on p.PracticeTypeID = pt.PracticeTypeID
+								join tblDATE d
+								on p.DateID = d.DateID
+								join tblPLAYER_PRACTICE pp
+								on pp.PracticeID = p.PracticeID
+								join tblPLAYER pl
+								on pp.PlayerID = pl.PlayerID
+								WHERE DATE(d.DateName) BETWEEN '$startday' AND '$endday' $groupQuery
+								ORDER BY DateName ASC, PlayerName ASC") as $row) { 
+
+								$practiceTypeID = $row['PracticeTypeID'];
+								$timestamp = strtotime($row['DateName']);
+								$dayOfWeek = date("w", $timestamp);
+								$startTime = strtotime($row['StartTime']);
+								$endTime = strtotime($row['EndTime']);
 								$diffDisplay = '';
 								$hours = '';
 								$minutes = '';
@@ -277,22 +447,7 @@
 								
 								
 
-								/*if($difference > 3600){
-									$hours = abs($difference/3600 %24);
-									$difference = $difference - ($hours * 3600);
-									$diffDisplay .= $hours . ' hrs ';
-								} 
 								
-								if($difference >= 60){
-									$minutes = abs($difference/60%60);
-									$difference = $difference - ($minutes * 60);
-									$diffDisplay .= $minutes . ' min ';
-								}
-
-								if ($difference <60) {
-								 	$seconds = $difference;
-								 	$diffDisplay .= $seconds . ' s ';
-								}*/ 	
 
 
 								if(!array_key_exists($name, $weekArray)){
@@ -370,9 +525,10 @@
 
 							    	<td><?php 
 							    		if ($sumArray[$name] > $hourLimit){
-										echo '<font color="red">' .sumFormat($sumArray[$name]) . '</font>';
+											echo '<font color="red">' .sumFormat($sumArray[$name]) . '</font>';
 							    		} else {
-							    		echo  sumFormat($sumArray[$name]); 
+							    			echo  sumFormat($sumArray[$name]);
+							    			echo "Name " . $name; 
 							    		} ?>
 
 							    	</td>
@@ -383,18 +539,10 @@
 					<input type="hidden" name="length" value=<?php echo $practiceCounter ?>>
 					<!-- <input type="submit" name = "formSubmit" value = "Submit"> -->
 					<button class="btn waves-effect waves-light amber accent-3 white-text right" type="submit" id="submitGroup" name="formSubmit">Submit</button>
-				</form>
-				<?php 
-				//echo var_dump($weekArray); 
-				} elseif(isset($_POST['formSubmit'])) {
-					if($_POST['groupSelect'] == "") {
-						echo "<script>alert('Please select a group')</script>";
-					}
-					$start = $_POST["startDate"];
-					if(empty($start)) {
-						echo "<script>alert('Please select a date from the calendar')</script>";
-					}
-				} 
+				</form>					    
+					
+
+				<?php }
 				?>
 			</div>
 		</div>
@@ -402,6 +550,15 @@
 		<?php } ?>
 
 		<!--  Scripts-->
+		<script>
+			function lastDate() {
+				var date = $('.week-picker').datepicker('getDate');
+				date.setMonth(date.getMonth() - 1);
+				date.setDate(1);
+				$('.week-picker').datepicker('setDate', date);
+			}				
+			
+		</script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
