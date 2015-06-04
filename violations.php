@@ -4,9 +4,11 @@
             if (!isset($_SESSION["newsession"])) {
                 echo "Please log in again.";
                 header('Location: '.$newURL);
+                die();
             } else if ($_SESSION["newsession"]!="ica") {
                 echo "Please log in again.";
                 header('Location: '.$newURL);
+                die();
             } else { 
 
     ?>
