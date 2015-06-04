@@ -1,3 +1,16 @@
+  <?php  
+        session_start();
+        $newURL = "index.php";
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+            } else if ($_SESSION["newsession"]!="ica") {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+            } else { 
+
+    ?>
+
 <!DOCTYPE html>
 <html>
     <head lang="en">
@@ -14,16 +27,6 @@
         <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     </head>
     <body>
-        <?php  
-        session_start();
-            if (!isset($_SESSION["newsession"])) {
-                echo "Please log in again.";
-            } else if ($_SESSION["newsession"]!="ica") {
-                echo "Please log in again.";
-            } else { 
-
-    ?>
-
         <!-- header -->
         <nav class="purple darken-4">
             <div class="nav-wrapper">

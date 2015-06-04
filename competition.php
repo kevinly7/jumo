@@ -1,3 +1,16 @@
+  <?php  
+        session_start();
+        $newURL = "index.php";
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+            } else if ($_SESSION["newsession"]!="coach") {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+            } else { 
+
+    ?>
+
 <html>
     <head lang="en">
         <meta charset="UTF-8">
@@ -10,15 +23,6 @@
     </head>
   
     <body>
-          <?php  
-        session_start();
-            if (!isset($_SESSION["newsession"])) {
-                echo "Please log in again.";
-            } else if ($_SESSION["newsession"]!="coach") {
-                echo "Please log in again.";
-            } else {
-
-    ?>
         <!-- header -->
         <nav class="purple darken-4">
             <div class="nav-wrapper">

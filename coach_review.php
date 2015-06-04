@@ -1,3 +1,15 @@
+  <?php  
+        session_start();
+        $newURL = "index.php";
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+            } else if ($_SESSION["newsession"]!="coach") {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+            } else { 
+
+    ?>
 <!DOCTYPE html>
 <html>
     <head lang="en">
@@ -57,16 +69,6 @@
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     </head>
     <body>
-  
-   	<?php  
-   	session_start();
-		if (!isset($_SESSION["newsession"])) {
-			echo "Please log in again.";
-		} else if ($_SESSION["newsession"]!="coach") {
-			echo "Please log in again.";
-		} else { 
-
-   	?>
 
     	<!-- header -->
         <ul id="dropdown1" class="dropdown-content">
