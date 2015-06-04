@@ -78,7 +78,7 @@
 
                                     <h5 class="light desc ">Logging practice hours for a whole team is not only a hassle for coaches,
                                         but it also cuts into their busy schedule. With Jumo, coaches no longer need to spend hours
-                                        of their time remembering when Johnny and for how many hours.
+                                        of their time remembering when athletes practiced and for how many hours.
                                     </h5>
                                 </div>
                             </div>
