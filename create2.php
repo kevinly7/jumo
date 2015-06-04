@@ -1,3 +1,17 @@
+  <?php  
+        session_start();
+        $newURL = "index.php";
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else if ($_SESSION["newsession"]!="coach") {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else { 
+
+    ?>
 <html>
     <head lang="en">
         <meta charset="UTF-8">
@@ -81,7 +95,7 @@
 				</div>
 			</div>
 		<form>
-
+<?php } ?>
 
 		<!--  Scripts -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>

@@ -1,3 +1,17 @@
+  <?php  
+        session_start();
+        $newURL = "index.php";
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else if ($_SESSION["newsession"]!="coach") {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else { 
+
+    ?>
 <html>
 	<header>
 	</header>
@@ -66,3 +80,5 @@
 
 
 </html>
+
+<?php } ?>
