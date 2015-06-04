@@ -72,13 +72,17 @@
         <ul id="dropdown1" class="dropdown-content">
             <li><a class="purple-text text-darken-4" href="settings.php">Create Groups</a></li>
             <li class="divider"></li>
-            <li><a class="purple-text text-darken-4" href="edit_students.php">Edit Groups</a></li>
+            <li><a class="purple-text text-darken-4" href="edit_students.php">Add Students to Group</a></li>
+            <li class="divider"></li>
+            <li><a class="purple-text text-darken-4" href="delete_student_groups.php">Delete Students from Group</a></li>
+            <li class="divider"></li>
+            <li><a class="purple-text text-darken-4" href="create2.php">Add Practice to Group</a></li>
         </ul>
 
         <nav class="purple darken-4">
             <div class="nav-wrapper">
                 <ul class="logo">
-                    <a href="coach_review_2.php" class="brand-logo white-text">Jumo</a>
+                    <a href="coach_review.php" class="brand-logo white-text">Jumo</a>
                 </ul>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down logout">
@@ -86,12 +90,12 @@
 
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-button" href="#" data-activates="dropdown1">Settings<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
-                    <li> <a class = "logout1" href="index.php">Logout</a> </li>
+                    <li><a class = "logout1" href="index.php">Logout</a></li>
                 </ul>
             </div>
         </nav>
 
-        <h4 class="center">Summary</h4>
+        <!-- <h4 class="center">Summary</h4> -->
 
         <div class="row">
         	<div class="col s3">
@@ -196,7 +200,7 @@
 								$groupDisplay = $groupArray[$group];
 							}
 							?>
-							<p class = "viewTitle"> <?php echo "Checking practices from " . $groupDisplay . ' ' . $startday . ' to ' . $endday; ?> </p>
+							<h4 class = ""> <?php echo "Weekview: (" . $groupDisplay . ') ' . $startday . ' to ' . $endday; ?> </h4>
 
 							<?php $dayCount = 0;
 							$weekHours = 0;
@@ -251,10 +255,6 @@
 									$sumArray[$name] += $difference; 
 								}
 								
-								
-
-								
-
 
 								if(!array_key_exists($name, $weekArray)){
 									$weekArray[$name][$dayOfWeek] = array();
@@ -384,8 +384,8 @@
 								$groupDisplay = $groupArray[$group];
 							}
 							?>
-							<p class = "viewTitle"> <?php echo "Checking practices from " . $groupDisplay . ' ' . $startday . ' to ' . $endday; ?> </p>
-
+							<h4 class = ""> <?php echo "Weekview: (" . $groupDisplay . ') ' . $startday . ' to ' . $endday; ?> </h4>
+<!-- <h4 class="center">Summary</h4> -->
 							<?php $dayCount = 0;
 							$weekHours = 0;
 							$weekArray = array();

@@ -130,35 +130,3 @@ footer.page-footer {
 .coach-ica {
   padding-left: 10px;
 }
-
-/*  index  */
-#hero1 {
-  background: url(../background2.jpg);
-  /*height: 100%;
-  width: 100%;*/
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed
-}
-
-.hero {
-  position: relative;
-}
-
-.copy {
-  position: absolute;
-  top: 50%;
-  height: 10em;
-  margin-top: -5em;
-  width: 100%;
-}
-
-.description-section {
-  height: 100%;
-  width: 100%;
-}
-
-.login-card {
-  height: 250px;
-  width: 110%;
-}

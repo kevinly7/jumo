@@ -316,7 +316,7 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 							$groupDisplay = $groupArray[$group];
 						} 
 						?>
-						<h4 class = "center"> <?php echo "Weekview: (" . $groupDisplay . ') ' . $startday . ' to ' . $endday; ?> </p>
+						<h4 class = ""> <?php echo "Weekview: (" . $groupDisplay . ') ' . $startday . ' to ' . $endday; ?> </h4>
 						<?php $dayCount = 0;
 						$weekHours = 0;
 						$weekArray = array();
