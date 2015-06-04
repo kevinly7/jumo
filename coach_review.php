@@ -241,6 +241,7 @@
 								$groupID = $row['GroupID'];
 								$practiceCounter++;
 								$diffValue = $endTime - $startTime;
+
 								if ($practiceTypeID == 2){
 									$difference = 10800;
 								}								
@@ -331,14 +332,15 @@
 
 							    	<td><?php 
 							    		if ($sumArray[$name] > $hourLimit){
-										echo '<font color="red">' .sumFormat($sumArray[$name]) . '</font>';
+
+										echo '<font color="red">' .sumFormat($sumArray[$key]) . '</font>';
 							    		} else {
-							    		echo  sumFormat($sumArray[$name]); 
+							    		echo  sumFormat($sumArray[$key]); 
 							    		} ?>
 
 							    	</td>
 						    	</tr>
-					    	<?php }?> 
+					 <?php } ?> 
 					</table>
 					<br>
 					<input type="hidden" name="length" value=<?php echo $practiceCounter ?>>
@@ -519,9 +521,10 @@
 
 							    	<td><?php 
 							    		if ($sumArray[$name] > $hourLimit){
-										echo '<font color="red">' .sumFormat($sumArray[$name]) . '</font>';
+											echo '<font color="red">' .sumFormat($sumArray[$name]) . '</font>';
 							    		} else {
-							    		echo  sumFormat($sumArray[$name]); 
+							    			echo  sumFormat($sumArray[$name]);
+							    			echo "Name " . $name; 
 							    		} ?>
 
 							    	</td>
