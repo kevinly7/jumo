@@ -1,7 +1,21 @@
+  <?php  
+        session_start();
+        $newURL = "index.php";
+            if (!isset($_SESSION["newsession"])) {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else if ($_SESSION["newsession"]!="ica") {
+                echo "Please log in again.";
+                header('Location: '.$newURL);
+                die();
+            } else { 
 
+    ?>
 <?php
 include ('database.php'); 
 ?>
+
 <!DOCTYPE html>
 
 <html>
@@ -63,15 +77,6 @@ include ('database.php');
 		</script>
     </head>
     <body>
-      <?php  
-        session_start();
-            if (!isset($_SESSION["newsession"])) {
-                echo "Please log in again.";
-            } else if ($_SESSION["newsession"]!="ica") {
-                echo "Please log in again.";
-            } else { 
-
-    ?>
     	<!-- header -->
     	<ul id="dropdown1" class="dropdown-content">
             <li><a class="purple-text text-darken-4" href="signup.php">Create Accounts</a></li>
