@@ -230,7 +230,7 @@ function printWeek($year, $month, $week, $group, $default){
 		$weekArray = array();
 		$sumArray = array();
 						?>
-		<h4 class = "center"> <?php echo "Weekview: " . $startday . ' to ' . $endday; ?> </p>
+		<h4 class = ""> <?php echo "Violations: " . $startday . ' to ' . $endday; ?> </h4>
 	<?php
 				$violationquery = $connection->query("Select StartTime, EndTime, PracticeTypeName, DateName, PlayerName
 					from tblPRACTICE p
