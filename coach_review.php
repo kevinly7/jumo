@@ -183,6 +183,12 @@
 
 							
 							$group = $_POST['groupSelect'];
+							if($group == "All") {
+								echo "<script>var input = document.getElementsByName('groupSelect'); input[0].value = 'All'</script>";
+							} else {
+								echo "<script>var input = document.getElementsByName('groupSelect'); input[0].value = $group</script>";
+							}
+
 							$startday = $_POST['startDate'];
 							$endday = $_POST['endDate'];
 							$groupDisplay = $group; 

@@ -29,6 +29,8 @@ include ('database.php');
 		    }
 		    
 		    $('.week-picker').datepicker( {
+		    	//selectCurrentWeek();
+
 		        showOtherMonths: true,
 		        selectOtherMonths: true,
 		        onSelect: function(dateText, inst) { 
@@ -53,6 +55,7 @@ include ('database.php');
 		            selectCurrentWeek();
 		        }
 		    });
+
 		    
 		    $('.week-picker .ui-datepicker-calendar tr').on('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
 		    $('.week-picker .ui-datepicker-calendar tr').on('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
@@ -194,8 +197,15 @@ include ('database.php');
 				              	<th data-field="tot">Total Hours</th>
 							</tr>
 						</thead>
-					<?php  
-					
+					<?php
+					$group = $_POST['groupSelect'];
+  
+					if ($group != 'All'){
+							echo "<script>var input = document.getElementsByName('groupSelect'); input[0].value = $group</script>";
+						} else {
+							echo "<script>var input = document.getElementsByName('groupSelect'); input[0].value = 'All'</script>";
+
+						}
 					/*$monthyear = $_POST['monthSelect'];
 					$pieces = explode(" ", $monthyear);
 					$year = $pieces[0];
@@ -207,12 +217,16 @@ include ('database.php');
 					$year = "";
 					$month = "";
 					$week = "";
-					$group = $_POST['groupSelect'];
 					$default = true;
 					printWeek($year, $month, $week, $group, $groupArray, $default);
 							
-				} elseif(isset($_POST['formSubmit']) AND !isset($_POST['groupSelect'])) {
-					echo "<script>alert('Please select a group')</script>";
+				} elseif(isset($_POST['formSubmit'])) {
+					if(!isset($_POST['groupSelect'])) {
+						echo "<script>alert('Please select a group')</script>";
+					}
+					if(empty($start)) {
+						echo "<script>alert('Please select a date from the calendar')</script>";
+					}
 				} else { ?>
 				</div>
 				<div class="col s9">
@@ -300,7 +314,7 @@ function printWeek($year, $month, $week, $group, $groupArray, $default){
 						$groupDisplay = $group; 
 						if ($group != 'All'){
 							$groupDisplay = $groupArray[$group];
-						}
+						} 
 						?>
 						<h4 class = "center"> <?php echo "Weekview: (" . $groupDisplay . ') ' . $startday . ' to ' . $endday; ?> </p>
 						<?php $dayCount = 0;

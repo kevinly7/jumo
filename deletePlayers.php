@@ -60,7 +60,10 @@
 
 	            <?php }?>
 	        </select>
-        	<input type="submit" value="Submit">
+        	<!--<input type="submit" value="Submit">-->
+        	<div class="editStudentSubmit">
+                <button class="btn waves-effect waves-light amber accent-3 white-text" type="submit" id="formSubmit" name="formSubmit">Submit</button>
+            </div>
     	</form>
     <!--  Scripts-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
